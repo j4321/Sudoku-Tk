@@ -46,8 +46,10 @@ slightly change according to the distribution):
 Ubuntu/Debian:
 - python3-tk
 - python3-pil
-- python3-pil.imagetk
 - python3-numpy
+
+If you use a 8.5.x version of tcl/tk, you will also need 
+- python3-pil.imagetk
 
 Archlinux:
 - tk
@@ -58,7 +60,7 @@ Archlinux:
 
 Unpack the archive. 
 
-You can directly launch sudoku-tk.py
+You can directly launch sudoku-tk
 
 In Windows, you might need to select 'open with pythonw.exe' (which is in
 the file C:\Python3x).
@@ -66,7 +68,7 @@ the file C:\Python3x).
 In Linux, you can make sudoku-tk.py executable or launch it with
 
 ::
-    $ python3 sudoku-tk.py
+    $ python3 sudoku-tk
 
 You can also install it with
 

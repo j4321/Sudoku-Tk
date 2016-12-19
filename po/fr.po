@@ -1,206 +1,45 @@
 # Sudoku-Tk - Sudoku games and puzzle solver
 # Copyright (C) 2015 Juliette Monsel
 # This file is distributed under the same license as the Sudoku-Tk package.
-# Juliette Monsel <j_4321@sfr.fr>, 2016.
+# Juliette Monsel <j_4321@protonmail.com>, 2016.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.0\n"
-"Report-Msgid-Bugs-To: j_4321@sfr.fr\n"
-"POT-Creation-Date: 2016-04-11 23:00+0200\n"
+"Project-Id-Version: 1.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-19 20:05+0100\n"
 "PO-Revision-Date: 2016-04-11 23:02+0200\n"
-"Last-Translator:  <j_4321@sfr.fr>\n"
+"Last-Translator:  <j_4321@protonmail.com>\n"
 "Language-Team: French\n"
 "Language: fr\n"
-"MIME-Version: 1.0\n"
+"MIME-Version: 1.1\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: Modules/sudoku.py:90
-msgid "Generate a puzzle"
-msgstr "Générer une grille"
-
-#: Modules/sudoku.py:92
-msgid "Empty grid"
-msgstr "Grille vide"
-
-#: Modules/sudoku.py:96
-msgid "Game"
-msgstr "Jeu"
-
-#: Modules/sudoku.py:98
-msgid "Puzzle"
-msgstr "Grille"
-
-#: Modules/sudoku.py:102 Modules/sudoku.py:111
-msgid "Help"
-msgstr "Aide"
-
-#: Modules/sudoku.py:103
-msgid "About"
-msgstr "À propos"
-
-#: Modules/sudoku.py:105
-msgid "New"
-msgstr "Nouveau"
-
-#: Modules/sudoku.py:106
-msgid "Open"
-msgstr "Ouvrir"
-
-#: Modules/sudoku.py:107
-msgid "Save"
-msgstr "Enregistrer"
-
-#: Modules/sudoku.py:108
-msgid "Restart"
-msgstr "Recommencer"
-
-#: Modules/sudoku.py:109 Modules/aide.py:79
-msgid "Solve"
-msgstr "Résoudre"
-
-#: Modules/sudoku.py:110 Modules/sudoku.py:670
-msgid "Export"
-msgstr "Exporter"
-
-#: Modules/sudoku.py:185 Modules/sudoku.py:189 Modules/sudoku.py:191
-#: Modules/sudoku.py:424 Modules/sudoku.py:428 Modules/sudoku.py:429
-#: Modules/sudoku.py:442 Modules/sudoku.py:446 Modules/sudoku.py:448
-#: Modules/sudoku.py:469 Modules/sudoku.py:470 Modules/sudoku.py:521
-#: Modules/sudoku.py:525 Modules/sudoku.py:526 Modules/sudoku.py:595
-#: Modules/sudoku.py:596 Modules/sudoku.py:629 Modules/sudoku.py:630
-#: Modules/sudoku.py:644 Modules/sudoku.py:648 Modules/sudoku.py:649
-msgid "Yes"
-msgstr "Oui"
-
-#: Modules/sudoku.py:187 Modules/sudoku.py:426 Modules/sudoku.py:444
-#: Modules/sudoku.py:467 Modules/sudoku.py:523 Modules/sudoku.py:593
-#: Modules/sudoku.py:646
-msgid "Confirmation"
-msgstr "Confirmation"
-
-#: Modules/sudoku.py:188 Modules/sudoku.py:427 Modules/sudoku.py:445
-#: Modules/sudoku.py:524 Modules/sudoku.py:647
-msgid "Do you want to abandon the current puzzle?"
-msgstr "Voulez-vous abandonner le sudoku en cours ?"
-
-#: Modules/sudoku.py:189 Modules/sudoku.py:428 Modules/sudoku.py:446
-#: Modules/sudoku.py:469 Modules/sudoku.py:525 Modules/sudoku.py:595
-#: Modules/sudoku.py:629 Modules/sudoku.py:648
-msgid "No"
-msgstr "Non"
-
-#: Modules/sudoku.py:383 Modules/sudoku.py:391 Modules/sudoku.py:458
-msgid "Information"
-msgstr "Information"
-
-#: Modules/sudoku.py:384
-#, python-format
-msgid "You solved the puzzle in %(min)i minutes and %(sec)i secondes."
-msgstr "Vous avez résolu ce sudoku en %(min)i minutes et %(sec)i secondes."
-
-#: Modules/sudoku.py:391
-msgid "There is a mistake."
-msgstr "Il y a une erreur."
-
-#: Modules/sudoku.py:451 Modules/sudoku.py:452 Modules/sudoku.py:460
-msgid "Retry"
-msgstr "Ré-essayer"
-
-#: Modules/sudoku.py:454
-msgid "easy"
-msgstr "facile"
-
-#: Modules/sudoku.py:454
-msgid "medium"
-msgstr "intermédiaire"
-
-#: Modules/sudoku.py:454
-msgid "difficult"
-msgstr "difficile"
-
-#: Modules/sudoku.py:459
-#, python-format
-msgid ""
-"The generated puzzle contains %(nb)i numbers and its level is %(difficulty)s."
-msgstr ""
-"Le sudoku généré contient %(nb)i chiffres et est de niveau %(difficulty)s."
-
-#: Modules/sudoku.py:460 Modules/sudoku.py:461
-msgid "Play"
-msgstr "Jouer"
-
-#: Modules/sudoku.py:468
-msgid "Do you really want to start again?"
-msgstr "Voulez-vous vraiment recommencer ?"
-
-#: Modules/sudoku.py:552 Modules/sudoku.py:586 Modules/sudoku.py:589
-#: Modules/sudoku.py:627 Modules/sudoku.py:633 Modules/sudoku.py:636
-#: Modules/sudoku.py:659 Modules/sudoku.py:662
-msgid "Error"
-msgstr "Erreur"
-
-#: Modules/sudoku.py:553
-msgid "This file is not a valid sudoku file."
-msgstr "Ce fichier n'est pas un fichier de sudoku valide."
-
-
-#: Modules/sudoku.py:586 Modules/sudoku.py:633
-msgid "The grid is wrong. It cannot be solved."
-msgstr "Il y a une erreur dans la grille, elle ne peut pas être résolue."
-
-#: Modules/sudoku.py:589 Modules/sudoku.py:636
-msgid "Resolution failed."
-msgstr "La résolution a échoué."
-
-#: Modules/sudoku.py:594
-msgid "Do you really want to get the solution?"
-msgstr "Voulez-vous vraiment la solution ?"
-
-#: Modules/sudoku.py:628
-msgid ""
-"The grid is wrong. It cannot be solved. Do you want the solution of the "
-"initial grid?"
-msgstr ""
-"Il y a une erreur dans cette grille. Elle ne peut pas être résolue."
-" Voulez-vous la solution de la grille initiale ?"
-
-#: Modules/sudoku.py:659
-msgid "This is not a 9x9 sudoku grid."
-msgstr "Ce n'est pas une grille de sudoku 9x9."
-
-#: Modules/sudoku.py:663
-msgid ""
-"The file does not have the right format. It should be a .txt file with cell "
-"values separated by one space. 0 means empty cell."
-msgstr ""
-"Ce fichier n'a pas le bon format. Ce devrait être un fichier .txt contenant "
-"les valeurs des cases séparées d'un espace, 0 pour une case vide."
-
-#: Modules/about.py:38
+#: SudokuTkModules/about.py:36
 msgid "About Sudoku-Tk"
 msgstr "À propos de Sudoku-Tk"
 
-#: Modules/about.py:53
+#: SudokuTkModules/about.py:44
 #, python-format
 msgid "Sudoku-Tk %(version)s"
 msgstr "Sudoku-Tk %(version)s"
 
-#: Modules/about.py:55
+#: SudokuTkModules/about.py:46
 msgid "Sudoku games and puzzle solver"
 msgstr "Jeu de sudoku et résolution de grilles"
 
-#: Modules/about.py:58 Modules/about.py:82
+#: SudokuTkModules/about.py:49 SudokuTkModules/about.py:73
 msgid "License"
 msgstr "Licence"
 
-#: Modules/about.py:59 Modules/about.py:114
+#: SudokuTkModules/about.py:50 SudokuTkModules/about.py:99
+#: SudokuTkModules/sudoku.py:211
 msgid "Close"
 msgstr "Fermer"
 
-#: Modules/about.py:97
+#: SudokuTkModules/about.py:82
 msgid ""
 "Sudoku-Tk is free software: you can redistribute it and/or modify it under "
 "the terms of the GNU General Public License as published by the Free "
@@ -208,13 +47,13 @@ msgid ""
 "any later version.\n"
 "\n"
 msgstr ""
-"Sudoku-Tk est un logiciel libre ; vous pouvez le diffuser et/ou le "
-"modifier suivant les termes de la Licence Publique Générale GNU telle que "
-"publiée par la Free Software Foundation ; soit la version 3 de cette licence, "
-"soit (à votre convenance) une version ultérieure.\n"
+"Sudoku-Tk est un logiciel libre ; vous pouvez le diffuser et/ou le modifier "
+"suivant les termes de la Licence Publique Générale GNU telle que publiée par "
+"la Free Software Foundation ; soit la version 3 de cette licence, soit (à "
+"votre convenance) une version ultérieure.\n"
 "\n"
 
-#: Modules/about.py:99
+#: SudokuTkModules/about.py:84
 msgid ""
 "Sudoku-Tk is distributed in the hope that it will be useful, but WITHOUT ANY "
 "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
@@ -222,13 +61,13 @@ msgid ""
 "details.\n"
 "\n"
 msgstr ""
-"Sudoku-Tk est diffusé dans l'espoir qu'il sera utile, mais "
-"SANS AUCUNE GARANTIE ; sans même une garantie implicite de COMMERCIALISATION "
-"ou d'ADÉQUATION À UN USAGE PARTICULIER. Voyez la Licence Publique Générale "
-"GNU pour plus de détails.\n"
+"Sudoku-Tk est diffusé dans l'espoir qu'il sera utile, mais SANS AUCUNE "
+"GARANTIE ; sans même une garantie implicite de COMMERCIALISATION ou "
+"d'ADÉQUATION À UN USAGE PARTICULIER. Voyez la Licence Publique Générale GNU "
+"pour plus de détails.\n"
 "\n"
 
-#: Modules/about.py:101
+#: SudokuTkModules/about.py:86
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "this program. If not, see http://www.gnu.org/licenses/."
@@ -236,39 +75,41 @@ msgstr ""
 "Vous devriez avoir reçu une copie de la Licence Publique Générale GNU avec "
 "ce programme. Sinon, consultez http://www.gnu.org/licenses/."
 
-#: Modules/aide.py:37
+#: SudokuTkModules/aide.py:38
 msgid "Sudoku-Tk Help"
 msgstr "Aide de Sudoku-Tk"
 
-#: Modules/aide.py:51
+#: SudokuTkModules/aide.py:47
 msgid "Sudoku-Tk Help\n"
 msgstr "Aide de Sudoku-Tk\n"
 
-#: Modules/aide.py:52
+#: SudokuTkModules/aide.py:48
 msgid ""
 "Sudoku-Tk is a software written in python and using the Tcl/Tk graphical "
 "libraries. It enables you to play sudoku and can also solve sudoku puzzles."
 msgstr ""
 "Sudoku-Tk est un logiciel écrit en python et utilisant les librairies "
-"graphiques Tcl/Tk. Il vous permet de jouer au sudoku et peut aussi les résoudre."
+"graphiques Tcl/Tk. Il vous permet de jouer au sudoku et peut aussi les "
+"résoudre."
 
-#: Modules/aide.py:53
+#: SudokuTkModules/aide.py:49
 msgid ""
 " The puzzles can be loaded from files, entered by the user or generated by "
 "the software. I apologize for the slowness of the generation algorithm. It "
 "generates minimal puzzles, which means that if you remove any value from the "
 "puzzle it will not have a unique solution any more. See "
 msgstr ""
-"Les grilles peuvent provenir de fichier, être entrées par l'utilisateur ou générée "
-"par le logiciel. Je m'excuse de la lenteur de l'algorithme de génération. Il "
-"génère des grilles minimale, c'est-à-dire qu'il est impossible d'enlever une"
-" valeur à la grille sans perdre l'unicité de la solution. Consultez "
+"Les grilles peuvent provenir de fichier, être entrées par l'utilisateur ou "
+"générée par le logiciel. Je m'excuse de la lenteur de l'algorithme de "
+"génération. Il génère des grilles minimale, c'est-à-dire qu'il est "
+"impossible d'enlever une valeur à la grille sans perdre l'unicité de la "
+"solution. Consultez "
 
-#: Modules/aide.py:54 Modules/aide.py:84
+#: SudokuTkModules/aide.py:50 SudokuTkModules/aide.py:80
 msgid "https://en.wikipedia.org/wiki/Sudoku"
 msgstr "https://fr.wikipedia.org/wiki/Sudoku"
 
-#: Modules/aide.py:55
+#: SudokuTkModules/aide.py:51
 msgid ""
 " for more information on sudoku.\n"
 "\n"
@@ -276,30 +117,30 @@ msgstr ""
 " pour plus d'informations sur le sudoku.\n"
 "\n"
 
-#: Modules/aide.py:57
+#: SudokuTkModules/aide.py:53
 msgid "Starting a game\n"
 msgstr "Commencer une grille\n"
 
-#: Modules/aide.py:58
+#: SudokuTkModules/aide.py:54
 msgid "To start a game go to "
 msgstr "Pour commencer à jouer, aller dans "
 
-#: Modules/aide.py:59
+#: SudokuTkModules/aide.py:55
 msgid "New -> Generate a puzzle"
 msgstr "Nouveau -> Générer une grille"
 
-#: Modules/aide.py:60
+#: SudokuTkModules/aide.py:56
 msgid ""
 " or open an existing game / puzzle. You can also start from an empty grid."
 msgstr ""
-" ou ouvrez un jeu ou une grille déjà existant. Vous pouvez aussi partir d'une grille vide."
+" ou ouvrez un jeu ou une grille déjà existant. Vous pouvez aussi partir "
+"d'une grille vide."
 
-#: Modules/aide.py:61
+#: SudokuTkModules/aide.py:57
 msgid "You can find puzzles files in the "
-msgstr ""
-"Vous pourrez trouver des grilles dans le dossier "
+msgstr "Vous pourrez trouver des grilles dans le dossier "
 
-#: Modules/aide.py:63
+#: SudokuTkModules/aide.py:59
 msgid ""
 " folder. The levels given are only indicative.\n"
 "\n"
@@ -307,39 +148,43 @@ msgstr ""
 ". Les niveaux sont donnés à titre indicatif.\n"
 "\n"
 
-#: Modules/aide.py:65
+#: SudokuTkModules/aide.py:61
 msgid "Filling the grid\n"
 msgstr "Remplir la grille\n"
 
-#: Modules/aide.py:66
+#: SudokuTkModules/aide.py:62
 msgid "\t• Left mouse click in the cell to show the keypad to enter a value.\n"
-msgstr "\t• Clic gauche dans une case pour afficher le pavé numérique permettant d'entrer un chiffre.\n"
+msgstr ""
+"\t• Clic gauche dans une case pour afficher le pavé numérique permettant "
+"d'entrer un chiffre.\n"
 
-#: Modules/aide.py:67
+#: SudokuTkModules/aide.py:63
 msgid ""
 "\t• Right mouse click in the cell to show the keypad to enter a "
 "possibility.\n"
 msgstr ""
-"\t• Clic droit dans une case pour afficher le pavé numérique permettant"
-" d'entrer une possibilité.\n"
+"\t• Clic droit dans une case pour afficher le pavé numérique permettant "
+"d'entrer une possibilité.\n"
 
-#: Modules/aide.py:68
+#: SudokuTkModules/aide.py:64
 msgid "If the keypad does not appear, check whether the game is on pause.\n"
-msgstr "Si le pavé numérique n'apparaît pas, vérifiez que le jeu n'est pas en pause.\n"
+msgstr ""
+"Si le pavé numérique n'apparaît pas, vérifiez que le jeu n'est pas en "
+"pause.\n"
 
-#: Modules/aide.py:69
+#: SudokuTkModules/aide.py:65
 msgid ""
 "The game can be saved at any time to continue it later. To open a saved "
 "game, go to "
 msgstr ""
-"Le jeu peut être enregistré à tout moment pour le continuer plus tard. Pour"
-" ouvrir une partie enregistrée, allez dans "
+"Le jeu peut être enregistré à tout moment pour le continuer plus tard. Pour "
+"ouvrir une partie enregistrée, allez dans "
 
-#: Modules/aide.py:70
+#: SudokuTkModules/aide.py:66
 msgid "Open -> Game"
 msgstr "Ouvrir -> Jeu"
 
-#: Modules/aide.py:71
+#: SudokuTkModules/aide.py:67
 msgid ""
 " and select the desired .sudoku file.\n"
 "\n"
@@ -347,39 +192,43 @@ msgstr ""
 " et sélectionnez le fichier .sudoku de votre choix.\n"
 "\n"
 
-#: Modules/aide.py:73
+#: SudokuTkModules/aide.py:69
 msgid "Printing a puzzle\n"
 msgstr "Imprimer une grille\n"
 
-#: Modules/aide.py:74
+#: SudokuTkModules/aide.py:70
 msgid ""
 "You cannot print directly a puzzle but you can export it as .png or .jpg in "
 "order to put several puzzles in a document editor of your choice and print "
 "them."
 msgstr ""
-"Il est impossible d'imprimer une grille directement. En revanche, vous pouvez "
-"l'exporter au format .png ou .jpg afin de mettre plusieurs grilles sur une page depuis "
-"l'éditeur de texte de votre choix avant de l'imprimer."
+"Il est impossible d'imprimer une grille directement. En revanche, vous "
+"pouvez l'exporter au format .png ou .jpg afin de mettre plusieurs grilles "
+"sur une page depuis l'éditeur de texte de votre choix avant de l'imprimer."
 
-#: Modules/aide.py:75
+#: SudokuTkModules/aide.py:71
 msgid ""
 "Only the values are printed (not the possibilities) and to save ink, there "
 "is no grey background for the initial values.\n"
 "\n"
 msgstr ""
-"Seuls les chiffres seront exportés (pas les possibilités) et pour économiser "
-" de l'encre, le fond gris des chiffres initiaux est supprimé.\n"
+"Seuls les chiffres seront exportés (pas les possibilités) et pour "
+"économiser  de l'encre, le fond gris des chiffres initiaux est supprimé.\n"
 "\n"
 
-#: Modules/aide.py:77
+#: SudokuTkModules/aide.py:73
 msgid "Solving a puzzle\n"
 msgstr "Obtenir la solution d'un sudoku\n"
 
-#: Modules/aide.py:78
+#: SudokuTkModules/aide.py:74
 msgid "The "
 msgstr "La commande "
 
-#: Modules/aide.py:80
+#: SudokuTkModules/aide.py:75 SudokuTkModules/sudoku.py:119
+msgid "Solve"
+msgstr "Résoudre"
+
+#: SudokuTkModules/aide.py:76
 msgid ""
 " command in the menubar computes the solution of the current puzzle. First, "
 "it takes into account all the values in the grid, but if there is a mistake, "
@@ -387,7 +236,211 @@ msgid ""
 "right value will be displayed in red in the cells that contained a wrong "
 "value."
 msgstr ""
-" dans la barre de menu calcule la solution du sudoku en cours. Dans un premier temps, "
-"elle prend en compte tous les chiffres de la grille. Mais, s'il y a une erreur, la solution "
-"peut être calculer à partir des seuls chiffres initiaux. Dans ce cas le chiffre correct "
-" sera affiché en rouge dans les cases qui contenaient une erreur."
+" dans la barre de menu calcule la solution du sudoku en cours. Dans un "
+"premier temps, elle prend en compte tous les chiffres de la grille. Mais, "
+"s'il y a une erreur, la solution peut être calculer à partir des seuls "
+"chiffres initiaux. Dans ce cas le chiffre correct  sera affiché en rouge "
+"dans les cases qui contenaient une erreur."
+
+#: SudokuTkModules/constantes.py:133 SudokuTkModules/sudoku.py:233
+#: SudokuTkModules/sudoku.py:488 SudokuTkModules/sudoku.py:507
+#: SudokuTkModules/sudoku.py:575
+msgid "Information"
+msgstr "Information"
+
+#: SudokuTkModules/constantes.py:134
+msgid ""
+"This software has been developped using Tcl/Tk 8.6, but you are using an "
+"older version. Therefore there might be errors and the images will have a "
+"poor quality. Please consider upgrading your Tcl/Tk version."
+msgstr ""
+"Ce logiciel a été développé avec Tcl/Tk 8.6, mais vous utilisez une "
+"version plus ancienne. De ce fait, il peut y avoir des erreurs et les "
+"images seront de mauvaise qualité. Il est conseillé de mettre à jour Tcl/Tk."
+
+#: SudokuTkModules/constantes.py:135
+msgid "Do not show this message again."
+msgstr "Ne plus montrer ce message."
+
+#: SudokuTkModules/sudoku.py:99
+msgid "Easy"
+msgstr "Facile"
+
+#: SudokuTkModules/sudoku.py:100
+msgid "Medium"
+msgstr "Moyen"
+
+#: SudokuTkModules/sudoku.py:101
+msgid "Difficult"
+msgstr "Difficile"
+
+#: SudokuTkModules/sudoku.py:103
+msgid "Level"
+msgstr "Niveau"
+
+#: SudokuTkModules/sudoku.py:104
+msgid "Generate a puzzle"
+msgstr "Générer une grille"
+
+#: SudokuTkModules/sudoku.py:107
+msgid "Empty grid"
+msgstr "Grille vide"
+
+#: SudokuTkModules/sudoku.py:112 SudokuTkModules/sudoku.py:141
+msgid "Game"
+msgstr "Jeu"
+
+#: SudokuTkModules/sudoku.py:114
+msgid "Puzzle"
+msgstr "Grille"
+
+#: SudokuTkModules/sudoku.py:118
+msgid "Restart"
+msgstr "Recommencer"
+
+#: SudokuTkModules/sudoku.py:120
+msgid "Save"
+msgstr "Enregistrer"
+
+#: SudokuTkModules/sudoku.py:122 SudokuTkModules/sudoku.py:799
+msgid "Export"
+msgstr "Exporter"
+
+#: SudokuTkModules/sudoku.py:136 SudokuTkModules/sudoku.py:144
+msgid "Help"
+msgstr "Aide"
+
+#: SudokuTkModules/sudoku.py:137
+msgid "About"
+msgstr "À propos"
+
+#: SudokuTkModules/sudoku.py:139
+msgid "New"
+msgstr "Nouveau"
+
+#: SudokuTkModules/sudoku.py:140
+msgid "Open"
+msgstr "Ouvrir"
+
+#: SudokuTkModules/sudoku.py:142
+msgid "Language"
+msgstr "Langue"
+
+#: SudokuTkModules/sudoku.py:143 SudokuTkModules/sudoku.py:192
+msgid "Statistics"
+msgstr "Statistiques"
+
+#: SudokuTkModules/sudoku.py:195
+msgid "Best times"
+msgstr "Meilleurs temps"
+
+#: SudokuTkModules/sudoku.py:234
+msgid "The language setting will take effect after restarting the application"
+msgstr "Le changement de langue prendra effet au prochain démarrage."
+
+#: SudokuTkModules/sudoku.py:283 SudokuTkModules/sudoku.py:287
+#: SudokuTkModules/sudoku.py:288 SudokuTkModules/sudoku.py:540
+#: SudokuTkModules/sudoku.py:544 SudokuTkModules/sudoku.py:545
+#: SudokuTkModules/sudoku.py:559 SudokuTkModules/sudoku.py:563
+#: SudokuTkModules/sudoku.py:565 SudokuTkModules/sudoku.py:586
+#: SudokuTkModules/sudoku.py:590 SudokuTkModules/sudoku.py:591
+#: SudokuTkModules/sudoku.py:643 SudokuTkModules/sudoku.py:647
+#: SudokuTkModules/sudoku.py:648 SudokuTkModules/sudoku.py:721
+#: SudokuTkModules/sudoku.py:722 SudokuTkModules/sudoku.py:756
+#: SudokuTkModules/sudoku.py:757 SudokuTkModules/sudoku.py:771
+#: SudokuTkModules/sudoku.py:775 SudokuTkModules/sudoku.py:776
+msgid "Yes"
+msgstr "Oui"
+
+#: SudokuTkModules/sudoku.py:285 SudokuTkModules/sudoku.py:542
+#: SudokuTkModules/sudoku.py:561 SudokuTkModules/sudoku.py:588
+#: SudokuTkModules/sudoku.py:645 SudokuTkModules/sudoku.py:719
+#: SudokuTkModules/sudoku.py:773
+msgid "Confirmation"
+msgstr "Confirmation"
+
+#: SudokuTkModules/sudoku.py:286 SudokuTkModules/sudoku.py:543
+#: SudokuTkModules/sudoku.py:562 SudokuTkModules/sudoku.py:646
+#: SudokuTkModules/sudoku.py:774
+msgid "Do you want to abandon the current puzzle?"
+msgstr "Voulez-vous abandonner le sudoku en cours ?"
+
+#: SudokuTkModules/sudoku.py:287 SudokuTkModules/sudoku.py:544
+#: SudokuTkModules/sudoku.py:563 SudokuTkModules/sudoku.py:590
+#: SudokuTkModules/sudoku.py:647 SudokuTkModules/sudoku.py:721
+#: SudokuTkModules/sudoku.py:756 SudokuTkModules/sudoku.py:775
+msgid "No"
+msgstr "Non"
+
+#: SudokuTkModules/sudoku.py:489
+#, python-format
+msgid "You solved the puzzle in %(min)i minutes and %(sec)i secondes."
+msgstr "Vous avez résolu ce sudoku en %(min)i minutes et %(sec)i secondes."
+
+#: SudokuTkModules/sudoku.py:507
+msgid "There is a mistake."
+msgstr "Il y a une erreur."
+
+#: SudokuTkModules/sudoku.py:568 SudokuTkModules/sudoku.py:569
+#: SudokuTkModules/sudoku.py:577
+msgid "Retry"
+msgstr "Ré-essayer"
+
+#: SudokuTkModules/sudoku.py:576
+#, python-format
+msgid ""
+"The generated puzzle contains %(nb)i numbers and its level is %(difficulty)s."
+msgstr ""
+"Le sudoku généré contient %(nb)i chiffres et est de niveau %(difficulty)s."
+
+#: SudokuTkModules/sudoku.py:577 SudokuTkModules/sudoku.py:578
+msgid "Play"
+msgstr "Jouer"
+
+#: SudokuTkModules/sudoku.py:589
+msgid "Do you really want to start again?"
+msgstr "Voulez-vous vraiment recommencer ?"
+
+#: SudokuTkModules/sudoku.py:675 SudokuTkModules/sudoku.py:710
+#: SudokuTkModules/sudoku.py:713 SudokuTkModules/sudoku.py:754
+#: SudokuTkModules/sudoku.py:760 SudokuTkModules/sudoku.py:763
+#: SudokuTkModules/sudoku.py:788 SudokuTkModules/sudoku.py:791
+msgid "Error"
+msgstr "Erreur"
+
+#: SudokuTkModules/sudoku.py:676
+msgid "This file is not a valid sudoku file."
+msgstr "Ce fichier n'est pas un fichier de sudoku valide."
+
+#: SudokuTkModules/sudoku.py:710 SudokuTkModules/sudoku.py:760
+msgid "The grid is wrong. It cannot be solved."
+msgstr "Il y a une erreur dans la grille, elle ne peut pas être résolue."
+
+#: SudokuTkModules/sudoku.py:713 SudokuTkModules/sudoku.py:763
+msgid "Resolution failed."
+msgstr "La résolution a échoué."
+
+#: SudokuTkModules/sudoku.py:720
+msgid "Do you really want to get the solution?"
+msgstr "Voulez-vous vraiment la solution ?"
+
+#: SudokuTkModules/sudoku.py:755
+msgid ""
+"The grid is wrong. It cannot be solved. Do you want the solution of the "
+"initial grid?"
+msgstr ""
+"Il y a une erreur dans cette grille. Elle ne peut pas être résolue. Voulez-"
+"vous la solution de la grille initiale ?"
+
+#: SudokuTkModules/sudoku.py:788
+msgid "This is not a 9x9 sudoku grid."
+msgstr "Ce n'est pas une grille de sudoku 9x9."
+
+#: SudokuTkModules/sudoku.py:792
+msgid ""
+"The file does not have the right format. It should be a .txt file with cell "
+"values separated by one space. 0 means empty cell."
+msgstr ""
+"Ce fichier n'a pas le bon format. Ce devrait être un fichier .txt contenant "
+"les valeurs des cases séparées d'un espace, 0 pour une case vide."
+
