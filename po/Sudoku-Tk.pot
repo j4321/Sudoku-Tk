@@ -1,0 +1,347 @@
+# Sudoku-Tk - Sudoku games and puzzle solver
+# Copyright (C) 2015 Juliette Monsel
+# This file is distributed under the same license as the Sudoku-Tk package.
+# Juliette Monsel <j_4321@sfr.fr>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: j_4321@sfr.fr\n"
+"POT-Creation-Date: 2016-04-11 23:00+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Modules/sudoku.py:90
+msgid "Generate a puzzle"
+msgstr ""
+
+#: Modules/sudoku.py:92
+msgid "Empty grid"
+msgstr ""
+
+#: Modules/sudoku.py:96
+msgid "Game"
+msgstr ""
+
+#: Modules/sudoku.py:98
+msgid "Puzzle"
+msgstr ""
+
+#: Modules/sudoku.py:102 Modules/sudoku.py:111
+msgid "Help"
+msgstr ""
+
+#: Modules/sudoku.py:103
+msgid "About"
+msgstr ""
+
+#: Modules/sudoku.py:105
+msgid "New"
+msgstr ""
+
+#: Modules/sudoku.py:106
+msgid "Open"
+msgstr ""
+
+#: Modules/sudoku.py:107
+msgid "Save"
+msgstr ""
+
+#: Modules/sudoku.py:108
+msgid "Restart"
+msgstr ""
+
+#: Modules/sudoku.py:109 Modules/aide.py:79
+msgid "Solve"
+msgstr ""
+
+#: Modules/sudoku.py:110 Modules/sudoku.py:670
+msgid "Export"
+msgstr ""
+
+#: Modules/sudoku.py:185 Modules/sudoku.py:189 Modules/sudoku.py:191
+#: Modules/sudoku.py:424 Modules/sudoku.py:428 Modules/sudoku.py:429
+#: Modules/sudoku.py:442 Modules/sudoku.py:446 Modules/sudoku.py:448
+#: Modules/sudoku.py:469 Modules/sudoku.py:470 Modules/sudoku.py:521
+#: Modules/sudoku.py:525 Modules/sudoku.py:526 Modules/sudoku.py:595
+#: Modules/sudoku.py:596 Modules/sudoku.py:629 Modules/sudoku.py:630
+#: Modules/sudoku.py:644 Modules/sudoku.py:648 Modules/sudoku.py:649
+msgid "Yes"
+msgstr ""
+
+#: Modules/sudoku.py:187 Modules/sudoku.py:426 Modules/sudoku.py:444
+#: Modules/sudoku.py:467 Modules/sudoku.py:523 Modules/sudoku.py:593
+#: Modules/sudoku.py:646
+msgid "Confirmation"
+msgstr ""
+
+#: Modules/sudoku.py:188 Modules/sudoku.py:427 Modules/sudoku.py:445
+#: Modules/sudoku.py:524 Modules/sudoku.py:647
+msgid "Do you want to abandon the current puzzle?"
+msgstr ""
+
+#: Modules/sudoku.py:189 Modules/sudoku.py:428 Modules/sudoku.py:446
+#: Modules/sudoku.py:469 Modules/sudoku.py:525 Modules/sudoku.py:595
+#: Modules/sudoku.py:629 Modules/sudoku.py:648
+msgid "No"
+msgstr ""
+
+#: Modules/sudoku.py:383 Modules/sudoku.py:391 Modules/sudoku.py:458
+msgid "Information"
+msgstr ""
+
+#: Modules/sudoku.py:384
+#, python-format
+msgid "You solved the puzzle in %(min)i minutes and %(sec)i secondes."
+msgstr ""
+
+#: Modules/sudoku.py:391
+msgid "There is a mistake."
+msgstr ""
+
+#: Modules/sudoku.py:451 Modules/sudoku.py:452 Modules/sudoku.py:460
+msgid "Retry"
+msgstr ""
+
+#: Modules/sudoku.py:454
+msgid "easy"
+msgstr ""
+
+#: Modules/sudoku.py:454
+msgid "medium"
+msgstr ""
+
+#: Modules/sudoku.py:454
+msgid "difficult"
+msgstr ""
+
+#: Modules/sudoku.py:459
+#, python-format
+msgid ""
+"The generated puzzle contains %(nb)i numbers and its level is %(difficulty)s."
+msgstr ""
+
+#: Modules/sudoku.py:460 Modules/sudoku.py:461
+msgid "Play"
+msgstr ""
+
+#: Modules/sudoku.py:468
+msgid "Do you really want to start again?"
+msgstr ""
+
+#: Modules/sudoku.py:552 Modules/sudoku.py:586 Modules/sudoku.py:589
+#: Modules/sudoku.py:627 Modules/sudoku.py:633 Modules/sudoku.py:636
+#: Modules/sudoku.py:659 Modules/sudoku.py:662
+msgid "Error"
+msgstr ""
+
+#: Modules/sudoku.py:553
+msgid "This file is not a valid sudoku file."
+msgstr ""
+
+#: Modules/sudoku.py:586 Modules/sudoku.py:633
+msgid "The grid is wrong. It cannot be solved."
+msgstr ""
+
+#: Modules/sudoku.py:589 Modules/sudoku.py:636
+msgid "Resolution failed."
+msgstr ""
+
+#: Modules/sudoku.py:594
+msgid "Do you really want to get the solution?"
+msgstr ""
+
+#: Modules/sudoku.py:628
+msgid ""
+"The grid is wrong. It cannot be solved. Do you want the solution of the "
+"initial grid?"
+msgstr ""
+
+#: Modules/sudoku.py:659
+msgid "This is not a 9x9 sudoku grid."
+msgstr ""
+
+#: Modules/sudoku.py:663
+msgid ""
+"The file does not have the right format. It should be a .txt file with cell "
+"values separated by one space. 0 means empty cell."
+msgstr ""
+
+#: Modules/about.py:38
+msgid "About Sudoku-Tk"
+msgstr ""
+
+#: Modules/about.py:53
+#, python-format
+msgid "Sudoku-Tk %(version)s"
+msgstr ""
+
+#: Modules/about.py:55
+msgid "Sudoku games and puzzle solver"
+msgstr ""
+
+#: Modules/about.py:58 Modules/about.py:82
+msgid "License"
+msgstr ""
+
+#: Modules/about.py:59 Modules/about.py:114
+msgid "Close"
+msgstr ""
+
+#: Modules/about.py:97
+msgid ""
+"Sudoku-Tk is free software: you can redistribute it and/or modify it under "
+"the terms of the GNU General Public License as published by the Free "
+"Software Foundation, either version 3 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+msgstr ""
+
+#: Modules/about.py:99
+msgid ""
+"Sudoku-Tk is distributed in the hope that it will be useful, but WITHOUT ANY "
+"WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
+"FOR A PARTICULAR PURPOSE. See the GNU General Public License for more "
+"details.\n"
+"\n"
+msgstr ""
+
+#: Modules/about.py:101
+msgid ""
+"You should have received a copy of the GNU General Public License along with "
+"this program. If not, see http://www.gnu.org/licenses/."
+msgstr ""
+
+#: Modules/aide.py:37
+msgid "Sudoku-Tk Help"
+msgstr ""
+
+#: Modules/aide.py:51
+msgid "Sudoku-Tk Help\n"
+msgstr ""
+
+#: Modules/aide.py:52
+msgid ""
+"Sudoku-Tk is a software written in python and using the Tcl/Tk graphical "
+"libraries. It enables you to play sudoku and can also solve sudoku puzzles."
+msgstr ""
+
+#: Modules/aide.py:53
+msgid ""
+" The puzzles can be loaded from files, entered by the user or generated by "
+"the software. I apologize for the slowness of the generation algorithm. It "
+"generates minimal puzzles, which means that if you remove any value from the "
+"puzzle it will not have a unique solution any more. See "
+msgstr ""
+
+#: Modules/aide.py:54 Modules/aide.py:84
+msgid "https://en.wikipedia.org/wiki/Sudoku"
+msgstr ""
+
+#: Modules/aide.py:55
+msgid ""
+" for more information on sudoku.\n"
+"\n"
+msgstr ""
+
+#: Modules/aide.py:57
+msgid "Starting a game\n"
+msgstr ""
+
+#: Modules/aide.py:58
+msgid "To start a game go to "
+msgstr ""
+
+#: Modules/aide.py:59
+msgid "New -> Generate a puzzle"
+msgstr ""
+
+#: Modules/aide.py:60
+msgid ""
+" or open an existing game / puzzle. You can also start from an empty grid."
+msgstr ""
+
+#: Modules/aide.py:61
+msgid "You can find puzzles files in the "
+msgstr ""
+
+#: Modules/aide.py:63
+msgid ""
+" folder. The levels given are only indicative.\n"
+"\n"
+msgstr ""
+
+#: Modules/aide.py:65
+msgid "Filling the grid\n"
+msgstr ""
+
+#: Modules/aide.py:66
+msgid "\t• Left mouse click in the cell to show the keypad to enter a value.\n"
+msgstr ""
+
+#: Modules/aide.py:67
+msgid ""
+"\t• Right mouse click in the cell to show the keypad to enter a "
+"possibility.\n"
+msgstr ""
+
+#: Modules/aide.py:68
+msgid "If the keypad does not appear, check whether the game is on pause.\n"
+msgstr ""
+
+#: Modules/aide.py:69
+msgid ""
+"The game can be saved at any time to continue it later. To open a saved "
+"game, go to "
+msgstr ""
+
+#: Modules/aide.py:70
+msgid "Open -> Game"
+msgstr ""
+
+#: Modules/aide.py:71
+msgid ""
+" and select the desired .sudoku file.\n"
+"\n"
+msgstr ""
+
+#: Modules/aide.py:73
+msgid "Printing a puzzle\n"
+msgstr ""
+
+#: Modules/aide.py:74
+msgid ""
+"You cannot print directly a puzzle but you can export it as .png or .jpg in "
+"order to put several puzzles in a document editor of your choice and print "
+"them."
+msgstr ""
+
+#: Modules/aide.py:75
+msgid ""
+"Only the values are printed (not the possibilities) and to save ink, there "
+"is no grey background for the initial values.\n"
+"\n"
+msgstr ""
+
+#: Modules/aide.py:77
+msgid "Solving a puzzle\n"
+msgstr ""
+
+#: Modules/aide.py:78
+msgid "The "
+msgstr ""
+
+#: Modules/aide.py:80
+msgid ""
+" command in the menubar computes the solution of the current puzzle. First, "
+"it takes into account all the values in the grid, but if there is a mistake, "
+"the solution can be computed from the initial values only. In this case, the "
+"right value will be displayed in red in the cells that contained a wrong "
+"value."
+msgstr ""

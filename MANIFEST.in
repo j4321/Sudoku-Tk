@@ -1,0 +1,4 @@
+include sudoku-tk.py README.txt COPYING.txt
+recursive-include SudokuTkModules/Files *
+recursive-include Puzzles *
+recursive-include po *
