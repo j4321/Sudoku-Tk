@@ -1,0 +1,19 @@
+Sudoku-Tk - Sudoku games and puzzle solver
+==========================================
+Copyright 2016 Juliette Monsel <j_4321@protonmail.com>
+
+
+Version 1.1
+-----------
+
+* Improved keypad management (no longer need to clic twice to change location)
+* Added best times statistics
+* Added `New Game -> Level` to start a game of given level
+* Bug fix: timer value restored when opening a saved game
+* Added language selection
+
+
+Version 1.0
+-----------
+
+* Initial version

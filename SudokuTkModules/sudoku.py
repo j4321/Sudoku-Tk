@@ -181,6 +181,13 @@ class Sudoku(Tk):
         self.mainloop()
 
     def show_stat(self):
+        """ show best times """
+        def reset():
+            """ reset best times """
+            for level in ["easy", "medium", "difficult"]:
+                CONFIG.set("Statistics", level, "")
+            top.destroy()
+
         if self.chrono_on:
             self.play_pause()
         top = Toplevel(self)
@@ -207,25 +214,26 @@ class Sudoku(Tk):
                       font="Sans 10").grid(row=i + 1, column=1,
                                            sticky="w", pady=4,
                                            padx=(4,20))
-        Button(top, text=_("Close"), command=top.destroy).grid(row=4, columnspan=2, padx=20, pady=10)
+        Button(top, text=_("Close"), command=top.destroy).grid(row=4, column=0, padx=(10,4), pady=10)
+        Button(top, text=_("Reset"), command=reset).grid(row=4, column=1, padx=(4, 10), pady=10)
 
     def new_easy(self):
-        self.level = "easy"
         nb = np.random.randint(1, 101)
         fichier = join(PUZZLES_LOCATION, "easy", "puzzle_easy_%i.txt" % nb)
         self.import_grille(fichier)
+        self.level = "easy"
 
     def new_medium(self):
-        self.level = "medium"
         nb = np.random.randint(1, 101)
         fichier = join(PUZZLES_LOCATION, "medium", "puzzle_medium_%i.txt" % nb)
         self.import_grille(fichier)
+        self.level = "medium"
 
     def new_difficult(self):
-        self.level = "difficult"
         nb = np.random.randint(1, 101)
         fichier = join(PUZZLES_LOCATION, "difficult", "puzzle_difficult_%i.txt" % nb)
         self.import_grille(fichier)
+        self.level = "difficult"
 
     def translate(self):
         """ changement de la langue de l'interface """
@@ -487,14 +495,16 @@ class Sudoku(Tk):
                 one_button_box(self, _("Information"),
                                _("You solved the puzzle in %(min)i minutes and %(sec)i secondes.") % {"min": self.chrono[0], "sec": self.chrono[1]},
                                image=self.im_info)
-                if level != "unknown":
+                if self.level != "unknown":
                     best = CONFIG.get("Statistics", self.level)
+                    current = self.chrono[0]*60 + self.chrono[1]
                     if best:
                         best = int(best)
-                        current = self.chrono[0]*60 + self.chrono[1]
+                        print(best, current)
                         if current < best:
                             CONFIG.set("Statistics", self.level, str(current))
                     else:
+                        print(current)
                         CONFIG.set("Statistics", self.level, str(current))
                 self.b_pause.configure(state="disabled")
                 self.debut = False
@@ -737,6 +747,7 @@ class Sudoku(Tk):
                             self.blocs[i][j].edit_chiffre(sol[i,j])
                             self.blocs[i][j].affiche_solution()
                 self.restart()
+                self.b_restart.configure(state="normal")
                 self.nb_cases_remplies = 81
             elif sol[1]:
                 i,j = sol[1]
