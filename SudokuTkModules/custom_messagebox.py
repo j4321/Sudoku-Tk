@@ -21,8 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 Custom tkinter messageboxes
 """
 
-from tkinter import Toplevel, BooleanVar
-from tkinter.ttk import Label, Button, Checkbutton
+from tkinter import Toplevel, BooleanVar, Tk
+from tkinter.ttk import Label, Button, Checkbutton, Style
 
 class OneButtonBox(Toplevel):
     """ Messagebox with only one button """
@@ -39,6 +39,7 @@ class OneButtonBox(Toplevel):
         """
         Toplevel.__init__(self, parent, **options)
         self.transient(parent)
+        self.resizable(False, False)
         self.title(title)
         if image:
             Label(self, text=message, wraplength=335,
@@ -52,12 +53,12 @@ class OneButtonBox(Toplevel):
         b.focus_set()
         self.wait_window(self)
 
-class OBCheckbutton(Toplevel):
+class OBCheckbutton(Tk):
     """ Messagebox with only one button and a checkbox below the button
         for instance to add a 'Do not show this again' option """
 
-    def __init__(self, parent=None, title="", message="", button="Ok", image=None,
-                 checkmessage="", **options):
+    def __init__(self, title="", message="", button="Ok", image=None,
+                 checkmessage="", style="clam", **options):
         """
             Create a messagebox with one button and a checkbox below the button:
                 parent: parent of the toplevel window
@@ -68,20 +69,22 @@ class OBCheckbutton(Toplevel):
                 checkmessage: message displayed next to the checkbox
                 **options: other options to pass to the Toplevel.__init__ method
         """
-        Toplevel.__init__(self, parent, **options)
-        self.transient(parent)
+        Tk.__init__(self, **options)
+        self.resizable(False, False)
         self.title(title)
+        s = Style(self)
+        s.theme_use(style)
         if image:
             Label(self, text=message, wraplength=335,
-                  font="Sans 11", compound="left", image=image).grid(row=0, padx=10, pady=10)
+                  font="Sans 11", compound="left", image=image).grid(row=0, padx=10, pady=(10,0))
         else:
             Label(self, text=message, wraplength=335,
-                  font="Sans 11").grid(row=0, padx=10,pady=10)
+                  font="Sans 11").grid(row=0, padx=10, pady=(10,0))
         b = Button(self, text=button, command=self.destroy)
-        b.grid(row=1, padx=10,pady=10)
+        b.grid(row=2, padx=10, pady=10)
         self.var = BooleanVar(self)
         c = Checkbutton(self, text=checkmessage, variable=self.var)
-        c.grid(row=2, padx=10, pady=10)
+        c.grid(row=1, padx=10, pady=0, sticky="e")
         self.grab_set()
         b.focus_set()
         self.wait_window(self)
@@ -92,7 +95,7 @@ class OBCheckbutton(Toplevel):
 class TwoButtonBox(Toplevel):
     """ Messagebox with two buttons """
 
-    def __init__(self, parent=None, title="", message="", button1="Yes", button2="No",
+    def __init__(self, parent, title="", message="", button1="Yes", button2="No",
                  image=None, **options):
         """
             Create a messagebox with two buttons:
@@ -106,6 +109,7 @@ class TwoButtonBox(Toplevel):
 
         Toplevel.__init__(self, parent, **options)
         self.transient(parent)
+        self.resizable(False, False)
         self.title(title)
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
@@ -141,20 +145,21 @@ class TwoButtonBox(Toplevel):
     def get_rep(self):
         return self.rep
 
-def one_button_box(parent=None, title="", message="", button="Ok", image=None,
+def one_button_box(parent, title="", message="", button="Ok", image=None,
                    **options):
     """ Open a OneButtonBox and return "ok" when closed. """
     OneButtonBox(parent, title, message, button, image, **options)
     return "ok"
 
-def ob_checkbutton(parent=None, title="", message="", button="Ok", image=None,
-                   checkmessage="", **options):
+def ob_checkbutton(title="", message="", button="Ok", image=None,
+                   checkmessage="", style="clam", **options):
     """ Open a OBCheckbutton and return the value of the checkbutton when closed. """
-    ob = OBCheckbutton(parent, title, message, button, image, checkmessage, **options)
+    ob = OBCheckbutton(title, message, button, image, checkmessage, style, **options)
     return ob.get_check()
 
-def two_button_box(parent=None, title="", message="", button1="Yes", button2="No",
+def two_button_box(parent, title="", message="", button1="Yes", button2="No",
                    image=None, **options):
     """ Open a TwoButtonBox and return the text of the button chosen by the user"""
     tbb = TwoButtonBox(parent, title, message, button1, button2, image, **options)
     return tbb.get_rep()
+

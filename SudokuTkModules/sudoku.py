@@ -178,8 +178,6 @@ class Sudoku(Tk):
         self.bind("<Control-g>", lambda e: self.genere_grille())
         self.bind("<FocusOut>", self.focus_out)
 
-        self.mainloop()
-
     def show_stat(self):
         """ show best times """
         def reset():

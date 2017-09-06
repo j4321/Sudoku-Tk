@@ -72,7 +72,7 @@ class Aide(Toplevel):
 
         txt.insert("end", _("Solving a puzzle\n"), ("titre2"))
         txt.insert("end", _("The "))
-        txt.insert("end", _("Solve"), ("it"))
+        txt.insert("end", _("Game -> Solve"), ("it"))
         txt.insert("end", _(" command in the menubar computes the solution of the current puzzle. First, it takes into account all the values in the grid, but if there is a mistake, the solution can be computed from the initial values only. In this case, the right value will be displayed in red in the cells that contained a wrong value."))
 
         txt.tag_configure("link", foreground="#0000ff", underline=1)

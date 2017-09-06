@@ -35,7 +35,7 @@ msgid "License"
 msgstr ""
 
 #: SudokuTkModules/about.py:50 SudokuTkModules/about.py:99
-#: SudokuTkModules/sudoku.py:211
+#: SudokuTkModules/sudoku.py:217
 msgid "Close"
 msgstr ""
 
@@ -182,8 +182,8 @@ msgstr ""
 msgid "The "
 msgstr ""
 
-#: SudokuTkModules/aide.py:75 SudokuTkModules/sudoku.py:119
-msgid "Solve"
+#: SudokuTkModules/aide.py:75
+msgid "Game -> Solve"
 msgstr ""
 
 #: SudokuTkModules/aide.py:76
@@ -195,17 +195,17 @@ msgid ""
 "value."
 msgstr ""
 
-#: SudokuTkModules/constantes.py:133 SudokuTkModules/sudoku.py:233
-#: SudokuTkModules/sudoku.py:488 SudokuTkModules/sudoku.py:507
-#: SudokuTkModules/sudoku.py:575
+#: SudokuTkModules/constantes.py:133 SudokuTkModules/sudoku.py:240
+#: SudokuTkModules/sudoku.py:495 SudokuTkModules/sudoku.py:516
+#: SudokuTkModules/sudoku.py:584
 msgid "Information"
 msgstr ""
 
 #: SudokuTkModules/constantes.py:134
 msgid ""
 "This software has been developped using Tcl/Tk 8.6, but you are using an "
-"older version. Therefore there might be errors and the images will have a "
-"poor quality. Please consider upgrading your Tcl/Tk version."
+"older version. Therefore there might be errors. Please consider upgrading "
+"your Tcl/Tk version."
 msgstr ""
 
 #: SudokuTkModules/constantes.py:135
@@ -248,11 +248,15 @@ msgstr ""
 msgid "Restart"
 msgstr ""
 
+#: SudokuTkModules/sudoku.py:119
+msgid "Solve"
+msgstr ""
+
 #: SudokuTkModules/sudoku.py:120
 msgid "Save"
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:122 SudokuTkModules/sudoku.py:799
+#: SudokuTkModules/sudoku.py:122 SudokuTkModules/sudoku.py:809
 msgid "Export"
 msgstr ""
 
@@ -276,114 +280,118 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:143 SudokuTkModules/sudoku.py:192
+#: SudokuTkModules/sudoku.py:143 SudokuTkModules/sudoku.py:198
 msgid "Statistics"
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:195
+#: SudokuTkModules/sudoku.py:201
 msgid "Best times"
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:234
+#: SudokuTkModules/sudoku.py:218
+msgid "Reset"
+msgstr ""
+
+#: SudokuTkModules/sudoku.py:241
 msgid "The language setting will take effect after restarting the application"
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:283 SudokuTkModules/sudoku.py:287
-#: SudokuTkModules/sudoku.py:288 SudokuTkModules/sudoku.py:540
-#: SudokuTkModules/sudoku.py:544 SudokuTkModules/sudoku.py:545
-#: SudokuTkModules/sudoku.py:559 SudokuTkModules/sudoku.py:563
-#: SudokuTkModules/sudoku.py:565 SudokuTkModules/sudoku.py:586
-#: SudokuTkModules/sudoku.py:590 SudokuTkModules/sudoku.py:591
-#: SudokuTkModules/sudoku.py:643 SudokuTkModules/sudoku.py:647
-#: SudokuTkModules/sudoku.py:648 SudokuTkModules/sudoku.py:721
-#: SudokuTkModules/sudoku.py:722 SudokuTkModules/sudoku.py:756
-#: SudokuTkModules/sudoku.py:757 SudokuTkModules/sudoku.py:771
-#: SudokuTkModules/sudoku.py:775 SudokuTkModules/sudoku.py:776
+#: SudokuTkModules/sudoku.py:290 SudokuTkModules/sudoku.py:294
+#: SudokuTkModules/sudoku.py:295 SudokuTkModules/sudoku.py:549
+#: SudokuTkModules/sudoku.py:553 SudokuTkModules/sudoku.py:554
+#: SudokuTkModules/sudoku.py:568 SudokuTkModules/sudoku.py:572
+#: SudokuTkModules/sudoku.py:574 SudokuTkModules/sudoku.py:595
+#: SudokuTkModules/sudoku.py:599 SudokuTkModules/sudoku.py:600
+#: SudokuTkModules/sudoku.py:652 SudokuTkModules/sudoku.py:656
+#: SudokuTkModules/sudoku.py:657 SudokuTkModules/sudoku.py:730
+#: SudokuTkModules/sudoku.py:731 SudokuTkModules/sudoku.py:766
+#: SudokuTkModules/sudoku.py:767 SudokuTkModules/sudoku.py:781
+#: SudokuTkModules/sudoku.py:785 SudokuTkModules/sudoku.py:786
 msgid "Yes"
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:285 SudokuTkModules/sudoku.py:542
-#: SudokuTkModules/sudoku.py:561 SudokuTkModules/sudoku.py:588
-#: SudokuTkModules/sudoku.py:645 SudokuTkModules/sudoku.py:719
-#: SudokuTkModules/sudoku.py:773
+#: SudokuTkModules/sudoku.py:292 SudokuTkModules/sudoku.py:551
+#: SudokuTkModules/sudoku.py:570 SudokuTkModules/sudoku.py:597
+#: SudokuTkModules/sudoku.py:654 SudokuTkModules/sudoku.py:728
+#: SudokuTkModules/sudoku.py:783
 msgid "Confirmation"
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:286 SudokuTkModules/sudoku.py:543
-#: SudokuTkModules/sudoku.py:562 SudokuTkModules/sudoku.py:646
-#: SudokuTkModules/sudoku.py:774
+#: SudokuTkModules/sudoku.py:293 SudokuTkModules/sudoku.py:552
+#: SudokuTkModules/sudoku.py:571 SudokuTkModules/sudoku.py:655
+#: SudokuTkModules/sudoku.py:784
 msgid "Do you want to abandon the current puzzle?"
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:287 SudokuTkModules/sudoku.py:544
-#: SudokuTkModules/sudoku.py:563 SudokuTkModules/sudoku.py:590
-#: SudokuTkModules/sudoku.py:647 SudokuTkModules/sudoku.py:721
-#: SudokuTkModules/sudoku.py:756 SudokuTkModules/sudoku.py:775
+#: SudokuTkModules/sudoku.py:294 SudokuTkModules/sudoku.py:553
+#: SudokuTkModules/sudoku.py:572 SudokuTkModules/sudoku.py:599
+#: SudokuTkModules/sudoku.py:656 SudokuTkModules/sudoku.py:730
+#: SudokuTkModules/sudoku.py:766 SudokuTkModules/sudoku.py:785
 msgid "No"
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:489
+#: SudokuTkModules/sudoku.py:496
 #, python-format
 msgid "You solved the puzzle in %(min)i minutes and %(sec)i secondes."
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:507
+#: SudokuTkModules/sudoku.py:516
 msgid "There is a mistake."
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:568 SudokuTkModules/sudoku.py:569
-#: SudokuTkModules/sudoku.py:577
+#: SudokuTkModules/sudoku.py:577 SudokuTkModules/sudoku.py:578
+#: SudokuTkModules/sudoku.py:586
 msgid "Retry"
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:576
+#: SudokuTkModules/sudoku.py:585
 #, python-format
 msgid ""
 "The generated puzzle contains %(nb)i numbers and its level is %(difficulty)s."
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:577 SudokuTkModules/sudoku.py:578
+#: SudokuTkModules/sudoku.py:586 SudokuTkModules/sudoku.py:587
 msgid "Play"
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:589
+#: SudokuTkModules/sudoku.py:598
 msgid "Do you really want to start again?"
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:675 SudokuTkModules/sudoku.py:710
-#: SudokuTkModules/sudoku.py:713 SudokuTkModules/sudoku.py:754
-#: SudokuTkModules/sudoku.py:760 SudokuTkModules/sudoku.py:763
-#: SudokuTkModules/sudoku.py:788 SudokuTkModules/sudoku.py:791
+#: SudokuTkModules/sudoku.py:684 SudokuTkModules/sudoku.py:719
+#: SudokuTkModules/sudoku.py:722 SudokuTkModules/sudoku.py:764
+#: SudokuTkModules/sudoku.py:770 SudokuTkModules/sudoku.py:773
+#: SudokuTkModules/sudoku.py:798 SudokuTkModules/sudoku.py:801
 msgid "Error"
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:676
+#: SudokuTkModules/sudoku.py:685
 msgid "This file is not a valid sudoku file."
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:710 SudokuTkModules/sudoku.py:760
+#: SudokuTkModules/sudoku.py:719 SudokuTkModules/sudoku.py:770
 msgid "The grid is wrong. It cannot be solved."
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:713 SudokuTkModules/sudoku.py:763
+#: SudokuTkModules/sudoku.py:722 SudokuTkModules/sudoku.py:773
 msgid "Resolution failed."
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:720
+#: SudokuTkModules/sudoku.py:729
 msgid "Do you really want to get the solution?"
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:755
+#: SudokuTkModules/sudoku.py:765
 msgid ""
 "The grid is wrong. It cannot be solved. Do you want the solution of the "
 "initial grid?"
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:788
+#: SudokuTkModules/sudoku.py:798
 msgid "This is not a 9x9 sudoku grid."
 msgstr ""
 
-#: SudokuTkModules/sudoku.py:792
+#: SudokuTkModules/sudoku.py:802
 msgid ""
 "The file does not have the right format. It should be a .txt file with cell "
 "values separated by one space. 0 means empty cell."

@@ -7,8 +7,8 @@ from sys import platform
 files = ["puzzles/easy/*", "puzzles/medium/*", "puzzles/difficult/*",
          "images/*","locale/en_US/LC_MESSAGES/*","locale/fr_FR/LC_MESSAGES/*"]
 if platform == "linux":
-    data_files = [("share/applications", ["sudoku-tk.desktop"]),
-                  ("share/pixmaps", ["sudoku-tk.png"])]
+    data_files = [("/usr/share/applications", ["sudoku-tk.desktop"]),
+                  ("/usr/share/pixmaps", ["sudoku-tk.png"])]
 else:
     data_files = []
 

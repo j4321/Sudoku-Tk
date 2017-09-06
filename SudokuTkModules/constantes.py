@@ -127,15 +127,15 @@ else:
 
 if TclVersion < 8.6:
     # then tkinter cannot import PNG files directly, we need to use PIL
-    from PIL import ImageTk
+    from PIL import ImageTk, Image
     from SudokuTkModules.custom_messagebox import ob_checkbutton
-    if CONFIG.has_option("General", "old_tcl_warning") and CONFIG.getboolean("General", "old_tcl_warning"):
+    if not CONFIG.has_option("General", "old_tcl_warning") or CONFIG.getboolean("General", "old_tcl_warning"):
         ans = ob_checkbutton(title=_("Information"),
-                             message=_("This software has been developped using Tcl/Tk 8.6, but you are using an older version. Therefore there might be errors and the images will have a poor quality. Please consider upgrading your Tcl/Tk version."),
+                             message=_("This software has been developped using Tcl/Tk 8.6, but you are using an older version. Therefore there might be errors. Please consider upgrading your Tcl/Tk version."),
                              checkmessage=_("Do not show this message again."))
     CONFIG.set("General", "old_tcl_warning", str(not ans))
     def open_image(file, master=None):
-        return ImageTk.PhotoImage(file=file, master=master)
+        return ImageTk.PhotoImage(Image.open(file))
 else:
     # no need of ImageTk dependency
     from tkinter import PhotoImage

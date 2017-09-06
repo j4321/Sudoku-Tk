@@ -23,4 +23,5 @@ Main
 
 from SudokuTkModules.sudoku import Sudoku
 
-Sudoku()
+game = Sudoku()
+game.mainloop()
