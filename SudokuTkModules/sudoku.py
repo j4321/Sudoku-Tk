@@ -75,32 +75,32 @@ class Sudoku(Tk):
                             'bordercolor': [('focus', focusbordercolor)],
                             'foreground': [('disabled', disabledfg)]}
 
-        self.style = Style(self)
-        self.style.theme_use(cst.STYLE)
-        self.style.configure('TFrame', background=bg)
-        self.style.configure('TLabel', background=bg)
-        self.style.configure('TScrollbar', gripcount=0, troughcolor=pressedbg,
+        style = Style(self)
+        style.theme_use(cst.STYLE)
+        style.configure('TFrame', background=bg)
+        style.configure('TLabel', background=bg)
+        style.configure('TScrollbar', gripcount=0, troughcolor=pressedbg,
                              **button_style_config)
-        self.style.map('TScrollbar', **button_style_map)
-        self.style.configure('TButton', **button_style_config)
-        self.style.map('TButton', **button_style_map)
-        self.style.configure('TCheckutton', **button_style_config)
-        self.style.map('TCheckutton', **button_style_map)
+        style.map('TScrollbar', **button_style_map)
+        style.configure('TButton', **button_style_config)
+        style.map('TButton', **button_style_map)
+        style.configure('TCheckutton', **button_style_config)
+        style.map('TCheckutton', **button_style_map)
         self.option_add('*Menu.background', bg)
-
-        self.style.configure("bg.TFrame", background="grey")
-        self.style.configure("case.TFrame", background="white")
-        self.style.configure("case.TLabel", background="white", foreground="black")
-        self.style.configure("case_init.TFrame", background="lightgrey")
-        self.style.configure("case_init.TLabel", background="lightgrey", foreground="black")
-        self.style.configure("erreur.TFrame", background="white")
-        self.style.configure("erreur.TLabel", background="white", foreground="red")
-        self.style.configure("solution.TFrame", background="white")
-        self.style.configure("solution.TLabel", background="white", foreground="blue")
-        self.style.configure("pause.TLabel", foreground="grey", background='white')
-        self.option_add('*Menu.activeBackground',
-                        self.style.lookup('TButton', 'background', ('active',), default='#eeebe7'))
+        self.option_add('*Menu.activeBackground', activebg)
         self.configure(bg=bg)
+
+        style.configure("bg.TFrame", background="grey")
+        style.configure("case.TFrame", background="white")
+        style.configure("case.TLabel", background="white", foreground="black")
+        style.configure("case_init.TFrame", background="lightgrey")
+        style.configure("case_init.TLabel", background="lightgrey", foreground="black")
+        style.configure("erreur.TFrame", background="white")
+        style.configure("erreur.TLabel", background="white", foreground="red")
+        style.configure("solution.TFrame", background="white")
+        style.configure("solution.TLabel", background="white", foreground="blue")
+        style.configure("pause.TLabel", foreground="grey", background='white')
+
 
         # --- images
         self.im_erreur = open_image(cst.ERREUR)
@@ -115,34 +115,42 @@ class Sudoku(Tk):
         # --- chronomètre
         self.chrono = [0,0]
         self.tps = Label(self, text="%02i:%02i"% tuple(self.chrono),
-                             font="Arial 16")
+                         font="Arial 16")
         self.debut = False # la partie a-t-elle commencée ?
         self.chrono_on = False # le chrono est-il en marche ?
 
-        self.level = "unknown" # puzzle level
         self.b_pause = Button(self, state="disabled", image=self.im_pause,
                                   command=self.play_pause)
         self.b_restart = Button(self, state="disabled", image=self.im_restart,
                                 command=self.recommence)
-        self.tps.grid(row=1, column=0, sticky="e", padx=(30,10), pady=(30,30))
-        self.b_pause.grid(row=1, column=1, sticky="w", padx=2, pady=(30,30))
-        self.b_restart.grid(row=1, column=2, sticky="w", padx=(2,10), pady=(30,30))
+        self.tps.grid(row=2, column=0, sticky="e", padx=(30,10), pady=(30,30))
+        self.b_pause.grid(row=2, column=1, sticky="w", padx=2, pady=(30,30))
+        self.b_restart.grid(row=2, column=2, sticky="w", padx=(2,10), pady=(30,30))
 
         # --- Retour en arrière
         self.b_undo = Button(self, image=self.im_undo, command=self.undo)
-        self.b_undo.grid(row=1, column=3, sticky="e", pady=(30,30), padx=2)
+        self.b_undo.grid(row=2, column=3, sticky="e", pady=(30,30), padx=2)
 
         self.b_redo = Button(self, image=self.im_redo, command=self.redo)
-        self.b_redo.grid(row=1, column=4, sticky="w", pady=(30,30), padx=(2,30))
+        self.b_redo.grid(row=2, column=4, sticky="w", pady=(30,30), padx=(2,30))
+
+
+        # --- level indication
+        frame = Frame(self)
+        frame.grid(row=0, columnspan=5, padx=30, pady=10)
+        Label(frame, text=_("Level") + ' - ', font="Arial 16").pack(side='left')
+        self.label_level = Label(frame, font="Arial 16", text=_("Unknown"))
+        self.label_level.pack(side='left')
+        self.level = "unknown" # puzzle level
 
         # --- frame contenant la grille de sudoku
-        self.frame = Frame(self, style="bg.TFrame")
-        self.frame.grid(row=0, columnspan=5, padx=30, pady=(30,0))
-        self.pause_frame = Frame(self, style="case.TFrame")
-        self.pause_frame.grid_propagate(False)
-        self.pause_frame.columnconfigure(0, weight=1)
-        self.pause_frame.rowconfigure(0, weight=1)
-        Label(self.pause_frame, text='PAUSE', style='pause.TLabel',
+        self.frame_puzzle = Frame(self, style="bg.TFrame")
+        self.frame_puzzle.grid(row=1, columnspan=5, padx=30)
+        self.frame_pause = Frame(self, style="case.TFrame")
+        self.frame_pause.grid_propagate(False)
+        self.frame_pause.columnconfigure(0, weight=1)
+        self.frame_pause.rowconfigure(0, weight=1)
+        Label(self.frame_pause, text='PAUSE', style='pause.TLabel',
               font=('TkDefaultFont', 30, 'bold')).grid()
 
         # --- menu
@@ -176,6 +184,8 @@ class Sudoku(Tk):
                               accelerator="Ctrl+S")
         menu_game.add_command(label=_("Export"), command=self.export_impression,
                               accelerator="Ctrl+E")
+        menu_game.add_command(label=_("Evaluate level"),
+                              command=self.evaluate_level)
 
         menu_language = Menu(menu, tearoff=0)
         self.langue = StringVar(self)
@@ -209,7 +219,7 @@ class Sudoku(Tk):
         for i in range(9):
             self.blocs.append([])
             for j in range(9):
-                self.blocs[i].append(Case(self.frame, i, j, width=50, height=50))
+                self.blocs[i].append(Case(self.frame_puzzle, i, j, width=50, height=50))
                 px, py = 1, 1
                 if i % 3 == 2 and i != 8:
                     py = (1,3)
@@ -240,6 +250,24 @@ class Sudoku(Tk):
         elif exists(cst.PATH_SAVE):
             self.load(cst.PATH_SAVE)
             remove(cst.PATH_SAVE)
+
+    @property
+    def level(self):
+        return self._level
+
+    @level.setter
+    def level(self, level):
+        self._level = level
+        self.label_level.configure(text=_(level.capitalize()))
+
+    def evaluate_level(self):
+        grille = Grille()
+        for i in range(9):
+            for j in range(9):
+                val = self.blocs[i][j].get_val()
+                if val:
+                    grille.ajoute_init(i, j, val)
+        self.level = difficulte_grille(grille)
 
     def show_stat(self):
         """ show best times """
@@ -432,7 +460,7 @@ class Sudoku(Tk):
         self.b_redo.configure(state="disabled")
         self.b_restart.configure(state="disabled")
         self.log_reinit()
-        self.pause_frame.place_forget()
+        self.frame_pause.place_forget()
 
     def play_pause(self):
         """ Démarre le chrono s'il était arrêté, le met en pause sinon """
@@ -442,7 +470,7 @@ class Sudoku(Tk):
                 self.b_pause.configure(image=self.im_play)
                 self.b_redo.configure(state="disabled")
                 self.b_undo.configure(state="disabled")
-                self.pause_frame.place(in_=self.frame, x=0, y=0, anchor='nw',
+                self.frame_pause.place(in_=self.frame_puzzle, x=0, y=0, anchor='nw',
                                        relwidth=1, relheight=1)
             elif self.nb_cases_remplies != 81:
                 self.chrono_on = True
@@ -452,7 +480,7 @@ class Sudoku(Tk):
                     self.b_undo.configure(state="normal")
                 if self.log_ligne < self.log_nb_ligne - 1:
                     self.b_redo.configure(state="normal")
-                self.pause_frame.place_forget()
+                self.frame_pause.place_forget()
 
     def affiche_chrono(self):
         """ Met à jour l'affichage du temps """
@@ -643,7 +671,7 @@ class Sudoku(Tk):
                 nb = grille.nb_cases_remplies()
                 self.configure(cursor="")
                 rep2 = two_button_box(self, _("Information"),
-                                     _("The generated puzzle contains %(nb)i numbers and its level is %(difficulty)s.") % ({"nb": nb, "difficulty": _(diff)}),
+                                     _("The generated puzzle contains %(nb)i numbers and its level is %(difficulty)s.") % ({"nb": nb, "difficulty": _(diff.capitalize())}),
                                      _("Retry"), _("Play"), image=self.im_info)
             if rep2 == _("Play"):
                 self.level = diff
