@@ -21,7 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 Class for the GUI
 """
 
-from SudokuTkModules.constantes import *
+import SudokuTkModules.constantes as cst
+from SudokuTkModules.constantes import open_image, CONFIG, LOG
 from SudokuTkModules.clavier import Clavier
 from SudokuTkModules.about import About
 from SudokuTkModules.aide import Aide
@@ -37,8 +38,6 @@ from pickle import Pickler, Unpickler, UnpicklingError
 from os.path import exists, join
 from os import remove
 
-#_ = lang.gettext
-
 
 class Sudoku(Tk):
     def __init__(self):
@@ -46,22 +45,22 @@ class Sudoku(Tk):
         self.title("Sudoku-Tk")
         self.resizable(0,0)
         self.protocol("WM_DELETE_WINDOW", self.quitter)
-        set_icon(self)
+        cst.set_icon(self)
         self.columnconfigure(3, weight=1)
         # styles
         self.style = Style(self)
-        self.style.theme_use(STYLE)
+        self.style.theme_use(cst.STYLE)
         self.style.configure("bg.TFrame", background="grey")
 
         # images
-        self.im_erreur = open_image(ERREUR)
-        self.im_pause = open_image(PAUSE)
-        self.im_restart = open_image(RESTART)
-        self.im_play = open_image(PLAY)
-        self.im_info = open_image(INFO)
-        self.im_undo = open_image(UNDO)
-        self.im_redo = open_image(REDO)
-        self.im_question = open_image(QUESTION)
+        self.im_erreur = open_image(cst.ERREUR)
+        self.im_pause = open_image(cst.PAUSE)
+        self.im_restart = open_image(cst.RESTART)
+        self.im_play = open_image(cst.PLAY)
+        self.im_info = open_image(cst.INFO)
+        self.im_undo = open_image(cst.UNDO)
+        self.im_redo = open_image(cst.REDO)
+        self.im_question = open_image(cst.QUESTION)
 
         # chronomètre
         self.chrono = [0,0]
@@ -124,7 +123,7 @@ class Sudoku(Tk):
 
         menu_language = Menu(menu, tearoff=0)
         self.langue = StringVar(self)
-        self.langue.set(LANGUE[:2])
+        self.langue.set(cst.LANGUE[:2])
         menu_language.add_radiobutton(label="Français",
                                       variable=self.langue,
                                       value="fr", command=self.translate)
@@ -217,19 +216,19 @@ class Sudoku(Tk):
 
     def new_easy(self):
         nb = np.random.randint(1, 101)
-        fichier = join(PUZZLES_LOCATION, "easy", "puzzle_easy_%i.txt" % nb)
+        fichier = join(cst.PUZZLES_LOCATION, "easy", "puzzle_easy_%i.txt" % nb)
         self.import_grille(fichier)
         self.level = "easy"
 
     def new_medium(self):
         nb = np.random.randint(1, 101)
-        fichier = join(PUZZLES_LOCATION, "medium", "puzzle_medium_%i.txt" % nb)
+        fichier = join(cst.PUZZLES_LOCATION, "medium", "puzzle_medium_%i.txt" % nb)
         self.import_grille(fichier)
         self.level = "medium"
 
     def new_difficult(self):
         nb = np.random.randint(1, 101)
-        fichier = join(PUZZLES_LOCATION, "difficult", "puzzle_difficult_%i.txt" % nb)
+        fichier = join(cst.PUZZLES_LOCATION, "difficult", "puzzle_difficult_%i.txt" % nb)
         self.import_grille(fichier)
         self.level = "difficult"
 
@@ -292,7 +291,7 @@ class Sudoku(Tk):
                                  _("Yes"), _("No"), image=self.im_question)
         if rep == _("Yes"):
             remove(LOG)
-            with open(PATH_CONFIG, 'w') as fichier:
+            with open(cst.PATH_CONFIG, 'w') as fichier:
                 CONFIG.write(fichier)
             self.destroy()
 
@@ -422,7 +421,7 @@ class Sudoku(Tk):
                             self.clavier = Clavier(self, case, "val")
                         elif event.num == 3:
                             self.clavier = Clavier(self, case, "possibilite")
-                        self.clavier.geometry("+%i+%i" % (case.winfo_rootx()-25,case.winfo_rooty()+50))
+                        self.clavier.display("+%i+%i" % (case.winfo_rootx()-25,case.winfo_rooty()+50))
 
             elif self.clavier:
                 self.clavier.quitter()
@@ -607,7 +606,7 @@ class Sudoku(Tk):
     def sauvegarde(self):
         if self.chrono_on:
             self.play_pause()
-        fichier = asksaveasfilename(initialdir=INITIALDIR,
+        fichier = asksaveasfilename(initialdir=cst.INITIALDIR,
                                     defaultextension='.sudoku',
                                     filetypes=[('SUDOKU', '*.sudoku')])
         if fichier:
@@ -681,7 +680,7 @@ class Sudoku(Tk):
                 except (KeyError, EOFError, UnpicklingError):
                     one_button_box(self, _("Error"),
                                    _("This file is not a valid sudoku file."),
-                                   style=STYLE, image=self.im_erreur)
+                                   style=cst.STYLE, image=self.im_erreur)
 
 
     def resolution_init(self):
@@ -783,7 +782,7 @@ class Sudoku(Tk):
                                  _("Yes"), _("No"), self.im_question)
         if rep == _("Yes"):
             if not fichier:
-                fichier = askopenfilename(initialdir=INITIALDIR,
+                fichier = askopenfilename(initialdir=cst.INITIALDIR,
                                           defaultextension='.txt',
                                           filetypes=[('TXT', '*.txt'), ('Tous les fichiers',"*")])
             if fichier:
@@ -805,7 +804,7 @@ class Sudoku(Tk):
         if self.chrono_on:
             self.play_pause()
         fichier = asksaveasfilename(title=_("Export"),
-                                    initialdir=INITIALDIR,
+                                    initialdir=cst.INITIALDIR,
                                     defaultextension='.png',
                                     filetypes=[('PNG', '*.png'),
                                                ('JPEG', 'jpg')])

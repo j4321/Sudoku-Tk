@@ -45,7 +45,7 @@ LOCALE_PATH = os.path.join(PATH, 'locale')
 # default path to save, open ...
 if os.access(PATH, os.W_OK):
     # user has writing rights on the path
-    INITIALDIR = os.path.split(PATH)[0] # pour enregister / importer ...
+    INITIALDIR = os.path.split(PATH)[0]  # pour enregister / importer ...
 else:
     INITIALDIR = os.path.join(os.path.expanduser("~"), "Sudoku-Tk")
 
@@ -81,7 +81,6 @@ gettext.textdomain(APP_NAME)
 # Get the language to use
 LANG = gettext.translation(APP_NAME, LOCALE_PATH,
                            languages=[LANGUE], fallback=True)
-#_ = LANG.gettext
 LANG.install()
 
 # chemins des images
@@ -134,13 +133,17 @@ if TclVersion < 8.6:
                              message=_("This software has been developped using Tcl/Tk 8.6, but you are using an older version. Therefore there might be errors. Please consider upgrading your Tcl/Tk version."),
                              checkmessage=_("Do not show this message again."))
     CONFIG.set("General", "old_tcl_warning", str(not ans))
+
     def open_image(file, master=None):
         return ImageTk.PhotoImage(Image.open(file))
+
 else:
     # no need of ImageTk dependency
     from tkinter import PhotoImage
+
     def open_image(file, master=None):
         return PhotoImage(file=file, master=master)
+
 
 def set_icon(fen):
     """ icône de l'application """
