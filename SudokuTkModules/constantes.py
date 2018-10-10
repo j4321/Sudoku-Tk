@@ -28,7 +28,7 @@ import os
 import gettext
 from tkinter import TclVersion
 
-VERSION = "1.1"
+VERSION = "1.2.0"
 
 PL = platform[0]
 
@@ -51,6 +51,7 @@ else:
 
 CONFIG = ConfigParser()
 PATH_CONFIG = os.path.join(INITIALDIR, "sudoku-tk.ini")
+PATH_SAVE = os.path.join(INITIALDIR, ".last.sudoku")
 
 if os.path.exists(PATH_CONFIG):
     CONFIG.read(PATH_CONFIG)
