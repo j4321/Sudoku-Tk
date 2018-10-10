@@ -20,6 +20,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Class for the GUI
 """
+#TODO: set numbers back to black when conflicted number is erased
+#TODO: use list instead of file for log
+
 
 import SudokuTkModules.constantes as cst
 from SudokuTkModules.constantes import open_image, CONFIG, LOG
@@ -41,7 +44,7 @@ from os import remove
 
 class Sudoku(Tk):
     def __init__(self, file=None):
-        Tk.__init__(self)
+        Tk.__init__(self, className="Sudoku-Tk")
         self.title("Sudoku-Tk")
         self.resizable(0,0)
         self.protocol("WM_DELETE_WINDOW", self.quitter)
@@ -52,6 +55,14 @@ class Sudoku(Tk):
         self.style = Style(self)
         self.style.theme_use(cst.STYLE)
         self.style.configure("bg.TFrame", background="grey")
+        self.style.configure("case.TFrame", background="white")
+        self.style.configure("case.TLabel", background="white", foreground="black")
+        self.style.configure("case_init.TFrame", background="lightgrey")
+        self.style.configure("case_init.TLabel", background="lightgrey", foreground="black")
+        self.style.configure("erreur.TFrame", background="white")
+        self.style.configure("erreur.TLabel", background="white", foreground="red")
+        self.style.configure("solution.TFrame", background="white")
+        self.style.configure("solution.TLabel", background="white", foreground="blue")
 
         # --- images
         self.im_erreur = open_image(cst.ERREUR)
@@ -133,7 +144,7 @@ class Sudoku(Tk):
 
 
         menu_help = Menu(menu, tearoff=0)
-        menu_help.add_command(label=_("Help"), command=self.aide)
+        menu_help.add_command(label=_("Help"), command=self.aide, accelerator='F1')
         menu_help.add_command(label=_("About"), command=self.about)
 
         menu.add_cascade(label=_("New"), menu=menu_nouveau)
@@ -177,6 +188,7 @@ class Sudoku(Tk):
         self.bind("<Control-n>", lambda e: self.grille_vide())
         self.bind("<Control-g>", lambda e: self.genere_grille())
         self.bind("<FocusOut>", self.focus_out)
+        self.bind("<F1>", self.aide)
 
         # --- open game
         if file:
@@ -286,7 +298,7 @@ class Sudoku(Tk):
             self.play_pause()
         About(self)
 
-    def aide(self):
+    def aide(self, event=None):
         if self.chrono_on:
             self.play_pause()
         Aide(self)

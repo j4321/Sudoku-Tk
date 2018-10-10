@@ -31,7 +31,7 @@ class About(Toplevel):
         propos du logiciel """
     def __init__(self, master, **options):
         """ créer le Toplevel 'À propos de Sudoku-Tk' """
-        Toplevel.__init__(self, master, **options)
+        Toplevel.__init__(self, master, class_="Sudoku-Tk", **options)
 
         self.title(_("About Sudoku-Tk"))
         self.transient(master)

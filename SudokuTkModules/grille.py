@@ -21,6 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Non GUI sudoku puzzle class used to solve / generate puzzles
 """
+#TODO: speed up puzzle generation
+#TODO: improve levels
 
 import numpy as np
 from pickle import Pickler
@@ -631,7 +633,7 @@ def stats_grille(grille):
     return nb, singlets, total
 
 def difficulte_grille(grille):
-    _,ns,nt = stats_grille(grille)
+    _, ns, nt = stats_grille(grille)
     if ns < 20:
         return "easy"
     elif nt < 20:
