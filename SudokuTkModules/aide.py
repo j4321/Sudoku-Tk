@@ -26,10 +26,11 @@ from webbrowser import open as webOpen
 
 
 class Aide(Toplevel):
-    """ Toplevel de l'application principale donnant les informations à
-        propos du logiciel """
+    """Help dialog."""
+
     def __init__(self, master, **options):
-        """ créer le Toplevel 'À propos de Sudoku-Tk' """
+        """Display help dialog."""
+
         Toplevel.__init__(self, master, class_="Sudoku-Tk", **options)
 
         self.title(_("Sudoku-Tk Help"))
@@ -37,7 +38,8 @@ class Aide(Toplevel):
         self.grab_set()
 
         self.geometry(self.master.geometry())
-        txt = Text(self, wrap="word", font="Arial 10", tabs=("6"), padx=15, pady=15)
+        txt = Text(self, wrap="word", font="Arial 10", tabs=("6"),
+                   padx=15, pady=15, relief='flat', highlightthickness=0)
         scroll = Scrollbar(self, orient='vertical', command=txt.yview)
         txt.configure(yscrollcommand=scroll.set)
         scroll.pack(side='right', fill='y')
@@ -75,7 +77,6 @@ class Aide(Toplevel):
         txt.insert("end", _("Filling the grid") + '\n', ("titre2"))
         txt.insert("end", _("\t• Left mouse click in the cell to show the keypad to enter a value.") + '\n')
         txt.insert("end", _("\t• Right mouse click in the cell to show the keypad to enter a possibility." + '\n'), ("space"))
-        txt.insert("end", _("If the keypad does not appear, check whether the game is on pause.") + '\n')
         txt.insert("end", _("The game can be saved at any time to continue it later. To open a saved game, go to "))
         txt.insert("end", _("Open -> Game"), ("it"))
         txt.insert("end", _(" and select the desired .sudoku file.") + '\n\n')
