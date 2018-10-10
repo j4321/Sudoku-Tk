@@ -130,10 +130,10 @@ else:
 # ---  filebrowser
 ZENITY = False
 
-# try:
-#     import tkfilebrowser as tkfb
-# except ImportError:
-tkfb = False
+try:
+    import tkfilebrowser as tkfb
+except ImportError:
+    tkfb = False
 
 if PL != "w":
     paths = os.environ['PATH'].split(":")
