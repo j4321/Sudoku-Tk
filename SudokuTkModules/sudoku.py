@@ -20,8 +20,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Class for the GUI
 """
+#TODO: set numbers back to black when conflicted number is erased
+#TODO: use list instead of file for log
 
-from SudokuTkModules.constantes import *
+
+import SudokuTkModules.constantes as cst
+from SudokuTkModules.constantes import open_image, CONFIG, LOG
 from SudokuTkModules.clavier import Clavier
 from SudokuTkModules.about import About
 from SudokuTkModules.aide import Aide
@@ -37,60 +41,119 @@ from pickle import Pickler, Unpickler, UnpicklingError
 from os.path import exists, join
 from os import remove
 
-#_ = lang.gettext
-
 
 class Sudoku(Tk):
-    def __init__(self):
-        Tk.__init__(self)
+    def __init__(self, file=None):
+        Tk.__init__(self, className="Sudoku-Tk")
         self.title("Sudoku-Tk")
         self.resizable(0,0)
         self.protocol("WM_DELETE_WINDOW", self.quitter)
-        set_icon(self)
+        cst.set_icon(self)
         self.columnconfigure(3, weight=1)
-        # styles
-        self.style = Style(self)
-        self.style.theme_use(STYLE)
-        self.style.configure("bg.TFrame", background="grey")
 
-        # images
-        self.im_erreur = open_image(ERREUR)
-        self.im_pause = open_image(PAUSE)
-        self.im_restart = open_image(RESTART)
-        self.im_play = open_image(PLAY)
-        self.im_info = open_image(INFO)
-        self.im_undo = open_image(UNDO)
-        self.im_redo = open_image(REDO)
-        self.im_question = open_image(QUESTION)
+        # --- style
+        bg = '#dddddd'
+        activebg = '#efefef'
+        pressedbg = '#c1c1c1'
+        lightcolor = '#ededed'
+        darkcolor = '#cfcdc8'
+        bordercolor = '#888888'
+        focusbordercolor = '#5E5E5E'
+        disabledfg = '#999999'
+        disabledbg = bg
 
-        # chronomètre
+        button_style_config = {'bordercolor': bordercolor,
+                               'background': bg,
+                               'lightcolor': lightcolor,
+                               'darkcolor': darkcolor}
+
+        button_style_map = {'background': [('active', activebg),
+                                           ('disabled', disabledbg),
+                                           ('pressed', pressedbg)],
+                            'lightcolor': [('pressed', darkcolor)],
+                            'darkcolor': [('pressed', lightcolor)],
+                            'bordercolor': [('focus', focusbordercolor)],
+                            'foreground': [('disabled', disabledfg)]}
+
+        style = Style(self)
+        style.theme_use(cst.STYLE)
+        style.configure('TFrame', background=bg)
+        style.configure('TLabel', background=bg)
+        style.configure('TScrollbar', gripcount=0, troughcolor=pressedbg,
+                             **button_style_config)
+        style.map('TScrollbar', **button_style_map)
+        style.configure('TButton', **button_style_config)
+        style.map('TButton', **button_style_map)
+        style.configure('TCheckutton', **button_style_config)
+        style.map('TCheckutton', **button_style_map)
+        self.option_add('*Menu.background', bg)
+        self.option_add('*Menu.activeBackground', activebg)
+        self.configure(bg=bg)
+
+        style.configure("bg.TFrame", background="grey")
+        style.configure("case.TFrame", background="white")
+        style.configure("case.TLabel", background="white", foreground="black")
+        style.configure("case_init.TFrame", background="lightgrey")
+        style.configure("case_init.TLabel", background="lightgrey", foreground="black")
+        style.configure("erreur.TFrame", background="white")
+        style.configure("erreur.TLabel", background="white", foreground="red")
+        style.configure("solution.TFrame", background="white")
+        style.configure("solution.TLabel", background="white", foreground="blue")
+        style.configure("pause.TLabel", foreground="grey", background='white')
+
+
+        # --- images
+        self.im_erreur = open_image(cst.ERREUR)
+        self.im_pause = open_image(cst.PAUSE)
+        self.im_restart = open_image(cst.RESTART)
+        self.im_play = open_image(cst.PLAY)
+        self.im_info = open_image(cst.INFO)
+        self.im_undo = open_image(cst.UNDO)
+        self.im_redo = open_image(cst.REDO)
+        self.im_question = open_image(cst.QUESTION)
+
+        # --- chronomètre
         self.chrono = [0,0]
         self.tps = Label(self, text="%02i:%02i"% tuple(self.chrono),
-                             font="Arial 16")
+                         font="Arial 16")
         self.debut = False # la partie a-t-elle commencée ?
         self.chrono_on = False # le chrono est-il en marche ?
 
-        self.level = "unknown" # puzzle level
         self.b_pause = Button(self, state="disabled", image=self.im_pause,
                                   command=self.play_pause)
         self.b_restart = Button(self, state="disabled", image=self.im_restart,
                                 command=self.recommence)
-        self.tps.grid(row=1, column=0, sticky="e", padx=(30,10), pady=(30,30))
-        self.b_pause.grid(row=1, column=1, sticky="w", padx=2, pady=(30,30))
-        self.b_restart.grid(row=1, column=2, sticky="w", padx=(2,10), pady=(30,30))
+        self.tps.grid(row=2, column=0, sticky="e", padx=(30,10), pady=(30,30))
+        self.b_pause.grid(row=2, column=1, sticky="w", padx=2, pady=(30,30))
+        self.b_restart.grid(row=2, column=2, sticky="w", padx=(2,10), pady=(30,30))
 
-        # Retour en arrière
+        # --- Retour en arrière
         self.b_undo = Button(self, image=self.im_undo, command=self.undo)
-        self.b_undo.grid(row=1, column=3, sticky="e", pady=(30,30), padx=2)
+        self.b_undo.grid(row=2, column=3, sticky="e", pady=(30,30), padx=2)
 
         self.b_redo = Button(self, image=self.im_redo, command=self.redo)
-        self.b_redo.grid(row=1, column=4, sticky="w", pady=(30,30), padx=(2,30))
+        self.b_redo.grid(row=2, column=4, sticky="w", pady=(30,30), padx=(2,30))
 
-        # frame contenant la grille de sudoku
-        self.frame = Frame(self, style="bg.TFrame")
-        self.frame.grid(row=0, columnspan=5, padx=30, pady=(30,0))
 
-        # menu
+        # --- level indication
+        frame = Frame(self)
+        frame.grid(row=0, columnspan=5, padx=30, pady=10)
+        Label(frame, text=_("Level") + ' - ', font="Arial 16").pack(side='left')
+        self.label_level = Label(frame, font="Arial 16", text=_("Unknown"))
+        self.label_level.pack(side='left')
+        self.level = "unknown" # puzzle level
+
+        # --- frame contenant la grille de sudoku
+        self.frame_puzzle = Frame(self, style="bg.TFrame")
+        self.frame_puzzle.grid(row=1, columnspan=5, padx=30)
+        self.frame_pause = Frame(self, style="case.TFrame")
+        self.frame_pause.grid_propagate(False)
+        self.frame_pause.columnconfigure(0, weight=1)
+        self.frame_pause.rowconfigure(0, weight=1)
+        Label(self.frame_pause, text='PAUSE', style='pause.TLabel',
+              font=('TkDefaultFont', 30, 'bold')).grid()
+
+        # --- menu
         menu = Menu(self, tearoff=0)
 
         menu_nouveau = Menu(menu, tearoff=0)
@@ -121,10 +184,12 @@ class Sudoku(Tk):
                               accelerator="Ctrl+S")
         menu_game.add_command(label=_("Export"), command=self.export_impression,
                               accelerator="Ctrl+E")
+        menu_game.add_command(label=_("Evaluate level"),
+                              command=self.evaluate_level)
 
         menu_language = Menu(menu, tearoff=0)
         self.langue = StringVar(self)
-        self.langue.set(LANGUE[:2])
+        self.langue.set(cst.LANGUE[:2])
         menu_language.add_radiobutton(label="Français",
                                       variable=self.langue,
                                       value="fr", command=self.translate)
@@ -133,7 +198,7 @@ class Sudoku(Tk):
 
 
         menu_help = Menu(menu, tearoff=0)
-        menu_help.add_command(label=_("Help"), command=self.aide)
+        menu_help.add_command(label=_("Help"), command=self.aide, accelerator='F1')
         menu_help.add_command(label=_("About"), command=self.about)
 
         menu.add_cascade(label=_("New"), menu=menu_nouveau)
@@ -145,16 +210,16 @@ class Sudoku(Tk):
 
         self.configure(menu=menu)
 
-        # clavier popup
+        # --- clavier popup
         self.clavier = None
 
-        # cases
+        # --- cases
         self.nb_cases_remplies = 0
         self.blocs = []
         for i in range(9):
             self.blocs.append([])
             for j in range(9):
-                self.blocs[i].append(Case(self.frame, i, j, width=50, height=50))
+                self.blocs[i].append(Case(self.frame_puzzle, i, j, width=50, height=50))
                 px, py = 1, 1
                 if i % 3 == 2 and i != 8:
                     py = (1,3)
@@ -163,10 +228,10 @@ class Sudoku(Tk):
                 self.blocs[i][j].grid(row=i, column=j, padx=px, pady=py)
                 self.blocs[i][j].grid_propagate(0)
 
-        # création du fichier log
+        # --- création du fichier log
         self.log_reinit()
 
-        # raccourcis clavier et actions de la souris
+        # --- raccourcis clavier et actions de la souris
         self.bind("<Button>", self.edit_case)
         self.bind("<Control-z>", lambda e: self.undo())
         self.bind("<Control-y>", lambda e: self.redo())
@@ -177,6 +242,44 @@ class Sudoku(Tk):
         self.bind("<Control-n>", lambda e: self.grille_vide())
         self.bind("<Control-g>", lambda e: self.genere_grille())
         self.bind("<FocusOut>", self.focus_out)
+        self.bind("<F1>", self.aide)
+
+        # --- open game
+        if file:
+            try:
+                self.load_sudoku(file)
+            except FileNotFoundError:
+                one_button_box(self, _("Error"),
+                               _("The file %(file)r does not exist.") % file,
+                               image=self.im_erreur)
+            except (KeyError, EOFError, UnpicklingError):
+                try:
+                    self.load_grille(file)
+                except Exception:
+                    one_button_box(self, _("Error"),
+                                   _("This file is not a valid sudoku file."),
+                                   image=self.im_erreur)
+        elif exists(cst.PATH_SAVE):
+            self.load_sudoku(cst.PATH_SAVE)
+            remove(cst.PATH_SAVE)
+
+    @property
+    def level(self):
+        return self._level
+
+    @level.setter
+    def level(self, level):
+        self._level = level
+        self.label_level.configure(text=_(level.capitalize()))
+
+    def evaluate_level(self):
+        grille = Grille()
+        for i in range(9):
+            for j in range(9):
+                val = self.blocs[i][j].get_val()
+                if val:
+                    grille.ajoute_init(i, j, val)
+        self.level = difficulte_grille(grille)
 
     def show_stat(self):
         """ show best times """
@@ -213,23 +316,23 @@ class Sudoku(Tk):
                                            sticky="w", pady=4,
                                            padx=(4,20))
         Button(top, text=_("Close"), command=top.destroy).grid(row=4, column=0, padx=(10,4), pady=10)
-        Button(top, text=_("Reset"), command=reset).grid(row=4, column=1, padx=(4, 10), pady=10)
+        Button(top, text=_("Clear"), command=reset).grid(row=4, column=1, padx=(4, 10), pady=10)
 
     def new_easy(self):
         nb = np.random.randint(1, 101)
-        fichier = join(PUZZLES_LOCATION, "easy", "puzzle_easy_%i.txt" % nb)
+        fichier = join(cst.PUZZLES_LOCATION, "easy", "puzzle_easy_%i.txt" % nb)
         self.import_grille(fichier)
         self.level = "easy"
 
     def new_medium(self):
         nb = np.random.randint(1, 101)
-        fichier = join(PUZZLES_LOCATION, "medium", "puzzle_medium_%i.txt" % nb)
+        fichier = join(cst.PUZZLES_LOCATION, "medium", "puzzle_medium_%i.txt" % nb)
         self.import_grille(fichier)
         self.level = "medium"
 
     def new_difficult(self):
         nb = np.random.randint(1, 101)
-        fichier = join(PUZZLES_LOCATION, "difficult", "puzzle_difficult_%i.txt" % nb)
+        fichier = join(cst.PUZZLES_LOCATION, "difficult", "puzzle_difficult_%i.txt" % nb)
         self.import_grille(fichier)
         self.level = "difficult"
 
@@ -279,7 +382,7 @@ class Sudoku(Tk):
             self.play_pause()
         About(self)
 
-    def aide(self):
+    def aide(self, event=None):
         if self.chrono_on:
             self.play_pause()
         Aide(self)
@@ -288,12 +391,11 @@ class Sudoku(Tk):
         rep = _("Yes")
         if self.debut:
             rep = two_button_box(self, _("Confirmation"),
-                                 _("Do you want to abandon the current puzzle?"),
+                                 _("Do you want to interrupt the current puzzle?"),
                                  _("Yes"), _("No"), image=self.im_question)
         if rep == _("Yes"):
-            remove(LOG)
-            with open(PATH_CONFIG, 'w') as fichier:
-                CONFIG.write(fichier)
+            if self.debut:
+                self.save(cst.PATH_SAVE)
             self.destroy()
 
     def undo(self):
@@ -370,6 +472,7 @@ class Sudoku(Tk):
         self.b_redo.configure(state="disabled")
         self.b_restart.configure(state="disabled")
         self.log_reinit()
+        self.frame_pause.place_forget()
 
     def play_pause(self):
         """ Démarre le chrono s'il était arrêté, le met en pause sinon """
@@ -379,6 +482,8 @@ class Sudoku(Tk):
                 self.b_pause.configure(image=self.im_play)
                 self.b_redo.configure(state="disabled")
                 self.b_undo.configure(state="disabled")
+                self.frame_pause.place(in_=self.frame_puzzle, x=0, y=0, anchor='nw',
+                                       relwidth=1, relheight=1)
             elif self.nb_cases_remplies != 81:
                 self.chrono_on = True
                 self.b_pause.configure(image=self.im_pause)
@@ -387,7 +492,7 @@ class Sudoku(Tk):
                     self.b_undo.configure(state="normal")
                 if self.log_ligne < self.log_nb_ligne - 1:
                     self.b_redo.configure(state="normal")
-
+                self.frame_pause.place_forget()
 
     def affiche_chrono(self):
         """ Met à jour l'affichage du temps """
@@ -422,7 +527,7 @@ class Sudoku(Tk):
                             self.clavier = Clavier(self, case, "val")
                         elif event.num == 3:
                             self.clavier = Clavier(self, case, "possibilite")
-                        self.clavier.geometry("+%i+%i" % (case.winfo_rootx()-25,case.winfo_rooty()+50))
+                        self.clavier.display("+%i+%i" % (case.winfo_rootx()-25,case.winfo_rooty()+50))
 
             elif self.clavier:
                 self.clavier.quitter()
@@ -498,11 +603,9 @@ class Sudoku(Tk):
                     current = self.chrono[0]*60 + self.chrono[1]
                     if best:
                         best = int(best)
-                        print(best, current)
                         if current < best:
                             CONFIG.set("Statistics", self.level, str(current))
                     else:
-                        print(current)
                         CONFIG.set("Statistics", self.level, str(current))
                 self.b_pause.configure(state="disabled")
                 self.debut = False
@@ -580,7 +683,7 @@ class Sudoku(Tk):
                 nb = grille.nb_cases_remplies()
                 self.configure(cursor="")
                 rep2 = two_button_box(self, _("Information"),
-                                     _("The generated puzzle contains %(nb)i numbers and its level is %(difficulty)s.") % ({"nb": nb, "difficulty": _(diff)}),
+                                     _("The generated puzzle contains %(nb)i numbers and its level is %(difficulty)s.") % ({"nb": nb, "difficulty": _(diff.capitalize())}),
                                      _("Retry"), _("Play"), image=self.im_info)
             if rep2 == _("Play"):
                 self.level = diff
@@ -604,29 +707,32 @@ class Sudoku(Tk):
                         self.blocs[i][j].efface_case()
             self.restart()
 
+    def save(self, path):
+        grille = np.zeros((9,9), dtype=int)
+        modif = np.zeros((9,9), dtype=bool)
+        possibilites = []
+        for i in range(9):
+            possibilites.append([])
+            for j in range(9):
+                grille[i,j] = self.blocs[i][j].get_val()
+                modif[i,j] = self.blocs[i][j].is_modifiable()
+                possibilites[i].append(self.blocs[i][j].get_possibilites())
+        with open(path, "wb") as fich:
+            p = Pickler(fich)
+            p.dump(grille)
+            p.dump(modif)
+            p.dump(possibilites)
+            p.dump(self.chrono)
+            p.dump(self.level)
+
     def sauvegarde(self):
         if self.chrono_on:
             self.play_pause()
-        fichier = asksaveasfilename(initialdir=INITIALDIR,
+        fichier = asksaveasfilename(initialdir=cst.INITIALDIR,
                                     defaultextension='.sudoku',
                                     filetypes=[('SUDOKU', '*.sudoku')])
         if fichier:
-            grille = np.zeros((9,9), dtype=int)
-            modif = np.zeros((9,9), dtype=bool)
-            possibilites = []
-            for i in range(9):
-                possibilites.append([])
-                for j in range(9):
-                    grille[i,j] = self.blocs[i][j].get_val()
-                    modif[i,j] = self.blocs[i][j].is_modifiable()
-                    possibilites[i].append(self.blocs[i][j].get_possibilites())
-            with open(fichier, "wb") as fich:
-                p = Pickler(fich)
-                p.dump(grille)
-                p.dump(modif)
-                p.dump(possibilites)
-                p.dump(self.chrono)
-                p.dump(self.level)
+            self.save(fichier)
 
     def affiche_grille(self, grille):
         """ Affiche la grille """
@@ -643,6 +749,27 @@ class Sudoku(Tk):
                 else:
                    self.blocs[i][j].set_modifiable(True)
 
+    def load_sudoku(self, file):
+        with open(file,"rb") as fich:
+            dp = Unpickler(fich)
+            grille = dp.load()
+            modif = dp.load()
+            possibilites = dp.load()
+            chrono = dp.load()
+            self.level = dp.load()
+        self.nb_cases_remplies = 0
+        self.restart(*chrono)
+        for i in range(9):
+            for j in range(9):
+                self.blocs[i][j].efface_case()
+                if grille[i,j]:
+                    self.nb_cases_remplies += 1
+                    self.blocs[i][j].edit_chiffre(grille[i,j])
+                else:
+                    for pos in possibilites[i][j]:
+                        self.blocs[i][j].edit_possibilite(pos)
+                self.blocs[i][j].set_modifiable(modif[i,j])
+
     def import_partie(self):
         """ importe une partie stockée dans un fichier .sudoku """
         if self.chrono_on:
@@ -653,36 +780,22 @@ class Sudoku(Tk):
                                  _("Do you want to abandon the current puzzle?"),
                                  _("Yes"), _("No"), self.im_question)
         if rep == _("Yes"):
-            fichier = askopenfilename(initialdir=INITIALDIR,
+            fichier = askopenfilename(initialdir=cst.INITIALDIR,
                                         defaultextension='.sudoku',
                                         filetypes=[('SUDOKU', '*.sudoku')])
-            if fichier and exists(fichier):
+            if fichier:
                 try:
-                    with open(fichier,"rb") as fich:
-                        dp = Unpickler(fich)
-                        grille = dp.load()
-                        modif = dp.load()
-                        possibilites = dp.load()
-                        chrono = dp.load()
-                        self.level = dp.load()
-                    self.nb_cases_remplies = 0
-                    self.restart(*chrono)
-                    for i in range(9):
-                        for j in range(9):
-                            self.blocs[i][j].efface_case()
-                            if grille[i,j]:
-                                self.nb_cases_remplies += 1
-                                self.blocs[i][j].edit_chiffre(grille[i,j])
-                            else:
-                                for pos in possibilites[i][j]:
-                                    self.blocs[i][j].edit_possibilite(pos)
-                            self.blocs[i][j].set_modifiable(modif[i,j])
-
+                    self.load_sudoku(fichier)
+                except FileNotFoundError:
+                    one_button_box(self, _("Error"),
+                                   _("The file %(file)r does not exist.") % fichier,
+                                   image=self.im_erreur)
                 except (KeyError, EOFError, UnpicklingError):
                     one_button_box(self, _("Error"),
                                    _("This file is not a valid sudoku file."),
-                                   style=STYLE, image=self.im_erreur)
-
+                                   image=self.im_erreur)
+        elif self.debut:
+            self.play_pause()
 
     def resolution_init(self):
         """ Résolution de la grille initiale (sans tenir compte des valeurs rentrées par l'utilisateur. """
@@ -771,6 +884,15 @@ class Sudoku(Tk):
                 one_button_box(self, _("Error"), _("Resolution failed."),
                                image=self.im_erreur)
 
+    def load_grille(self, file):
+        gr = np.loadtxt(file, dtype=int)
+        if gr.shape == (9,9):
+            self.affiche_grille(gr)
+            self.level = "unknown"
+        else:
+            one_button_box(self, _("Error"), _("This is not a 9x9 sudoku grid."),
+                           image=self.im_erreur)
+
     def import_grille(self, fichier=None):
         """ importe une grille stockée dans un fichier txt sous forme de
             chiffres séparés par des espaces (0 = case vide) """
@@ -783,29 +905,29 @@ class Sudoku(Tk):
                                  _("Yes"), _("No"), self.im_question)
         if rep == _("Yes"):
             if not fichier:
-                fichier = askopenfilename(initialdir=INITIALDIR,
+                fichier = askopenfilename(initialdir=cst.INITIALDIR,
                                           defaultextension='.txt',
                                           filetypes=[('TXT', '*.txt'), ('Tous les fichiers',"*")])
             if fichier:
                 try:
-                    gr = np.loadtxt(fichier, dtype=int)
-                    if gr.shape == (9,9):
-                        self.affiche_grille(gr)
-                        self.level = "unknown"
-                    else:
-                        one_button_box(self, _("Error"), _("This is not a 9x9 sudoku grid."),
-                                       image=self.im_erreur)
+                    self.load_grille(fichier)
                 except (ValueError,UnicodeDecodeError):
                     one_button_box(self, _("Error"),
                                    _("The file does not have the right format. It should be a .txt file with cell values separated by one space. 0 means empty cell."),
                                    image=self.im_erreur)
+                except FileNotFoundError:
+                    one_button_box(self, _("Error"),
+                                   _("The file %(file)r does not exist.") % fichier,
+                                   image=self.im_erreur)
+        elif self.debut:
+            self.play_pause()
 
     def export_impression(self):
         """ exporte la grille en image (pour pouvoir l'imprimer) """
         if self.chrono_on:
             self.play_pause()
         fichier = asksaveasfilename(title=_("Export"),
-                                    initialdir=INITIALDIR,
+                                    initialdir=cst.INITIALDIR,
                                     defaultextension='.png',
                                     filetypes=[('PNG', '*.png'),
                                                ('JPEG', 'jpg')])

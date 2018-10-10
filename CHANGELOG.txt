@@ -3,14 +3,27 @@ Sudoku-Tk - Sudoku games and puzzle solver
 Copyright 2016 Juliette Monsel <j_4321@protonmail.com>
 
 
+Version 1.2
+-----------
+
+1.2.0
+~~~~~
+
+* Add possibility to open file from command line
+* Add "Evaluate level" command in Game menu
+* Restore previous game on startup if it was interrupted
+* Improve keypad display (no longer appear at the top of the screen before getting to the right position)
+* Improve PAUSE mode
+* Include level description in help dialog
+
 Version 1.1
 -----------
 
-* Improved keypad management (no longer need to clic twice to change location)
-* Added best times statistics
-* Added `New Game -> Level` to start a game of given level
+* Improv keypad management (no longer need to clic twice to change location)
+* Add best times statistics
+* Add `New Game -> Level` to start a game of given level
 * Bug fix: timer value restored when opening a saved game
-* Added language selection
+* Add language selection
 
 
 Version 1.0

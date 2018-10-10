@@ -31,11 +31,11 @@ class Clavier(Toplevel):
     def __init__(self, parent, case, val_ou_pos, **options):
         """ créer le Toplevel 'À propos de Bracelet Generator' """
         Toplevel.__init__(self, parent, **options)
+        self.withdraw()
         self.type = val_ou_pos # clavier pour rentrer une valeur ou une possibilité
         self.overrideredirect(True)
-        self.parent = parent
         self.case = case
-        self.transient(self.parent)
+        self.transient(self.master)
         self.style = Style(self)
         self.style.configure("clavier.TButton", font="Arial 12")
         self.boutons = [[Button(self, text="1", width=2, style="clavier.TButton", command=lambda: self.entre_nb(1)),
@@ -53,9 +53,6 @@ class Clavier(Toplevel):
         self.protocol("WM_DELETE_WINDOW", self.quitter)
         self.resizable(0, 0)
         self.attributes("-topmost",0)
-        self.focus_set()
-        self.lift()
-        self.bind("<FocusOut>", self.focus_out)
 
     def focus_out(self, event):
         """ quitte si la fenêtre n'est plus au premier plan """
@@ -79,31 +76,38 @@ class Clavier(Toplevel):
 
         # modification de la case
         if self.type == "val":
-            self.parent.modifie_nb_cases_remplies(self.case.edit_chiffre(val))
-            if not self.parent.test_case(i,j):
-                modifs = self.parent.update_grille(i,j)
+            self.master.modifie_nb_cases_remplies(self.case.edit_chiffre(val))
+            if not self.master.test_case(i,j):
+                modifs = self.master.update_grille(i,j)
             self.quitter()
         else:
-            self.parent.modifie_nb_cases_remplies(self.case.edit_possibilite(val))
-            self.parent.test_possibilite(i, j, val)
+            self.master.modifie_nb_cases_remplies(self.case.edit_possibilite(val))
+            self.master.test_possibilite(i, j, val)
 
         # données pour le log
         pos = array(self.case.get_possibilites(), dtype=str)
         redo_ch = "%i\t%s\n" % (self.case.get_val(),"".join(pos))
 
-        self.parent.log()
+        self.master.log()
         with open(LOG, "a") as log:
             log.write(coords + undo_ch + modifs + redo_ch)
-        self.parent.test_remplie()
+        self.master.test_remplie()
 
 
     def quitter(self):
         """ ferme la fenêtre """
-        if self.parent:
-            self.parent.focus_set()
-            self.parent.set_clavier(None)
+        if self.master:
+            self.master.focus_set()
+            self.master.set_clavier(None)
         self.destroy()
 
     def set_case(self, case):
         self.case = case
 
+    def display(self, geometry):
+        self.geometry(geometry)
+        self.update_idletasks()
+        self.deiconify()
+        self.focus_set()
+        self.lift()
+        self.bind("<FocusOut>", self.focus_out)

@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Non GUI sudoku puzzle class used to solve / generate puzzles
 """
+#TODO: speed up puzzle generation
 
 import numpy as np
 from pickle import Pickler
@@ -560,15 +561,15 @@ def genere_grille():
         # on enlève une case au hasard, puis on vérifie que la solution est
         # toujours unique
         g = Grille(grille.get_grille()) # copie test de la grille
-        i0,j0 = np.random.randint(9, size=2)
-        while (i0,j0) in val_necessaires or not grille.case_remplie(i0,j0):
-            i0,j0 = np.random.randint(9, size=2)
-        g.enleve(i0,j0)
+        i0, j0 = np.random.randint(9, size=2)
+        while (i0, j0) in val_necessaires or not grille.case_remplie(i0, j0):
+            i0, j0 = np.random.randint(9, size=2)
+        g.enleve(i0, j0)
         for i in range(20):
             g.nettoie()
         if g.est_remplie():
             # la solution est toujours unique
-            grille.enleve(i0,j0)
+            grille.enleve(i0, j0)
             nb += 1
         else:
             # il y a incertitude sur l'unicité de la solution
@@ -630,8 +631,10 @@ def stats_grille(grille):
             g.nettoie()
     return nb, singlets, total
 
+
 def difficulte_grille(grille):
-    _,ns,nt = stats_grille(grille)
+    """Return puzzle level."""
+    _, ns, nt = stats_grille(grille)
     if ns < 20:
         return "easy"
     elif nt < 20:

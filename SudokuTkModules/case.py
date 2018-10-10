@@ -21,8 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 Class for the cells in the grid
 """
 
-from SudokuTkModules.constantes import STYLE
-from tkinter.ttk import Frame, Style, Label
+from tkinter.ttk import Frame, Label
+
 
 class Case(Frame):
     """ case de la grille de sudoku """
@@ -36,16 +36,6 @@ class Case(Frame):
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
         # styles
-        self.style = Style(self)
-        self.style.theme_use(STYLE)
-        self.style.configure("case.TFrame", background="white")
-        self.style.configure("case.TLabel", background="white", foreground="black")
-        self.style.configure("case_init.TFrame", background="lightgrey")
-        self.style.configure("case_init.TLabel", background="lightgrey", foreground="black")
-        self.style.configure("erreur.TFrame", background="white")
-        self.style.configure("erreur.TLabel", background="white", foreground="red")
-        self.style.configure("solution.TFrame", background="white")
-        self.style.configure("solution.TLabel", background="white", foreground="blue")
         self.configure(style="case.TFrame")
 
         self.i = i
