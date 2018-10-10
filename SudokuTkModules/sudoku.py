@@ -246,9 +246,21 @@ class Sudoku(Tk):
 
         # --- open game
         if file:
-            self.load(file)
+            try:
+                self.load_sudoku(file)
+            except FileNotFoundError:
+                one_button_box(self, _("Error"),
+                               _("The file %(file)r does not exist.") % file,
+                               image=self.im_erreur)
+            except (KeyError, EOFError, UnpicklingError):
+                try:
+                    self.load_grille(file)
+                except Exception:
+                    one_button_box(self, _("Error"),
+                                   _("This file is not a valid sudoku file."),
+                                   image=self.im_erreur)
         elif exists(cst.PATH_SAVE):
-            self.load(cst.PATH_SAVE)
+            self.load_sudoku(cst.PATH_SAVE)
             remove(cst.PATH_SAVE)
 
     @property
@@ -737,36 +749,26 @@ class Sudoku(Tk):
                 else:
                    self.blocs[i][j].set_modifiable(True)
 
-    def load(self, file):
-        try:
-            with open(file,"rb") as fich:
-                dp = Unpickler(fich)
-                grille = dp.load()
-                modif = dp.load()
-                possibilites = dp.load()
-                chrono = dp.load()
-                self.level = dp.load()
-            self.nb_cases_remplies = 0
-            self.restart(*chrono)
-            for i in range(9):
-                for j in range(9):
-                    self.blocs[i][j].efface_case()
-                    if grille[i,j]:
-                        self.nb_cases_remplies += 1
-                        self.blocs[i][j].edit_chiffre(grille[i,j])
-                    else:
-                        for pos in possibilites[i][j]:
-                            self.blocs[i][j].edit_possibilite(pos)
-                    self.blocs[i][j].set_modifiable(modif[i,j])
-        except FileNotFoundError:
-            one_button_box(self, _("Error"),
-                           _("The file %(file)r does not exist.") % file,
-                           style=cst.STYLE, image=self.im_erreur)
-        except (KeyError, EOFError, UnpicklingError):
-            one_button_box(self, _("Error"),
-                           _("This file is not a valid sudoku file."),
-                           style=cst.STYLE, image=self.im_erreur)
-
+    def load_sudoku(self, file):
+        with open(file,"rb") as fich:
+            dp = Unpickler(fich)
+            grille = dp.load()
+            modif = dp.load()
+            possibilites = dp.load()
+            chrono = dp.load()
+            self.level = dp.load()
+        self.nb_cases_remplies = 0
+        self.restart(*chrono)
+        for i in range(9):
+            for j in range(9):
+                self.blocs[i][j].efface_case()
+                if grille[i,j]:
+                    self.nb_cases_remplies += 1
+                    self.blocs[i][j].edit_chiffre(grille[i,j])
+                else:
+                    for pos in possibilites[i][j]:
+                        self.blocs[i][j].edit_possibilite(pos)
+                self.blocs[i][j].set_modifiable(modif[i,j])
 
     def import_partie(self):
         """ importe une partie stockée dans un fichier .sudoku """
@@ -782,7 +784,18 @@ class Sudoku(Tk):
                                         defaultextension='.sudoku',
                                         filetypes=[('SUDOKU', '*.sudoku')])
             if fichier:
-                self.load(fichier)
+                try:
+                    self.load_sudoku(fichier)
+                except FileNotFoundError:
+                    one_button_box(self, _("Error"),
+                                   _("The file %(file)r does not exist.") % fichier,
+                                   image=self.im_erreur)
+                except (KeyError, EOFError, UnpicklingError):
+                    one_button_box(self, _("Error"),
+                                   _("This file is not a valid sudoku file."),
+                                   image=self.im_erreur)
+        elif self.debut:
+            self.play_pause()
 
     def resolution_init(self):
         """ Résolution de la grille initiale (sans tenir compte des valeurs rentrées par l'utilisateur. """
@@ -871,6 +884,15 @@ class Sudoku(Tk):
                 one_button_box(self, _("Error"), _("Resolution failed."),
                                image=self.im_erreur)
 
+    def load_grille(self, file):
+        gr = np.loadtxt(file, dtype=int)
+        if gr.shape == (9,9):
+            self.affiche_grille(gr)
+            self.level = "unknown"
+        else:
+            one_button_box(self, _("Error"), _("This is not a 9x9 sudoku grid."),
+                           image=self.im_erreur)
+
     def import_grille(self, fichier=None):
         """ importe une grille stockée dans un fichier txt sous forme de
             chiffres séparés par des espaces (0 = case vide) """
@@ -888,16 +910,14 @@ class Sudoku(Tk):
                                           filetypes=[('TXT', '*.txt'), ('Tous les fichiers',"*")])
             if fichier:
                 try:
-                    gr = np.loadtxt(fichier, dtype=int)
-                    if gr.shape == (9,9):
-                        self.affiche_grille(gr)
-                        self.level = "unknown"
-                    else:
-                        one_button_box(self, _("Error"), _("This is not a 9x9 sudoku grid."),
-                                       image=self.im_erreur)
+                    self.load_grille(fichier)
                 except (ValueError,UnicodeDecodeError):
                     one_button_box(self, _("Error"),
                                    _("The file does not have the right format. It should be a .txt file with cell values separated by one space. 0 means empty cell."),
+                                   image=self.im_erreur)
+                except FileNotFoundError:
+                    one_button_box(self, _("Error"),
+                                   _("The file %(file)r does not exist.") % fichier,
                                    image=self.im_erreur)
         elif self.debut:
             self.play_pause()

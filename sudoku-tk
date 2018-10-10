@@ -24,9 +24,10 @@ Main
 from SudokuTkModules.sudoku import Sudoku
 from SudokuTkModules.constantes import LOG, CONFIG, PATH_CONFIG
 from os import remove
+import sys
 
 try:
-    game = Sudoku()
+    game = Sudoku(*sys.argv[1:])
     game.mainloop()
 finally:
     remove(LOG)
