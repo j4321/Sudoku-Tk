@@ -1,3 +1,2 @@
 include sudoku-tk.py *.rst *.txt
-recursive-include Puzzles *
 recursive-include po *
