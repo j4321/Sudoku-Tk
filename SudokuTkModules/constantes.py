@@ -27,12 +27,13 @@ from locale import getdefaultlocale
 import os
 import gettext
 from tkinter import TclVersion
+from subprocess import check_output, CalledProcessError
+from tkinter import filedialog
+
 
 VERSION = "1.2.0"
 
 PL = platform[0]
-
-# Traduction
 
 APP_NAME = "Sudoku-Tk"
 
@@ -42,7 +43,7 @@ PATH = os.path.split(__file__)[0]
 LOCALE_PATH = os.path.join(PATH, 'locale')
 
 
-# default path to save, open ...
+# --- default path to save, open ...
 if os.access(PATH, os.W_OK):
     # user has writing rights on the path
     INITIALDIR = os.path.split(PATH)[0]  # pour enregister / importer ...
@@ -72,7 +73,7 @@ else:
         LANGUE = "en_US"
     CONFIG.set("General", "language", LANGUE)
 
-
+# --- translation
 gettext.find(APP_NAME, LOCALE_PATH)
 gettext.bind_textdomain_codeset(APP_NAME, "UTF - 8")
 gettext.bindtextdomain(APP_NAME, LOCALE_PATH)
@@ -84,7 +85,7 @@ LANG = gettext.translation(APP_NAME, LOCALE_PATH,
                            languages=[LANGUE], fallback=True)
 LANG.install()
 
-# chemins des images
+# --- chemins des images
 IMAGES_LOCATION = os.path.join(PATH, 'images')
 
 PLAY = os.path.join(IMAGES_LOCATION, "play.png")
@@ -125,6 +126,113 @@ if PL == "w":
 else:
     STYLE = 'clam'
 
+
+# ---  filebrowser
+ZENITY = False
+
+# try:
+#     import tkfilebrowser as tkfb
+# except ImportError:
+tkfb = False
+
+if PL != "w":
+    paths = os.environ['PATH'].split(":")
+    for path in paths:
+        if os.path.exists(os.path.join(path, "zenity")):
+            ZENITY = True
+
+
+def askopenfilename(defaultextension, filetypes, initialdir, initialfile="", title=_('Open'), **options):
+    """ plateform specific file browser:
+            - defaultextension: extension added if none is given
+            - initialdir: directory where the filebrowser is opened
+            - filetypes: [('NOM', '*.ext'), ...]
+    """
+    if tkfb:
+        return tkfb.askopenfilename(title=title,
+                                    defaultext=defaultextension,
+                                    filetypes=filetypes,
+                                    initialdir=initialdir,
+                                    initialfile=initialfile,
+                                    **options)
+    elif ZENITY:
+        try:
+            args = ["zenity", "--file-selection",
+                    "--filename", os.path.join(initialdir, initialfile)]
+            for ext in filetypes:
+                args += ["--file-filter", "%s|%s" % ext]
+            args += ["--title", title]
+            file = check_output(args).decode("utf-8").strip()
+            filename, ext = os.path.splitext(file)
+            if not ext:
+                ext = defaultextension
+            return filename + ext
+        except CalledProcessError:
+            return ""
+        except Exception:
+            return filedialog.askopenfilename(title=title,
+                                              defaultextension=defaultextension,
+                                              filetypes=filetypes,
+                                              initialdir=initialdir,
+                                              initialfile=initialfile,
+                                              **options)
+    else:
+        return filedialog.askopenfilename(title=title,
+                                          defaultextension=defaultextension,
+                                          filetypes=filetypes,
+                                          initialdir=initialdir,
+                                          initialfile=initialfile,
+                                          **options)
+
+
+def asksaveasfilename(defaultextension, filetypes, initialdir=".", initialfile="", title=_('Save As'), **options):
+    """ plateform specific file browser for saving a file:
+            - defaultextension: extension added if none is given
+            - initialdir: directory where the filebrowser is opened
+            - filetypes: [('NOM', '*.ext'), ...]
+    """
+    if tkfb:
+        return tkfb.asksaveasfilename(title=title,
+                                      defaultext=defaultextension,
+                                      initialdir=initialdir,
+                                      filetypes=filetypes,
+                                      initialfile=initialfile,
+                                      **options)
+    elif ZENITY:
+        try:
+            args = ["zenity", "--file-selection",
+                    "--filename", os.path.join(initialdir, initialfile),
+                    "--save", "--confirm-overwrite"]
+            for ext in filetypes:
+                args += ["--file-filter", "%s|%s" % ext]
+            args += ["--title", title]
+            file = check_output(args).decode("utf-8").strip()
+            if file:
+                filename, ext = os.path.splitext(file)
+                if not ext:
+                    ext = defaultextension
+                return filename + ext
+            else:
+                return ""
+        except CalledProcessError:
+            return ""
+        except Exception:
+            return filedialog.asksaveasfilename(title=title,
+                                                defaultextension=defaultextension,
+                                                initialdir=initialdir,
+                                                filetypes=filetypes,
+                                                initialfile=initialfile,
+                                                **options)
+    else:
+        return filedialog.asksaveasfilename(title=title,
+                                            defaultextension=defaultextension,
+                                            initialdir=initialdir,
+                                            filetypes=filetypes,
+                                            initialfile=initialfile,
+                                            **options)
+
+
+#  --- compatibility
 if TclVersion < 8.6:
     # then tkinter cannot import PNG files directly, we need to use PIL
     from PIL import ImageTk, Image

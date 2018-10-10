@@ -3,3 +3,4 @@ __pycache__
 *.ini
 dist
 *.egg-info
+AUR

@@ -25,7 +25,7 @@ Class for the GUI
 
 
 import SudokuTkModules.constantes as cst
-from SudokuTkModules.constantes import open_image, CONFIG, LOG
+from SudokuTkModules.constantes import open_image, CONFIG, LOG,  askopenfilename, asksaveasfilename
 from SudokuTkModules.clavier import Clavier
 from SudokuTkModules.about import About
 from SudokuTkModules.aide import Aide
@@ -33,7 +33,6 @@ from SudokuTkModules.grille import Grille, genere_grille, difficulte_grille
 from SudokuTkModules.case import Case
 from tkinter import Tk, Menu, StringVar, Toplevel
 from tkinter.ttk import Button, Style, Label, Frame
-from tkinter.filedialog import askopenfilename, asksaveasfilename
 from SudokuTkModules.custom_messagebox import one_button_box, two_button_box
 from PIL import Image, ImageDraw, ImageFont
 import numpy as np
@@ -730,7 +729,7 @@ class Sudoku(Tk):
             self.play_pause()
         fichier = asksaveasfilename(initialdir=cst.INITIALDIR,
                                     defaultextension='.sudoku',
-                                    filetypes=[('SUDOKU', '*.sudoku')])
+                                    filetypes=[('Sudoku', '*.sudoku')])
         if fichier:
             self.save(fichier)
 
@@ -782,7 +781,7 @@ class Sudoku(Tk):
         if rep == _("Yes"):
             fichier = askopenfilename(initialdir=cst.INITIALDIR,
                                         defaultextension='.sudoku',
-                                        filetypes=[('SUDOKU', '*.sudoku')])
+                                        filetypes=[('Sudoku', '*.sudoku')])
             if fichier:
                 try:
                     self.load_sudoku(fichier)
@@ -907,7 +906,7 @@ class Sudoku(Tk):
             if not fichier:
                 fichier = askopenfilename(initialdir=cst.INITIALDIR,
                                           defaultextension='.txt',
-                                          filetypes=[('TXT', '*.txt'), ('Tous les fichiers',"*")])
+                                          filetypes=[('Text', '*.txt'), ('Tous les fichiers',"*")])
             if fichier:
                 try:
                     self.load_grille(fichier)
