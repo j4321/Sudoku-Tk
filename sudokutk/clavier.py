@@ -23,7 +23,7 @@ Class for the virtual keyboard to enter numbers in the grid
 
 from tkinter import Toplevel
 from tkinter.ttk import Style, Button
-from SudokuTkModules.constantes import LOG
+from sudokutk.constantes import LOG
 from numpy import array
 
 class Clavier(Toplevel):

@@ -23,18 +23,18 @@ Class for the GUI
 #TODO: set numbers back to black when conflicted number is erased
 #TODO: use list instead of file for log
 
-import SudokuTkModules.constantes as cst
-from SudokuTkModules.constantes import open_image, CONFIG, LOG,  askopenfilename, asksaveasfilename
-from SudokuTkModules.clavier import Clavier
-from SudokuTkModules.about import About
-from SudokuTkModules.aide import Aide
-from SudokuTkModules.grille import Grille, genere_grille, difficulte_grille
-from SudokuTkModules.case import Case
-from SudokuTkModules.progression import Progression
-from SudokuTkModules.tooltip import TooltipWrapper
+import sudokutk.constantes as cst
+from sudokutk.constantes import open_image, CONFIG, LOG,  askopenfilename, asksaveasfilename
+from sudokutk.clavier import Clavier
+from sudokutk.about import About
+from sudokutk.aide import Aide
+from sudokutk.grille import Grille, genere_grille, difficulte_grille
+from sudokutk.case import Case
+from sudokutk.progression import Progression
+from sudokutk.tooltip import TooltipWrapper
 from tkinter import Tk, Menu, StringVar, Toplevel
 from tkinter.ttk import Button, Style, Label, Frame
-from SudokuTkModules.custom_messagebox import one_button_box, two_button_box
+from sudokutk.custom_messagebox import one_button_box, two_button_box
 from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 from pickle import Pickler, Unpickler, UnpicklingError

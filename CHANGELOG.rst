@@ -11,10 +11,13 @@ Version 1.2
 
 * Add possibility to open file from command line
 * Add "Evaluate level" command in Game menu
+* Add tootips to buttons
+* Show filling progress: display how many of each numbers are in the grid
 * Restore previous game on startup if it was interrupted
 * Improve keypad display (no longer appear at the top of the screen before getting to the right position)
 * Improve PAUSE mode
 * Include level description in help dialog
+* Update error display after number deletion
 
 Version 1.1
 -----------

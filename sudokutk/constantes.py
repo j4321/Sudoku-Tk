@@ -236,7 +236,7 @@ def asksaveasfilename(defaultextension, filetypes, initialdir=".", initialfile="
 if TclVersion < 8.6:
     # then tkinter cannot import PNG files directly, we need to use PIL
     from PIL import ImageTk, Image
-    from SudokuTkModules.custom_messagebox import ob_checkbutton
+    from sudokutk.custom_messagebox import ob_checkbutton
     if not CONFIG.has_option("General", "old_tcl_warning") or CONFIG.getboolean("General", "old_tcl_warning"):
         ans = ob_checkbutton(title=_("Information"),
                              message=_("This software has been developped using Tcl/Tk 8.6, but you are using an older version. Therefore there might be errors. Please consider upgrading your Tcl/Tk version."),

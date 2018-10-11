@@ -22,7 +22,7 @@ Window displaying the information about the software
 
 from tkinter import Text, Toplevel
 from tkinter.ttk import Button, Label, Style
-from SudokuTkModules.constantes import set_icon, ICONE_48, VERSION, open_image
+from sudokutk.constantes import set_icon, ICONE_48, VERSION, open_image
 from webbrowser import open as webOpen
 
 
