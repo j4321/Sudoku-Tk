@@ -44,7 +44,7 @@ class About(Toplevel):
                   text=_("Sudoku-Tk %(version)s")
                   % ({"version": VERSION})).grid(row=1, columnspan=2)
         Label(self, text=_("Sudoku games and puzzle solver")).grid(row=2, columnspan=2, padx=10)
-        Label(self, text="Copyright (C) Juliette Monsel 2016").grid(row=3, columnspan=2)
+        Label(self, text="Copyright (C) Juliette Monsel 2016-2018").grid(row=3, columnspan=2)
         Label(self, text="j_4321@protonmail.com").grid(row=4, columnspan=2)
         Button(self, text=_("License"), command=self._license).grid(row=5, column=0, pady=(20, 10), padx=(10,4))
         Button(self, text=_("Close"), command=self._quitter).grid(row=5, column=1, pady=(20, 10), padx=(4,10))

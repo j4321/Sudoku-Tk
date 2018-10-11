@@ -2,6 +2,8 @@ Sudoku-Tk - Sudoku games and puzzle solver
 ==========================================
 Copyright 2016-2018 Juliette Monsel <j_4321@protonmail.com>
 
+|Release| |License|
+
 Sudoku-Tk is a software written in Python 3 with a Tk GUI.
 It enables you to play sudoku and to solve sudoku puzzles.
 You can start from an empty grid, load puzzles or generate them.
@@ -91,5 +93,13 @@ SudokuTkModules (renamed sudokutk) will stay in your system.
 Troubleshooting
 ---------------
 
-If you have any troubles or comments, don't hesitate to send me an email
-at j_4321@protonmail.com
+If you encounter bugs or if you have suggestions, please open an issue on
+`GitHub <https://github.com/j4321/CheckMails/issues>`__ or write me an email
+at <j_4321@protonmail.com>.
+
+
+.. |Release| image:: https://badge.fury.io/gh/j4321%2FSudoku-Tk.svg
+    :alt: Latest Release
+    :target: https://github.com/j4321/Sudoku-Tk/releases
+.. |License| image:: https://img.shields.io/github/license/j4321/Sudoku-Tk.svg
+    :target: https://www.gnu.org/licenses/gpl-3.0.en.html
