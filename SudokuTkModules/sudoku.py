@@ -22,7 +22,7 @@ Class for the GUI
 """
 #TODO: set numbers back to black when conflicted number is erased
 #TODO: use list instead of file for log
-
+#TODO: tooltip
 
 import SudokuTkModules.constantes as cst
 from SudokuTkModules.constantes import open_image, CONFIG, LOG,  askopenfilename, asksaveasfilename
@@ -31,6 +31,7 @@ from SudokuTkModules.about import About
 from SudokuTkModules.aide import Aide
 from SudokuTkModules.grille import Grille, genere_grille, difficulte_grille
 from SudokuTkModules.case import Case
+from SudokuTkModules.progression import Progression
 from tkinter import Tk, Menu, StringVar, Toplevel
 from tkinter.ttk import Button, Style, Label, Frame
 from SudokuTkModules.custom_messagebox import one_button_box, two_button_box
@@ -134,21 +135,12 @@ class Sudoku(Tk):
         self.b_redo.grid(row=2, column=4, sticky="w", pady=30, padx=(2, 10))
 
         # --- numbers
-        frame_nb = Frame(self, style='bg.TFrame')
+        frame_nb = Frame(self, style='bg.TFrame', width=36)
         frame_nb.grid(row=1, column=6, sticky='en', pady=0, padx=(0, 30))
-        self.label_nbs = []
-        self.nbs = np.zeros(9, dtype=int)
+        self.progression = []
         for i in range(1, 10):
-            f = Frame(frame_nb, style='case.TFrame', width=34, height=34)
-            f.pack(padx=1, pady=1)
-            Label(f, style='case.TLabel', text=str(i),
-                  font='Arial 16').place(anchor='center', relx=0.5, rely=0.5)
-            self.label_nbs.append(Label(f, style='case.TLabel', text='0',
-                                        font='Arial 9'))
-            self.label_nbs[-1].place(anchor='ne', relx=1, rely=0)
-            # Label(frame_nb, text=str(i), font="Arial 20", anchor='center',
-            #       style='case.TLabel', width=2).pack(padx=1, pady=1, fill='both')
-
+            self.progression.append(Progression(frame_nb, i))
+            self.progression[-1].pack(padx=1, pady=1)
 
         # --- level indication
         frame = Frame(self)
@@ -288,8 +280,11 @@ class Sudoku(Tk):
         self.label_level.configure(text=_(level.capitalize()))
 
     def update_nbs(self, nb, delta):
-        self.nbs[nb - 1] += delta
-        self.label_nbs[nb - 1].configure(text=str(self.nbs[nb - 1]))
+        self.progression[nb - 1].nb += delta
+
+    def reset_nbs(self):
+        for p in self.progression:
+            p.nb = 0
 
     def evaluate_level(self):
         grille = Grille()
@@ -678,9 +673,7 @@ class Sudoku(Tk):
             self.nb_cases_remplies = 0
             self.restart()
             self.level = "unknown"
-            self.nbs = np.zeros(9, dtype=int)
-            for l in self.label_nbs:
-                l.configure(text='0')
+            self.reset_nbs()
             for i in range(9):
                 for j in range(9):
                     self.blocs[i][j].set_modifiable(True)
@@ -703,7 +696,6 @@ class Sudoku(Tk):
             rep2 = _("Retry")
             while rep2 == _("Retry"):
                 grille = genere_grille()
-#                dico = {"facile":_("easy"), "moyen":_("medium"), "difficile":_("difficult")}
                 diff = difficulte_grille(grille)
                 nb = grille.nb_cases_remplies()
                 self.configure(cursor="")
@@ -714,7 +706,6 @@ class Sudoku(Tk):
                 self.level = diff
                 self.affiche_grille(grille.get_sudoku())
 
-
     def recommence(self):
         if self.chrono_on:
             self.play_pause()
@@ -724,16 +715,16 @@ class Sudoku(Tk):
                                     _("Do you really want to start again?"),
                                     _("Yes"), _("No"), self.im_question)
         if rep == _("Yes"):
+            self.reset_nbs()
             for i in range(9):
                 for j in range(9):
                     if self.blocs[i][j].is_modifiable():
                         if self.blocs[i][j].get_val():
                             self.nb_cases_remplies -= 1
                         self.blocs[i][j].efface_case()
+                    else:
+                        self.update_nbs(self.blocs[i][j], 1)
             self.restart()
-            self.nbs = np.zeros(9, dtype=int)
-            for l in self.label_nbs:
-                l.configure(text='0')
 
     def save(self, path):
         grille = np.zeros((9,9), dtype=int)
@@ -838,7 +829,6 @@ class Sudoku(Tk):
         sol = grille.solve()
         self.configure(cursor="")
         if type(sol) == np.ndarray:
-            self.nbs = np.zeros(9, dtype=int)
             for i in range(9):
                 for j in range(9):
                     val = self.blocs[i][j].get_val()
