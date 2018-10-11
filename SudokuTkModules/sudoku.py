@@ -32,6 +32,7 @@ from SudokuTkModules.aide import Aide
 from SudokuTkModules.grille import Grille, genere_grille, difficulte_grille
 from SudokuTkModules.case import Case
 from SudokuTkModules.progression import Progression
+from SudokuTkModules.tooltip import TooltipWrapper
 from tkinter import Tk, Menu, StringVar, Toplevel
 from tkinter.ttk import Button, Style, Label, Frame
 from SudokuTkModules.custom_messagebox import one_button_box, two_button_box
@@ -101,7 +102,6 @@ class Sudoku(Tk):
         style.configure("solution.TLabel", background="white", foreground="blue")
         style.configure("pause.TLabel", foreground="grey", background='white')
 
-
         # --- images
         self.im_erreur = open_image(cst.ERREUR)
         self.im_pause = open_image(cst.PAUSE)
@@ -112,31 +112,30 @@ class Sudoku(Tk):
         self.im_redo = open_image(cst.REDO)
         self.im_question = open_image(cst.QUESTION)
 
-        # --- chronomètre
+        # --- timer
         self.chrono = [0,0]
         self.tps = Label(self, text="%02i:%02i"% tuple(self.chrono),
                          font="Arial 16")
         self.debut = False # la partie a-t-elle commencée ?
         self.chrono_on = False # le chrono est-il en marche ?
 
+        # --- buttons
         self.b_pause = Button(self, state="disabled", image=self.im_pause,
                                   command=self.play_pause)
         self.b_restart = Button(self, state="disabled", image=self.im_restart,
                                 command=self.recommence)
-        self.tps.grid(row=2, column=0, sticky="e", padx=(30, 10), pady=30)
-        self.b_pause.grid(row=2, column=1, sticky="w", padx=2, pady=30)
-        self.b_restart.grid(row=2, column=2, sticky="w", padx=2, pady=30)
-
-        # --- Retour en arrière
         self.b_undo = Button(self, image=self.im_undo, command=self.undo)
-        self.b_undo.grid(row=2, column=3, sticky="e", pady=30, padx=2)
-
         self.b_redo = Button(self, image=self.im_redo, command=self.redo)
-        self.b_redo.grid(row=2, column=4, sticky="w", pady=30, padx=(2, 10))
+
+        # --- tooltips
+        self.tooltip_wrapper = TooltipWrapper(self)
+        self.tooltip_wrapper.add_tooltip(self.b_pause, _("Pause game"))
+        self.tooltip_wrapper.add_tooltip(self.b_restart, _("Restart game"))
+        self.tooltip_wrapper.add_tooltip(self.b_undo, _("Undo"))
+        self.tooltip_wrapper.add_tooltip(self.b_redo, _("Redo"))
 
         # --- numbers
         frame_nb = Frame(self, style='bg.TFrame', width=36)
-        frame_nb.grid(row=1, column=6, sticky='en', pady=0, padx=(0, 30))
         self.progression = []
         for i in range(1, 10):
             self.progression.append(Progression(frame_nb, i))
@@ -152,13 +151,21 @@ class Sudoku(Tk):
 
         # --- frame contenant la grille de sudoku
         self.frame_puzzle = Frame(self, style="bg.TFrame")
-        self.frame_puzzle.grid(row=1, columnspan=5, padx=(30, 15))
         self.frame_pause = Frame(self, style="case.TFrame")
         self.frame_pause.grid_propagate(False)
         self.frame_pause.columnconfigure(0, weight=1)
         self.frame_pause.rowconfigure(0, weight=1)
         Label(self.frame_pause, text='PAUSE', style='pause.TLabel',
               font='Arial 30 bold').grid()
+
+        # --- placement
+        frame_nb.grid(row=1, column=6, sticky='en', pady=0, padx=(0, 30))
+        self.frame_puzzle.grid(row=1, columnspan=5, padx=(30, 15))
+        self.tps.grid(row=2, column=0, sticky="e", padx=(30, 10), pady=30)
+        self.b_pause.grid(row=2, column=1, sticky="w", padx=2, pady=30)
+        self.b_restart.grid(row=2, column=2, sticky="w", padx=2, pady=30)
+        self.b_undo.grid(row=2, column=3, sticky="e", pady=30, padx=2)
+        self.b_redo.grid(row=2, column=4, sticky="w", pady=30, padx=(2, 10))
 
         # --- menu
         menu = Menu(self, tearoff=0)
@@ -498,6 +505,7 @@ class Sudoku(Tk):
                 self.b_pause.configure(image=self.im_play)
                 self.b_redo.configure(state="disabled")
                 self.b_undo.configure(state="disabled")
+                self.tooltip_wrapper.set_tooltip_text(self.b_pause, _("Play game"))
                 self.frame_pause.place(in_=self.frame_puzzle, x=0, y=0, anchor='nw',
                                        relwidth=1, relheight=1)
             elif self.nb_cases_remplies != 81:
@@ -508,6 +516,7 @@ class Sudoku(Tk):
                     self.b_undo.configure(state="normal")
                 if self.log_ligne < self.log_nb_ligne - 1:
                     self.b_redo.configure(state="normal")
+                self.tooltip_wrapper.set_tooltip_text(self.b_pause, _("Pause game"))
                 self.frame_pause.place_forget()
 
     def affiche_chrono(self):
