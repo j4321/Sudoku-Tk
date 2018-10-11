@@ -1,73 +1,64 @@
 Sudoku-Tk - Sudoku games and puzzle solver
 ==========================================
-Copyright 2016 Juliette Monsel <j_4321@protonmail.com>
+Copyright 2016-2018 Juliette Monsel <j_4321@protonmail.com>
 
 Sudoku-Tk is a software written in Python 3 with a Tk GUI.
 It enables you to play sudoku and to solve sudoku puzzles.
 You can start from an empty grid, load puzzles or generate them.
 You can save the game to continue later and there is a timer.
 
-Windows version
----------------
-
-
-Download Sudoku-Tk-x.y-windows.7z
-
-Unpack the archive
-
-Launch Sudoku-Tk from the shortcut in the folder, it is a
-standalone software.
-
-
-Souce code
-----------
-
-It should work on any OS provided the dependencies are installed. 
+Sudoku-Tk should work on any OS provided the dependencies are installed. 
 No compilation is needed since Python is an interpreted language.
 
-1. Prerequisites
+Prerequisites
+-------------
 
 This software is based on Python 3 and Tkinter interface so you will need
-to have them installed to use it. You might need to install some 
-additionnal python libraries.
+to have them installed to use it. This software also depends on the additionnal
+python libraries Pillow and Numpy.
 
-1.1. Windows users
+Windows
+~~~~~~~
 
-Install Python 3: https://www.python.org/downloads/windows/
-Install Pillow: https://pypi.python.org/pypi/Pillow/
-Install Numpy: https://pypi.python.org/pypi/numpy
+Install:
+
+- Python 3: https://www.python.org/downloads/windows/
+- Pillow: https://pypi.python.org/pypi/Pillow/
+- Numpy: https://pypi.python.org/pypi/numpy
 
 In all cases, be careful to choose the Python 3 versions
 (it won't work with Python 2)
 
-1.2. Linux users
+Or install Pillow and Numpy with pip:
+
+::
+
+    pip install numpy pillow
+    
+
+Linux
+~~~~~
 
 Install with your package manager the following packages (names might
 slightly change according to the distribution):
 
 Ubuntu/Debian:
 
-- python3-tk
+::
 
-- python3-pil
+    $sudo apt-get install python3-tk python3-pil python3-numpy
 
-- python3-numpy
-
-
-If you use a 8.5.x version of tcl/tk, you will also need 
-
-- python3-pil.imagetk
+If you use tcl/tk < 8.6, you will also need python3-pil.imagetk
 
 Archlinux:
 
-- tk
+::
 
-- python-pillow
-
-- python-numpy
+    $sudo pacman -S tk python-pillow python-numpy
 
 
-2. Getting started
+Getting started
+---------------
 
 Unpack the archive. 
 
