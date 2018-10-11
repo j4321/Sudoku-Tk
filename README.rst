@@ -42,18 +42,22 @@ Linux
 ~~~~~
 
 Install with your package manager the following packages (names might
-slightly change according to the distribution):
+slightly change according to the distribution): python3-tk python3-pil python3-numpy
+If you use tcl/tk < 8.6, you will also need python3-pil.imagetk.
 
-Ubuntu/Debian:
+- Ubuntu/Debian:
 
-::
+    Sudoku-Tk is available in the PPA `ppa:j-4321-i/ppa <https://launchpad.net/~j-4321-i/+archive/ubuntu/ppa>`__.
 
-    $sudo apt-get install python3-tk python3-pil python3-numpy
+    ::
 
-If you use tcl/tk < 8.6, you will also need python3-pil.imagetk
+        $ sudo add-apt-repository ppa:j-4321-i/ppa
+        $ sudo apt-get update
+        $ sudo apt-get install sudoku-tk
 
-Archlinux: a PKGBUILD is available in the repository.
+- Archlinux: 
 
+    Sudoku-Tk is available in `AUR <https://aur.archlinux.org/packages/sudoku-tk>`__.
 
 Getting started
 ---------------
