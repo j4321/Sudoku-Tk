@@ -52,11 +52,7 @@ Ubuntu/Debian:
 
 If you use tcl/tk < 8.6, you will also need python3-pil.imagetk
 
-Archlinux:
-
-::
-
-    $sudo pacman -S tk python-pillow python-numpy
+Archlinux: a PKGBUILD is available in the repository.
 
 
 Getting started
