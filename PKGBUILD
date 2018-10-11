@@ -12,7 +12,7 @@ depends=('tk' 'python-pillow' 'python-numpy' 'gettext' 'desktop-file-utils')
 optdepends=('python-tkfilebrowser: nicer file browser'
             'zenity: nicer file browser')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/j4321/$_name/archive/v$pkgver.tar.gz")
-sha512sums=('e908a32c0d704fedccb33eae42f304aaeb13b756f28940bbc7fd9a3150329b8389d2ff2706b982fb431d9dad28886106b1da9300e6c68041465624a3cd89031e')
+sha512sums=('66c246219b690ec56c34c663ffef463a4ebe8d273e5309126f337e330a56cf1b63f1e2c7dfb4c2ff5237c1c1a077a80ee379e8a972d3564be497030d14f866a4')
 
 build() {
 	cd "$srcdir/$_name-$pkgver"
