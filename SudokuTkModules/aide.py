@@ -76,7 +76,8 @@ class Aide(Toplevel):
 
         txt.insert("end", _("Filling the grid") + '\n', ("titre2"))
         txt.insert("end", _("\t• Left mouse click in the cell to show the keypad to enter a value.") + '\n')
-        txt.insert("end", _("\t• Right mouse click in the cell to show the keypad to enter a possibility." + '\n'), ("space"))
+        txt.insert("end", _("\t• Right mouse click in the cell to show the keypad to enter a possibility." + '\n'))
+        txt.insert("end", _("Clicking on a number already in the cell removes it.") + '\n', ("space"))
         txt.insert("end", _("The game can be saved at any time to continue it later. To open a saved game, go to "))
         txt.insert("end", _("Open -> Game"), ("it"))
         txt.insert("end", _(" and select the desired .sudoku file.") + '\n\n')
