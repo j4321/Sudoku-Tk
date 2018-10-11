@@ -26,7 +26,7 @@ from tkinter.ttk import Frame, Label
 
 class Case(Frame):
     """ case de la grille de sudoku """
-    def __init__(self, parent, i, j, **options):
+    def __init__(self, parent, i, j, callback_edit, **options):
         Frame.__init__(self, parent, **options)
         # grid layout
         self.rowconfigure(0, weight=1)
@@ -43,6 +43,7 @@ class Case(Frame):
         self.modifiable = True
         self.val = 0 # valeur de la case, 0 = vide
         self.possibilites = [] # possibilites écrites dans la case
+        self.callback_edit = callback_edit
 
         # labels
         self.chiffres = [] # tableau 3x3 de labels permettant d'afficher les chiffres dans la case
@@ -56,6 +57,15 @@ class Case(Frame):
                 self.chiffres[i][j].grid(row=i, column=j,
                                          sticky=sticky_i[i % 3] + sticky_j[j % 3],
                                          padx=1, pady=1)
+
+    def __eq__(self, other):
+        try:
+            return self.val == int(other)
+        except Exception:
+            return False
+
+    def __int__(self):
+        return self.val
 
     def get_val(self):
         return self.val
@@ -112,13 +122,17 @@ class Case(Frame):
         if self.val != val:
             if not self.val:
                 nb = 1
+            else:
+                self.callback_edit(self.val, -1)
             self.efface_case()
             self.chiffres[0][0].configure(text=val, font="Arial 32")
             self.chiffres[0][0].grid_configure(rowspan=3, columnspan=3, sticky="nsew")
             self.chiffres[0][0].lift()
             self.val = val
+            self.callback_edit(val, 1)
         else:
             self.efface_case()
+            self.callback_edit(val, -1)
             nb = -1
         return nb
 
@@ -128,6 +142,7 @@ class Case(Frame):
         j = (val - 1) % 3
         nb = 0
         if self.val:
+            self.callback_edit(self.val, -1)
             self.efface_case()
             nb = -1
         if not val in self.possibilites:
@@ -138,13 +153,17 @@ class Case(Frame):
             self.possibilites.remove(val)
         return nb
 
+    def no_error(self):
+        for i in range(3):
+            for j in range(3):
+                self.pas_erreur(i, j)
 
     def efface_case(self):
         """ Efface tous les labels de la case """
         for i in range(3):
             for j in range(3):
                 self.chiffres[i][j].configure(text=" ", font="Arial 9")
-                self.pas_erreur(i,j)
+                self.pas_erreur(i, j)
         self.chiffres[0][0].grid_configure(rowspan=1, columnspan=1, sticky="nw")
         self.val = 0
         self.possibilites = []
