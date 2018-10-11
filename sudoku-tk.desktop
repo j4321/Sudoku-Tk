@@ -2,12 +2,11 @@
 Version=1.2
 Encoding=UTF-8
 Name=Sudoku-Tk
-Comment_fr="Jeu et résolution de sudoku"
 Comment="Sudoku games and puzzle solver"
 Exec=sudoku-tk
 Icon=sudoku-tk
 Terminal=false
 Type=Application
-Categories=Games
+Categories=Game;
 StartupNotify=false
 
