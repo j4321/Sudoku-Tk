@@ -594,6 +594,7 @@ class Sudoku(Tk):
             sol = grille.solve()
             if type(sol) == np.ndarray:
                 self.play_pause()
+                self.frame_pause.place_forget()
                 one_button_box(self, _("Information"),
                                _("You solved the puzzle in %(min)i minutes and %(sec)i secondes.") % {"min": self.chrono[0], "sec": self.chrono[1]},
                                image=self.im_info)
