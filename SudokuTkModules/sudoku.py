@@ -22,7 +22,6 @@ Class for the GUI
 """
 #TODO: set numbers back to black when conflicted number is erased
 #TODO: use list instead of file for log
-#TODO: tooltip
 
 import SudokuTkModules.constantes as cst
 from SudokuTkModules.constantes import open_image, CONFIG, LOG,  askopenfilename, asksaveasfilename
@@ -539,20 +538,23 @@ class Sudoku(Tk):
                 self.b_pause.configure(state="normal")
                 self.b_restart.configure(state="normal")
                 self.play_pause()
-            if  str(event.widget) != "." and self.chrono_on:
+            if str(event.widget) != "." and self.chrono_on:
                 if self.clavier:
                     self.clavier.quitter()
                 ref = self.blocs[0][0].winfo_parent()
                 case = event.widget.grid_info().get("in", None)
                 if str(case) == ref:
                     case = event.widget
-                if case and str(case) != ".":
+                try:
                     if case.is_modifiable():
                         if event.num == 1:
                             self.clavier = Clavier(self, case, "val")
                         elif event.num == 3:
                             self.clavier = Clavier(self, case, "possibilite")
                         self.clavier.display("+%i+%i" % (case.winfo_rootx()-25,case.winfo_rooty()+50))
+                except AttributeError:
+                    if self.clavier:
+                        self.clavier.quitter()
 
             elif self.clavier:
                 self.clavier.quitter()
@@ -734,6 +736,9 @@ class Sudoku(Tk):
                     else:
                         self.update_nbs(self.blocs[i][j], 1)
             self.restart()
+        elif self.debut:
+            self.play_pause()
+
 
     def save(self, path):
         grille = np.zeros((9,9), dtype=int)

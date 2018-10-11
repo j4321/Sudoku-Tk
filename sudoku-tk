@@ -28,7 +28,7 @@ import sys
 
 try:
     game = Sudoku(*sys.argv[1:])
-    game.mainloop()
+    # game.mainloop()
 finally:
     remove(LOG)
     with open(PATH_CONFIG, 'w') as fichier:
