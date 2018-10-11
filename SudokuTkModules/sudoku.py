@@ -504,7 +504,7 @@ class Sudoku(Tk):
                 self.b_pause.configure(image=self.im_play)
                 self.b_redo.configure(state="disabled")
                 self.b_undo.configure(state="disabled")
-                self.tooltip_wrapper.set_tooltip_text(self.b_pause, _("Play game"))
+                self.tooltip_wrapper.set_tooltip_text(self.b_pause, _("Resume game"))
                 self.frame_pause.place(in_=self.frame_puzzle, x=0, y=0, anchor='nw',
                                        relwidth=1, relheight=1)
             elif self.nb_cases_remplies != 81:
