@@ -81,5 +81,15 @@ You can also install it with
     $ python3 setup.py install 
 
 
+Note
+----
+
+If you had installed version 1.1 and you are updating to 1.2, please 
+uninstall all files from the previous version otherwise the old module
+SudokuTkModules (renamed sudokutk) will stay in your system.
+
+Troubleshooting
+---------------
+
 If you have any troubles or comments, don't hesitate to send me an email
 at j_4321@protonmail.com
