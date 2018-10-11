@@ -2,7 +2,7 @@
 # -*-coding:Utf-8 -*-
 """
 Sudoku-Tk - Sudoku games and puzzle solver
-Copyright 2016 Juliette Monsel <j_4321@protonmail.com>
+Copyright 2016-2018 Juliette Monsel <j_4321@protonmail.com>
 
 Sudoku-Tk is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
