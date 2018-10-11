@@ -122,21 +122,37 @@ class Sudoku(Tk):
                                   command=self.play_pause)
         self.b_restart = Button(self, state="disabled", image=self.im_restart,
                                 command=self.recommence)
-        self.tps.grid(row=2, column=0, sticky="e", padx=(30,10), pady=(30,30))
-        self.b_pause.grid(row=2, column=1, sticky="w", padx=2, pady=(30,30))
-        self.b_restart.grid(row=2, column=2, sticky="w", padx=(2,10), pady=(30,30))
+        self.tps.grid(row=2, column=0, sticky="e", padx=(30, 10), pady=30)
+        self.b_pause.grid(row=2, column=1, sticky="w", padx=2, pady=30)
+        self.b_restart.grid(row=2, column=2, sticky="w", padx=2, pady=30)
 
         # --- Retour en arrière
         self.b_undo = Button(self, image=self.im_undo, command=self.undo)
-        self.b_undo.grid(row=2, column=3, sticky="e", pady=(30,30), padx=2)
+        self.b_undo.grid(row=2, column=3, sticky="e", pady=30, padx=2)
 
         self.b_redo = Button(self, image=self.im_redo, command=self.redo)
-        self.b_redo.grid(row=2, column=4, sticky="w", pady=(30,30), padx=(2,30))
+        self.b_redo.grid(row=2, column=4, sticky="w", pady=30, padx=(2, 10))
+
+        # --- numbers
+        frame_nb = Frame(self, style='bg.TFrame')
+        frame_nb.grid(row=1, column=6, sticky='en', pady=0, padx=(0, 30))
+        self.label_nbs = []
+        self.nbs = np.zeros(9, dtype=int)
+        for i in range(1, 10):
+            f = Frame(frame_nb, style='case.TFrame', width=34, height=34)
+            f.pack(padx=1, pady=1)
+            Label(f, style='case.TLabel', text=str(i),
+                  font='Arial 16').place(anchor='center', relx=0.5, rely=0.5)
+            self.label_nbs.append(Label(f, style='case.TLabel', text='0',
+                                        font='Arial 9'))
+            self.label_nbs[-1].place(anchor='ne', relx=1, rely=0)
+            # Label(frame_nb, text=str(i), font="Arial 20", anchor='center',
+            #       style='case.TLabel', width=2).pack(padx=1, pady=1, fill='both')
 
 
         # --- level indication
         frame = Frame(self)
-        frame.grid(row=0, columnspan=5, padx=30, pady=10)
+        frame.grid(row=0, columnspan=5, padx=(30, 10), pady=10)
         Label(frame, text=_("Level") + ' - ', font="Arial 16").pack(side='left')
         self.label_level = Label(frame, font="Arial 16", text=_("Unknown"))
         self.label_level.pack(side='left')
@@ -144,13 +160,13 @@ class Sudoku(Tk):
 
         # --- frame contenant la grille de sudoku
         self.frame_puzzle = Frame(self, style="bg.TFrame")
-        self.frame_puzzle.grid(row=1, columnspan=5, padx=30)
+        self.frame_puzzle.grid(row=1, columnspan=5, padx=(30, 15))
         self.frame_pause = Frame(self, style="case.TFrame")
         self.frame_pause.grid_propagate(False)
         self.frame_pause.columnconfigure(0, weight=1)
         self.frame_pause.rowconfigure(0, weight=1)
         Label(self.frame_pause, text='PAUSE', style='pause.TLabel',
-              font=('TkDefaultFont', 30, 'bold')).grid()
+              font='Arial 30 bold').grid()
 
         # --- menu
         menu = Menu(self, tearoff=0)
@@ -218,7 +234,7 @@ class Sudoku(Tk):
         for i in range(9):
             self.blocs.append([])
             for j in range(9):
-                self.blocs[i].append(Case(self.frame_puzzle, i, j, width=50, height=50))
+                self.blocs[i].append(Case(self.frame_puzzle, i, j, self.update_nbs, width=50, height=50))
                 px, py = 1, 1
                 if i % 3 == 2 and i != 8:
                     py = (1,3)
@@ -270,6 +286,10 @@ class Sudoku(Tk):
     def level(self, level):
         self._level = level
         self.label_level.configure(text=_(level.capitalize()))
+
+    def update_nbs(self, nb, delta):
+        self.nbs[nb - 1] += delta
+        self.label_nbs[nb - 1].configure(text=str(self.nbs[nb - 1]))
 
     def evaluate_level(self):
         grille = Grille()
@@ -415,6 +435,7 @@ class Sudoku(Tk):
 
             if self.blocs[i][j].get_val():
                 self.modifie_nb_cases_remplies(-1)
+                self.update_nbs(self.blocs[i][j].get_val(), -1)
             self.blocs[i][j].efface_case()
             if val_prec:
                 self.modifie_nb_cases_remplies(self.blocs[i][j].edit_chiffre(val_prec))
@@ -448,6 +469,7 @@ class Sudoku(Tk):
             i, j, val = int(i), int(j), int(val)
             if self.blocs[i][j].get_val():
                 self.modifie_nb_cases_remplies(-1)
+                self.update_nbs(self.blocs[i][j].get_val(), -1)
             self.blocs[i][j].efface_case()
             if val:
                 self.modifie_nb_cases_remplies(self.blocs[i][j].edit_chiffre(val))
@@ -656,6 +678,9 @@ class Sudoku(Tk):
             self.nb_cases_remplies = 0
             self.restart()
             self.level = "unknown"
+            self.nbs = np.zeros(9, dtype=int)
+            for l in self.label_nbs:
+                l.configure(text='0')
             for i in range(9):
                 for j in range(9):
                     self.blocs[i][j].set_modifiable(True)
@@ -706,6 +731,9 @@ class Sudoku(Tk):
                             self.nb_cases_remplies -= 1
                         self.blocs[i][j].efface_case()
             self.restart()
+            self.nbs = np.zeros(9, dtype=int)
+            for l in self.label_nbs:
+                l.configure(text='0')
 
     def save(self, path):
         grille = np.zeros((9,9), dtype=int)
@@ -810,6 +838,7 @@ class Sudoku(Tk):
         sol = grille.solve()
         self.configure(cursor="")
         if type(sol) == np.ndarray:
+            self.nbs = np.zeros(9, dtype=int)
             for i in range(9):
                 for j in range(9):
                     val = self.blocs[i][j].get_val()
