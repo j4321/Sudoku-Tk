@@ -65,20 +65,20 @@ class Clavier(Toplevel):
 
     def entre_nb(self, val):
         """ commande de la touche val du clavier """
-        i,j = self.case.get_i(), self.case.get_j()
+        i, j = self.case.get_i(), self.case.get_j()
 
         # données pour le log
         val_prec = self.case.get_val()
         pos_prec = array(self.case.get_possibilites(), dtype=str)
-        coords = "%i\t%i;" % (i,j)
+        coords = "%i\t%i;" % (i, j)
         undo_ch = "%i\t%s;" % (val_prec,"".join(pos_prec))
         modifs = ";"
 
         # modification de la case
         if self.type == "val":
             self.master.modifie_nb_cases_remplies(self.case.edit_chiffre(val))
-            if not self.master.test_case(i,j):
-                modifs = self.master.update_grille(i,j)
+            if not self.master.test_case(i, j, val_prec):
+                modifs = self.master.update_grille(i, j, val_prec)
             self.quitter()
         else:
             self.master.modifie_nb_cases_remplies(self.case.edit_possibilite(val))

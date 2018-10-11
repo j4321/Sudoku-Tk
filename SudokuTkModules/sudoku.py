@@ -228,18 +228,17 @@ class Sudoku(Tk):
 
         # --- cases
         self.nb_cases_remplies = 0
-        self.blocs = []
+        self.blocs = np.zeros((9, 9), dtype=object)
         for i in range(9):
-            self.blocs.append([])
             for j in range(9):
-                self.blocs[i].append(Case(self.frame_puzzle, i, j, self.update_nbs, width=50, height=50))
+                self.blocs[i, j] = Case(self.frame_puzzle, i, j, self.update_nbs, width=50, height=50)
                 px, py = 1, 1
                 if i % 3 == 2 and i != 8:
                     py = (1,3)
                 if j % 3 == 2 and j != 8:
                     px =(1,3)
-                self.blocs[i][j].grid(row=i, column=j, padx=px, pady=py)
-                self.blocs[i][j].grid_propagate(0)
+                self.blocs[i, j].grid(row=i, column=j, padx=px, pady=py)
+                self.blocs[i, j].grid_propagate(0)
 
         # --- création du fichier log
         self.log_reinit()
@@ -296,7 +295,7 @@ class Sudoku(Tk):
         grille = Grille()
         for i in range(9):
             for j in range(9):
-                val = self.blocs[i][j].get_val()
+                val = self.blocs[i, j].get_val()
                 if val:
                     grille.ajoute_init(i, j, val)
         self.level = difficulte_grille(grille)
@@ -434,24 +433,24 @@ class Sudoku(Tk):
             if self.log_ligne == 1:
                 self.b_undo.configure(state="disabled")
 
-            if self.blocs[i][j].get_val():
+            if self.blocs[i, j].get_val():
                 self.modifie_nb_cases_remplies(-1)
-                self.update_nbs(self.blocs[i][j].get_val(), -1)
-            self.blocs[i][j].efface_case()
+                self.update_nbs(self.blocs[i, j].get_val(), -1)
+            self.blocs[i, j].efface_case()
             if val_prec:
-                self.modifie_nb_cases_remplies(self.blocs[i][j].edit_chiffre(val_prec))
-                if not self.test_case(i, j):
-                    self.update_grille(i ,j)
+                self.modifie_nb_cases_remplies(self.blocs[i, j].edit_chiffre(val_prec))
+                if not self.test_case(i, j, val):
+                    self.update_grille(i, j, val)
             else:
                 for nb in pos_prec:
                     v = int(nb)
-                    self.modifie_nb_cases_remplies(self.blocs[i][j].edit_possibilite(v))
+                    self.modifie_nb_cases_remplies(self.blocs[i, j].edit_possibilite(v))
                     self.test_possibilite(i, j, v)
             if modifs[0]:
                 for ch in modifs:
                     k, l = ch.split(",")
                     k, l = int(k), int(l)
-                    self.blocs[k][l].edit_possibilite(val)
+                    self.blocs[k, l].edit_possibilite(val)
 
     def redo(self):
         if self.log_ligne < self.log_nb_ligne - 1 and self.chrono_on:
@@ -468,18 +467,19 @@ class Sudoku(Tk):
             i, j = coords.split("\t")
             val, pos = redo_ch.split("\t")
             i, j, val = int(i), int(j), int(val)
-            if self.blocs[i][j].get_val():
+            val_prec = self.blocs[i, j].get_val()
+            if val_prec:
                 self.modifie_nb_cases_remplies(-1)
-                self.update_nbs(self.blocs[i][j].get_val(), -1)
-            self.blocs[i][j].efface_case()
+                self.update_nbs(val_prec, -1)
+            self.blocs[i, j].efface_case()
             if val:
-                self.modifie_nb_cases_remplies(self.blocs[i][j].edit_chiffre(val))
-                if not self.test_case(i, j):
-                    self.update_grille(i ,j)
+                self.modifie_nb_cases_remplies(self.blocs[i, j].edit_chiffre(val))
+                if not self.test_case(i, j, val_prec):
+                    self.update_grille(i, j, val_prec)
             else:
                 for nb in pos:
                     v = int(nb)
-                    self.modifie_nb_cases_remplies(self.blocs[i][j].edit_possibilite(v))
+                    self.modifie_nb_cases_remplies(self.blocs[i, j].edit_possibilite(v))
                     self.test_possibilite(i, j, v)
 
 
@@ -541,7 +541,7 @@ class Sudoku(Tk):
             if str(event.widget) != "." and self.chrono_on:
                 if self.clavier:
                     self.clavier.quitter()
-                ref = self.blocs[0][0].winfo_parent()
+                ref = self.blocs[0, 0].winfo_parent()
                 case = event.widget.grid_info().get("in", None)
                 if str(case) == ref:
                     case = event.widget
@@ -559,56 +559,43 @@ class Sudoku(Tk):
             elif self.clavier:
                 self.clavier.quitter()
 
-    def test_case(self, i,j):
+    def test_case(self, i, j, val_prec=0):
         """ Teste si la valeur de la case est en contradiction avec celles des
             autres cases de la ligne / colonne / bloc et renvoie True s'il y a une erreur."""
-        val = self.blocs[i][j].get_val()
-        k = 0
-        while k < 9 and (self.blocs[i][k].get_val() != val or j == k) and (self.blocs[k][j].get_val() != val or i == k):
-            k += 1
-        if k == 9:
-            # pas de problème dans la ligne / colonne
-            # test du bloc
-            a, b = i//3, j//3
-            x, y = 3*a, 3*b
-            while x < 3*(a+1) and (self.blocs[x][y].get_val() != val or (i==x and j==y)):
-                y += 1
-                if y == 3*(b+1):
-                    y = 3*b
-                    x += 1
-            if x < 3*(a+1):
+        val = self.blocs[i, j].get_val()
+        a, b = i // 3, j // 3
+        error = False
+        if val:
+            if ((self.blocs[i, :] == val).sum() > 1 or (self.blocs[:, j] == val).sum() > 1 or
+                (self.blocs[3 * a: 3 * (a + 1), 3 * b: 3 * (b + 1)] == val).sum() > 1):
                 # erreur !
-                self.blocs[i][j].affiche_erreur()
-                return True
-            else:
-                return False
-        else:
-            # erreur !
-            self.blocs[i][j].affiche_erreur()
-            return True
+                self.blocs[i, j].affiche_erreur()
+                error = True
+        if val_prec:
+            # a number was removed, remove obsolete errors
+            line = self.blocs[i, :] == val_prec
+            column = self.blocs[:, j] == val_prec
+            bloc = self.blocs[3 * a: 3 * (a + 1), 3 * b: 3 * (b + 1)] == val_prec
+            if line.sum() == 1:
+                self.blocs[i, line.argmax()].no_error()
+                self.test_case(i, line.argmax())
+            if column.sum() == 1:
+                self.blocs[column.argmax(), j].no_error()
+                self.test_case(column.argmax(), j)
+            if bloc.sum() == 1:
+                x, y = divmod(bloc.argmax(), 3)
+                self.blocs[3 * a + x, 3 * b + y].no_error()
+                self.test_case(3 * a + x, 3 * b + y)
+        return error
 
     def test_possibilite(self, i, j, val):
         """ Teste si la possibilité val de la case est en contradiction avec les valeurs des
             autres cases de la ligne / colonne / bloc """
-        k = 0
-        while k < 9 and self.blocs[i][k].get_val() != val and self.blocs[k][j].get_val() != val:
-            k += 1
-        if k == 9:
-            # pas de problème dans la ligne / colonne
-            # test du bloc
-            a, b = i//3, j//3
-            x, y = 3*a, 3*b
-            while x < 3*(a+1) and self.blocs[x][y].get_val() != val:
-                y += 1
-                if y == 3*(b+1):
-                    y = 3*b
-                    x += 1
-            if x < 3*(a+1):
-                # erreur !
-                self.blocs[i][j].affiche_erreur_possibilite(val)
-        else:
+        a, b = i // 3, j // 3
+        if ((self.blocs[i, :] == val).sum() > 0 or (self.blocs[:, j] == val).sum() > 0 or
+            (self.blocs[3 * a: 3 * (a + 1), 3 * b: 3 * (b + 1)] == val).sum() > 0):
             # erreur !
-            self.blocs[i][j].affiche_erreur_possibilite(val)
+            self.blocs[i, j].affiche_erreur_possibilite(val)
 
     def test_remplie(self):
         """ Test si la grille est remplie """
@@ -616,7 +603,7 @@ class Sudoku(Tk):
             grille = Grille()
             for i in range(9):
                 for j in range(9):
-                    val = self.blocs[i][j].get_val()
+                    val = self.blocs[i, j].get_val()
                     if val:
                         grille.ajoute_init(i, j, val)
             sol = grille.solve()
@@ -640,35 +627,51 @@ class Sudoku(Tk):
 
             else:
                 i,j = sol[1]
-                if self.blocs[i][j].get_val():
-                    self.blocs[i][j].affiche_erreur()
+                if self.blocs[i, j].get_val():
+                    self.blocs[i, j].affiche_erreur()
                 one_button_box(self, _("Information"), _("There is a mistake."),
                                image=self.im_info)
 
-    def update_grille(self, i, j):
+    def update_grille(self, i, j, val_prec=0):
         """ Enlève les possibilités devenues impossibles suite à l'ajout d'une
             valeur dans la case (i,j) """
-        val = self.blocs[i][j].get_val()
+        val = self.blocs[i, j].get_val()
         modif = []
-        for k in range(9):
-            pos1 = self.blocs[i][k].get_possibilites()
-            pos2 = self.blocs[k][j].get_possibilites()
+        a, b = i // 3, j // 3
+        if val_prec:
+            x, y = divmod(val_prec - 1, 3)
+            print(val_prec, x, y)
+        for k, (line, column, bloc) in enumerate(zip(self.blocs[i, :], self.blocs[:, j], self.blocs[3 * a: 3 * (a + 1), 3 * b: 3 * (b + 1)].flatten())):
+            # works because if line is bloc then pos1 is pos3 and both are edited at once
+            pos1 = line.get_possibilites()
+            pos2 = column.get_possibilites()
+            pos3 = bloc.get_possibilites()
             if val in pos1:
-                self.blocs[i][k].edit_possibilite(val)
-                modif.append((i,k))
+                self.blocs[i, k].edit_possibilite(val)
+                modif.append((i, k))
             if val in pos2:
-                self.blocs[k][j].edit_possibilite(val)
-                modif.append((k,j))
-        a, b = i//3, j//3
-        for x in range(3*a, 3*(a+1)):
-            for y in range(3*b, 3*(b+1)):
-                pos = self.blocs[x][y].get_possibilites()
-                if val in pos:
-                    self.blocs[x][y].edit_possibilite(val)
-                    modif.append((x,y))
+                self.blocs[k, j].edit_possibilite(val)
+                modif.append((k, j))
+            if val in pos3:
+                m, n = divmod(k, 3)
+                self.blocs[3 * a + m, 3 * b + n].edit_possibilite(val)
+                modif.append((3 * a + m, 3 * b + n))
+            if val_prec:
+                if val_prec in pos1:
+                    self.blocs[i, k].pas_erreur(x, y)
+                    self.test_possibilite(i, k, val_prec)
+                if val_prec in pos2:
+                    self.blocs[k, j].pas_erreur(x, y)
+                    self.test_possibilite(k, j, val_prec)
+                if val_prec in pos3:
+                    m, n = divmod(k, 3)
+                    m, n = 3 * a + m, 3 * b + n
+                    if m != i and n != j:
+                        self.blocs[m, n].pas_erreur(x, y)
+                        self.test_possibilite(m, n, val_prec)
         modif_ch = ""
-        for (k,l) in modif:
-            modif_ch += "%i,%i\t" % (k,l)
+        for (k, l) in modif:
+            modif_ch += "%i,%i\t" % (k, l)
         return modif_ch[:-1] + ";"
 
     def set_clavier(self, c):
@@ -687,8 +690,8 @@ class Sudoku(Tk):
             self.reset_nbs()
             for i in range(9):
                 for j in range(9):
-                    self.blocs[i][j].set_modifiable(True)
-                    self.blocs[i][j].efface_case()
+                    self.blocs[i, j].set_modifiable(True)
+                    self.blocs[i, j].efface_case()
 
 
     def genere_grille(self):
@@ -729,12 +732,12 @@ class Sudoku(Tk):
             self.reset_nbs()
             for i in range(9):
                 for j in range(9):
-                    if self.blocs[i][j].is_modifiable():
-                        if self.blocs[i][j].get_val():
+                    if self.blocs[i, j].is_modifiable():
+                        if self.blocs[i, j].get_val():
                             self.nb_cases_remplies -= 1
-                        self.blocs[i][j].efface_case()
+                        self.blocs[i, j].efface_case()
                     else:
-                        self.update_nbs(self.blocs[i][j], 1)
+                        self.update_nbs(self.blocs[i, j].get_val(), 1)
             self.restart()
         elif self.debut:
             self.play_pause()
@@ -747,9 +750,9 @@ class Sudoku(Tk):
         for i in range(9):
             possibilites.append([])
             for j in range(9):
-                grille[i,j] = self.blocs[i][j].get_val()
-                modif[i,j] = self.blocs[i][j].is_modifiable()
-                possibilites[i].append(self.blocs[i][j].get_possibilites())
+                grille[i,j] = self.blocs[i, j].get_val()
+                modif[i,j] = self.blocs[i, j].is_modifiable()
+                possibilites[i].append(self.blocs[i, j].get_possibilites())
         with open(path, "wb") as fich:
             p = Pickler(fich)
             p.dump(grille)
@@ -774,13 +777,13 @@ class Sudoku(Tk):
         for i in range(9):
             for j in range(9):
                 nb = grille[i,j]
-                self.blocs[i][j].efface_case()
+                self.blocs[i, j].efface_case()
                 if nb:
-                    self.blocs[i][j].set_modifiable(False)
+                    self.blocs[i, j].set_modifiable(False)
                     self.nb_cases_remplies += 1
-                    self.blocs[i][j].edit_chiffre(nb)
+                    self.blocs[i, j].edit_chiffre(nb)
                 else:
-                   self.blocs[i][j].set_modifiable(True)
+                   self.blocs[i, j].set_modifiable(True)
 
     def load_sudoku(self, file):
         with open(file,"rb") as fich:
@@ -794,14 +797,14 @@ class Sudoku(Tk):
         self.restart(*chrono)
         for i in range(9):
             for j in range(9):
-                self.blocs[i][j].efface_case()
+                self.blocs[i, j].efface_case()
                 if grille[i,j]:
                     self.nb_cases_remplies += 1
-                    self.blocs[i][j].edit_chiffre(grille[i,j])
+                    self.blocs[i, j].edit_chiffre(grille[i,j])
                 else:
                     for pos in possibilites[i][j]:
-                        self.blocs[i][j].edit_possibilite(pos)
-                self.blocs[i][j].set_modifiable(modif[i,j])
+                        self.blocs[i, j].edit_possibilite(pos)
+                self.blocs[i, j].set_modifiable(modif[i,j])
 
     def import_partie(self):
         """ importe une partie stockée dans un fichier .sudoku """
@@ -835,8 +838,8 @@ class Sudoku(Tk):
         grille = Grille()
         for i in range(9):
             for j in range(9):
-                if not self.blocs[i][j].is_modifiable():
-                    val = self.blocs[i][j].get_val()
+                if not self.blocs[i, j].is_modifiable():
+                    val = self.blocs[i, j].get_val()
                     grille.ajoute_init(i, j, val)
         self.configure(cursor="watch")
         self.update()
@@ -845,21 +848,21 @@ class Sudoku(Tk):
         if type(sol) == np.ndarray:
             for i in range(9):
                 for j in range(9):
-                    val = self.blocs[i][j].get_val()
+                    val = self.blocs[i, j].get_val()
                     if not val:
-                        self.blocs[i][j].edit_chiffre(sol[i,j])
-                        self.blocs[i][j].affiche_solution()
-                    elif self.blocs[i][j].is_modifiable():
+                        self.blocs[i, j].edit_chiffre(sol[i,j])
+                        self.blocs[i, j].affiche_solution()
+                    elif self.blocs[i, j].is_modifiable():
                         if val != sol[i,j]:
-                            self.blocs[i][j].edit_chiffre(sol[i,j])
-                            self.blocs[i][j].affiche_erreur()
+                            self.blocs[i, j].edit_chiffre(sol[i,j])
+                            self.blocs[i, j].affiche_erreur()
             self.restart()
             self.nb_cases_remplies = 81
 
         elif sol[1]:
             i,j = sol[1]
-            if self.blocs[i][j].get_val():
-                self.blocs[i][j].affiche_erreur()
+            if self.blocs[i, j].get_val():
+                self.blocs[i, j].affiche_erreur()
             one_button_box(self, _("Error"), _("The grid is wrong. It cannot be solved."),
                            image=self.im_erreur)
         else:
@@ -876,7 +879,7 @@ class Sudoku(Tk):
             grille = Grille()
             for i in range(9):
                 for j in range(9):
-                    val = self.blocs[i][j].get_val()
+                    val = self.blocs[i, j].get_val()
                     if val:
                         grille.ajoute_init(i, j, val)
             self.configure(cursor="watch")
@@ -886,19 +889,19 @@ class Sudoku(Tk):
             if type(sol) == np.ndarray:
                 for i in range(9):
                     for j in range(9):
-                        val = self.blocs[i][j].get_val()
+                        val = self.blocs[i, j].get_val()
                         if not val:
-                            self.blocs[i][j].edit_chiffre(sol[i,j])
-                            self.blocs[i][j].affiche_solution()
+                            self.blocs[i, j].edit_chiffre(sol[i,j])
+                            self.blocs[i, j].affiche_solution()
                 self.restart()
                 self.b_restart.configure(state="normal")
                 self.nb_cases_remplies = 81
             elif sol[1]:
                 i,j = sol[1]
-                if self.blocs[i][j].get_val():
-                    self.blocs[i][j].affiche_erreur()
+                if self.blocs[i, j].get_val():
+                    self.blocs[i, j].affiche_erreur()
                 i,j = 0,0
-                while i < 9 and self.blocs[i][j].is_modifiable():
+                while i < 9 and self.blocs[i, j].is_modifiable():
                     j += 1
                     if j == 9:
                         i += 1
@@ -968,7 +971,7 @@ class Sudoku(Tk):
             grille = np.zeros((9,9), dtype=int)
             for i in range(9):
                 for j in range(9):
-                    grille[i,j] = self.blocs[i][j].get_val()
+                    grille[i,j] = self.blocs[i, j].get_val()
             font = ImageFont.truetype("arial.ttf", 64)
             im = Image.new("RGB",(748,748),"white")
             draw = ImageDraw.Draw(im)
@@ -987,7 +990,7 @@ class Sudoku(Tk):
             for i in range(9):
                 for j in range(9):
                     if grille[i,j]:
-                        draw.text((26 + j*82 + 2*(j//3),10 + i*82 + 2*(i//3)),"%i" % grille[i,j],fill="black",font=font)
+                        draw.text((26 + j*82 + 2*(j // 3),10 + i*82 + 2*(i // 3)),"%i" % grille[i,j],fill="black",font=font)
 
             del draw
             im.save(fichier)

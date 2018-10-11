@@ -58,6 +58,15 @@ class Case(Frame):
                                          sticky=sticky_i[i % 3] + sticky_j[j % 3],
                                          padx=1, pady=1)
 
+    def __eq__(self, other):
+        try:
+            return self.val == int(other)
+        except Exception:
+            return False
+
+    def __int__(self):
+        return self.val
+
     def get_val(self):
         return self.val
 
@@ -144,13 +153,17 @@ class Case(Frame):
             self.possibilites.remove(val)
         return nb
 
+    def no_error(self):
+        for i in range(3):
+            for j in range(3):
+                self.pas_erreur(i, j)
 
     def efface_case(self):
         """ Efface tous les labels de la case """
         for i in range(3):
             for j in range(3):
                 self.chiffres[i][j].configure(text=" ", font="Arial 9")
-                self.pas_erreur(i,j)
+                self.pas_erreur(i, j)
         self.chiffres[0][0].grid_configure(rowspan=1, columnspan=1, sticky="nw")
         self.val = 0
         self.possibilites = []
