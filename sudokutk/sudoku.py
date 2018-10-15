@@ -775,6 +775,7 @@ class Sudoku(Tk):
         """ Affiche la grille """
         self.nb_cases_remplies = 0
         self.restart()
+        self.reset_nbs()
         for i in range(9):
             for j in range(9):
                 nb = grille[i,j]
@@ -795,6 +796,7 @@ class Sudoku(Tk):
             chrono = dp.load()
             self.level = dp.load()
         self.nb_cases_remplies = 0
+        self.reset_nbs()
         self.restart(*chrono)
         for i in range(9):
             for j in range(9):
