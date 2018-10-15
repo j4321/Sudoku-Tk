@@ -19,7 +19,7 @@ else:
     data_files = []
 
 setup(name="sudoku-tk",
-      version="1.2.0",
+      version="1.2.1",
       description="Sudoku games and puzzle solver",
       author="Juliette Monsel",
       author_email="j_4321@protonmail.com",

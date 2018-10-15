@@ -24,6 +24,7 @@ Custom tkinter messageboxes
 from tkinter import Toplevel, BooleanVar, Tk
 from tkinter.ttk import Label, Button, Checkbutton, Style
 
+
 class OneButtonBox(Toplevel):
     """ Messagebox with only one button """
 
@@ -46,12 +47,13 @@ class OneButtonBox(Toplevel):
                   font="Sans 11", compound="left", image=image).grid(row=0, padx=10, pady=10)
         else:
             Label(self, text=message, wraplength=335,
-                  font="Sans 11").grid(row=0, padx=10,pady=10)
+                  font="Sans 11").grid(row=0, padx=10, pady=10)
         b = Button(self, text=button, command=self.destroy)
-        b.grid(row=1, padx=10,pady=10)
+        b.grid(row=1, padx=10, pady=10)
         self.grab_set()
         b.focus_set()
         self.wait_window(self)
+
 
 class OBCheckbutton(Tk):
     """ Messagebox with only one button and a checkbox below the button
@@ -76,10 +78,11 @@ class OBCheckbutton(Tk):
         s.theme_use(style)
         if image:
             Label(self, text=message, wraplength=335,
-                  font="Sans 11", compound="left", image=image).grid(row=0, padx=10, pady=(10,0))
+                  font="Sans 11", compound="left",
+                  image=image).grid(row=0, padx=10, pady=(10, 0))
         else:
             Label(self, text=message, wraplength=335,
-                  font="Sans 11").grid(row=0, padx=10, pady=(10,0))
+                  font="Sans 11").grid(row=0, padx=10, pady=(10, 0))
         b = Button(self, text=button, command=self.destroy)
         b.grid(row=2, padx=10, pady=10)
         self.var = BooleanVar(self)
@@ -91,6 +94,7 @@ class OBCheckbutton(Tk):
 
     def get_check(self):
         return self.var.get()
+
 
 class TwoButtonBox(Toplevel):
     """ Messagebox with two buttons """
@@ -119,17 +123,17 @@ class TwoButtonBox(Toplevel):
         if image:
             Label(self, text=message, wraplength=335,
                   font="Sans 11", compound="left", image=image).grid(row=0,
-                                                                   padx=10,
-                                                                   pady=10,
-                                                                   columnspan=2)
+                                                                     padx=10,
+                                                                     pady=10,
+                                                                     columnspan=2)
         else:
             Label(self, text=message, wraplength=335,
-                  font="Sans 11").grid(row=0, padx=10,pady=10, columnspan=2)
+                  font="Sans 11").grid(row=0, padx=10, pady=10, columnspan=2)
         b1 = Button(self, text=button1, command=self.command1)
         b1.grid(row=1, column=0, padx=15, pady=10, sticky="e")
         Button(self, text=button2, command=self.command2).grid(row=1, column=1,
-                                                              padx=15, pady=10,
-                                                              sticky="w")
+                                                               padx=15, pady=10,
+                                                               sticky="w")
         self.grab_set()
         b1.focus_set()
         self.wait_window(self)
@@ -145,11 +149,13 @@ class TwoButtonBox(Toplevel):
     def get_rep(self):
         return self.rep
 
+
 def one_button_box(parent, title="", message="", button="Ok", image=None,
                    **options):
     """ Open a OneButtonBox and return "ok" when closed. """
     OneButtonBox(parent, title, message, button, image, **options)
     return "ok"
+
 
 def ob_checkbutton(title="", message="", button="Ok", image=None,
                    checkmessage="", style="clam", **options):
@@ -157,9 +163,9 @@ def ob_checkbutton(title="", message="", button="Ok", image=None,
     ob = OBCheckbutton(title, message, button, image, checkmessage, style, **options)
     return ob.get_check()
 
+
 def two_button_box(parent, title="", message="", button1="Yes", button2="No",
                    image=None, **options):
     """ Open a TwoButtonBox and return the text of the button chosen by the user"""
     tbb = TwoButtonBox(parent, title, message, button1, button2, image, **options)
     return tbb.get_rep()
-

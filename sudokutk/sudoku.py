@@ -716,7 +716,7 @@ class Sudoku(Tk):
                 self.configure(cursor="")
                 rep2 = two_button_box(self, _("Information"),
                                      _("The generated puzzle contains %(nb)i numbers and its level is %(difficulty)s.") % ({"nb": nb, "difficulty": _(diff.capitalize())}),
-                                     _("Retry"), _("Play"), image=self.im_info)
+                                     _("Play"), _("Retry"), image=self.im_info)
             if rep2 == _("Play"):
                 self.level = diff
                 self.affiche_grille(grille.get_sudoku())

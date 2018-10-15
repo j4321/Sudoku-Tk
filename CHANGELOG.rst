@@ -6,6 +6,11 @@ Copyright 2016-2018 Juliette Monsel <j_4321@protonmail.com>
 Version 1.2
 -----------
 
+1.2.1
+~~~~~
+
+* Fix bug in progression display: numbers were not reset
+
 1.2.0
 ~~~~~
 
