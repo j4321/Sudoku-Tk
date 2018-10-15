@@ -86,6 +86,7 @@ class Sudoku(Tk):
         style.map('TButton', **button_style_map)
         style.configure('TCheckutton', **button_style_config)
         style.map('TCheckutton', **button_style_map)
+        self.option_add('*Toplevel.background', bg)
         self.option_add('*Menu.background', bg)
         self.option_add('*Menu.activeBackground', activebg)
         self.configure(bg=bg)
