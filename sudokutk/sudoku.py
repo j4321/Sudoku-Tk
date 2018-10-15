@@ -641,7 +641,6 @@ class Sudoku(Tk):
         a, b = i // 3, j // 3
         if val_prec:
             x, y = divmod(val_prec - 1, 3)
-            print(val_prec, x, y)
         for k, (line, column, bloc) in enumerate(zip(self.blocs[i, :], self.blocs[:, j], self.blocs[3 * a: 3 * (a + 1), 3 * b: 3 * (b + 1)].flatten())):
             # works because if line is bloc then pos1 is pos3 and both are edited at once
             pos1 = line.get_possibilites()
@@ -879,6 +878,7 @@ class Sudoku(Tk):
                              _("Do you really want to get the solution?"),
                              _("Yes"), _("No"), image=self.im_question)
         if rep == _("Yes"):
+            self.frame_pause.place_forget()
             grille = Grille()
             for i in range(9):
                 for j in range(9):
