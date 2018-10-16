@@ -10,6 +10,7 @@ Version 1.2
 ~~~~~
 
 * Fix bug in progression display: numbers were not reset
+* Remove pause screen after failed resolution
 
 1.2.0
 ~~~~~
