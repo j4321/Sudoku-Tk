@@ -49,7 +49,7 @@ class Sudoku(Tk):
         self.resizable(0,0)
         self.protocol("WM_DELETE_WINDOW", self.quitter)
         cst.set_icon(self)
-        self.columnconfigure(3, weight=1)
+        self.columnconfigure(0, weight=1)
 
         # --- style
         bg = '#dddddd'
@@ -103,34 +103,47 @@ class Sudoku(Tk):
         style.configure("pause.TLabel", foreground="grey", background='white')
 
         # --- images
-        self.im_erreur = open_image(cst.ERREUR)
-        self.im_pause = open_image(cst.PAUSE)
-        self.im_restart = open_image(cst.RESTART)
-        self.im_play = open_image(cst.PLAY)
-        self.im_info = open_image(cst.INFO)
-        self.im_undo = open_image(cst.UNDO)
-        self.im_redo = open_image(cst.REDO)
-        self.im_question = open_image(cst.QUESTION)
+        self.im_erreur = open_image(cst.ERREUR, master=self)
+        self.im_check = open_image(cst.CHECK, master=self)
+        self.im_pause = open_image(cst.PAUSE, master=self)
+        self.im_restart = open_image(cst.RESTART, master=self)
+        self.im_play = open_image(cst.PLAY, master=self)
+        self.im_info = open_image(cst.INFO, master=self)
+        self.im_undo = open_image(cst.UNDO, master=self)
+        self.im_redo = open_image(cst.REDO, master=self)
+        self.im_question = open_image(cst.QUESTION, master=self)
 
         # --- timer
+        frame_btns = Frame(self)
+        frame_btns.columnconfigure(3, weight=1)
         self.chrono = [0,0]
-        self.tps = Label(self, text="%02i:%02i"% tuple(self.chrono),
+        self.tps = Label(frame_btns, text="%02i:%02i"% tuple(self.chrono),
                          font="Arial 16")
         self.debut = False # la partie a-t-elle commencée ?
         self.chrono_on = False # le chrono est-il en marche ?
 
         # --- buttons
-        self.b_pause = Button(self, state="disabled", image=self.im_pause,
-                                  command=self.play_pause)
-        self.b_restart = Button(self, state="disabled", image=self.im_restart,
+        self.b_pause = Button(frame_btns, state="disabled", image=self.im_pause,
+                              command=self.play_pause)
+        self.b_restart = Button(frame_btns, image=self.im_restart,
                                 command=self.recommence)
-        self.b_undo = Button(self, image=self.im_undo, command=self.undo)
-        self.b_redo = Button(self, image=self.im_redo, command=self.redo)
+        self.b_check = Button(frame_btns, image=self.im_check,
+                              command=self.check)
+        self.b_undo = Button(frame_btns, image=self.im_undo, command=self.undo)
+        self.b_redo = Button(frame_btns, image=self.im_redo, command=self.redo)
+
+        self.tps.grid(row=0, column=0, sticky="e", padx=(0, 10), pady=30)
+        self.b_pause.grid(row=0, column=1, sticky="w", padx=2, pady=30)
+        self.b_restart.grid(row=0, column=2, sticky="w", padx=2, pady=30)
+        self.b_check.grid(row=0, column=3, sticky="w", padx=2, pady=30)
+        self.b_undo.grid(row=0, column=4, sticky="e", pady=30, padx=2)
+        self.b_redo.grid(row=0, column=5, sticky="w", pady=30, padx=(2, 0))
 
         # --- tooltips
         self.tooltip_wrapper = TooltipWrapper(self)
         self.tooltip_wrapper.add_tooltip(self.b_pause, _("Pause game"))
         self.tooltip_wrapper.add_tooltip(self.b_restart, _("Restart game"))
+        self.tooltip_wrapper.add_tooltip(self.b_check, _("Check puzzle"))
         self.tooltip_wrapper.add_tooltip(self.b_undo, _("Undo"))
         self.tooltip_wrapper.add_tooltip(self.b_redo, _("Redo"))
 
@@ -159,13 +172,9 @@ class Sudoku(Tk):
               font='Arial 30 bold').grid()
 
         # --- placement
-        frame_nb.grid(row=1, column=6, sticky='en', pady=0, padx=(0, 30))
-        self.frame_puzzle.grid(row=1, columnspan=5, padx=(30, 15))
-        self.tps.grid(row=2, column=0, sticky="e", padx=(30, 10), pady=30)
-        self.b_pause.grid(row=2, column=1, sticky="w", padx=2, pady=30)
-        self.b_restart.grid(row=2, column=2, sticky="w", padx=2, pady=30)
-        self.b_undo.grid(row=2, column=3, sticky="e", pady=30, padx=2)
-        self.b_redo.grid(row=2, column=4, sticky="w", pady=30, padx=(2, 10))
+        frame_nb.grid(row=1, column=1, sticky='en', pady=0, padx=(0, 30))
+        self.frame_puzzle.grid(row=1, column=0,  padx=(30, 15))
+        frame_btns.grid(row=2, column=0,  sticky='ew', padx=(30, 15))
 
         # --- menu
         menu = Menu(self, tearoff=0)
@@ -193,6 +202,7 @@ class Sudoku(Tk):
 
         menu_game = Menu(menu, tearoff=0)
         menu_game.add_command(label=_("Restart"), command=self.recommence)
+        menu_game.add_command(label=_("Check"), command=self.check)
         menu_game.add_command(label=_("Solve"), command=self.resolution)
         menu_game.add_command(label=_("Save"), command=self.sauvegarde,
                               accelerator="Ctrl+S")
@@ -493,7 +503,6 @@ class Sudoku(Tk):
         self.b_undo.configure(state="disabled")
         self.b_pause.configure(state="disabled", image=self.im_pause)
         self.b_redo.configure(state="disabled")
-        self.b_restart.configure(state="disabled")
         self.log_reinit()
         self.frame_pause.place_forget()
 
@@ -537,7 +546,6 @@ class Sudoku(Tk):
             if not self.debut and self.nb_cases_remplies != 81:
                 self.debut = True
                 self.b_pause.configure(state="normal")
-                self.b_restart.configure(state="normal")
                 self.play_pause()
             if str(event.widget) != "." and self.chrono_on:
                 if self.clavier:
@@ -835,7 +843,15 @@ class Sudoku(Tk):
         elif self.debut:
             self.play_pause()
 
-    def resolution_init(self):
+    def check(self):
+        error = self.resolution_init(False)
+        if not error:
+            one_button_box(self, _("Information"), _("No error found."),
+                           image=self.im_info)
+        if not self.chrono_on:
+            self.play_pause()
+
+    def resolution_init(self, show_solution=True):
         """ Résolution de la grille initiale (sans tenir compte des valeurs rentrées par l'utilisateur. """
         grille = Grille()
         for i in range(9):
@@ -847,19 +863,23 @@ class Sudoku(Tk):
         self.update()
         sol = grille.solve()
         self.configure(cursor="")
+        error = False
         if type(sol) == np.ndarray:
             for i in range(9):
                 for j in range(9):
                     val = self.blocs[i, j].get_val()
                     if not val:
-                        self.blocs[i, j].edit_chiffre(sol[i,j])
-                        self.blocs[i, j].affiche_solution()
+                        if show_solution:
+                            self.blocs[i, j].edit_chiffre(sol[i,j])
+                            self.blocs[i, j].affiche_solution()
                     elif self.blocs[i, j].is_modifiable():
                         if val != sol[i,j]:
                             self.blocs[i, j].edit_chiffre(sol[i,j])
                             self.blocs[i, j].affiche_erreur()
-            self.restart()
-            self.nb_cases_remplies = 81
+                            error = True
+            if show_solution:
+                self.restart()
+                self.nb_cases_remplies = 81
 
         elif sol[1]:
             i,j = sol[1]
@@ -870,6 +890,7 @@ class Sudoku(Tk):
         else:
             one_button_box(self, _("Error"), _("Resolution failed."),
                            image=self.im_erreur)
+        return error
 
     def resolution(self):
         if self.chrono_on:
@@ -897,7 +918,6 @@ class Sudoku(Tk):
                             self.blocs[i, j].edit_chiffre(sol[i,j])
                             self.blocs[i, j].affiche_solution()
                 self.restart()
-                self.b_restart.configure(state="normal")
                 self.nb_cases_remplies = 81
             elif sol[1]:
                 i,j = sol[1]

@@ -3,6 +3,15 @@ Sudoku-Tk - Sudoku games and puzzle solver
 Copyright 2016-2018 Juliette Monsel <j_4321@protonmail.com>
 
 
+Version 1.3
+-----------
+
+1.3.0
+~~~~~
+
+* Add check puzzle command
+
+
 Version 1.2
 -----------
 

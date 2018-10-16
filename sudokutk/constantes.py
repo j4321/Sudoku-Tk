@@ -98,6 +98,7 @@ RESTART = os.path.join(IMAGES_LOCATION, "restart.png")
 UNDO = os.path.join(IMAGES_LOCATION, "undo.png")
 INFO = os.path.join(IMAGES_LOCATION, "info.png")
 REDO = os.path.join(IMAGES_LOCATION, "redo.png")
+CHECK = os.path.join(IMAGES_LOCATION, "check.png")
 ERREUR = os.path.join(IMAGES_LOCATION, "erreur.png")
 QUESTION = os.path.join(IMAGES_LOCATION, "question.png")
 ICONE = os.path.join(IMAGES_LOCATION, "icone_24.png")
@@ -236,7 +237,7 @@ def asksaveasfilename(defaultextension, filetypes, initialdir=".", initialfile="
                                             **options)
 
 
-#  --- compatibility
+# --- compatibility
 if TclVersion < 8.6:
     # then tkinter cannot import PNG files directly, we need to use PIL
     from PIL import ImageTk, Image
@@ -248,7 +249,7 @@ if TclVersion < 8.6:
     CONFIG.set("General", "old_tcl_warning", str(not ans))
 
     def open_image(file, master=None):
-        return ImageTk.PhotoImage(Image.open(file))
+        return ImageTk.PhotoImage(Image.open(file), master=master)
 
 else:
     # no need of ImageTk dependency
