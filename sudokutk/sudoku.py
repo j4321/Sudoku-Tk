@@ -20,8 +20,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Class for the GUI
 """
-#TODO: set numbers back to black when conflicted number is erased
+#TODO: fix english strings (grid _> puzzle ...)
 #TODO: use list instead of file for log
+#TODO: translate code comments / names into English
+
 
 import sudokutk.constantes as cst
 from sudokutk.constantes import open_image, CONFIG, LOG,  askopenfilename, asksaveasfilename
