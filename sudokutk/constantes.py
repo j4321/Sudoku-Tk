@@ -35,11 +35,10 @@ from subprocess import check_output, CalledProcessError
 from tkinter import filedialog
 
 
-VERSION = "1.2.0"
+VERSION = '1.2.1'
 
 PL = platform[0]
 
-APP_NAME = "Sudoku-Tk"
 
 # local directory
 PATH = os.path.split(__file__)[0]
@@ -78,6 +77,7 @@ else:
     CONFIG.set("General", "language", LANGUE)
 
 # --- translation
+APP_NAME = "Sudoku-Tk"
 gettext.find(APP_NAME, LOCALE_PATH)
 gettext.bind_textdomain_codeset(APP_NAME, "UTF - 8")
 gettext.bindtextdomain(APP_NAME, LOCALE_PATH)

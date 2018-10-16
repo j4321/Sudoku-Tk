@@ -94,7 +94,7 @@ Troubleshooting
 ---------------
 
 If you encounter bugs or if you have suggestions, please open an issue on
-`GitHub <https://github.com/j4321/CheckMails/issues>`__ or write me an email
+`GitHub <https://github.com/j4321/Sudoku-Tk/issues>`__ or write me an email
 at <j_4321@protonmail.com>.
 
 

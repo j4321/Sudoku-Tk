@@ -3,6 +3,8 @@
 
 from setuptools import setup
 from sys import platform
+from sudokutk.constantes import VERSION
+
 
 files = ["puzzles/easy/*",
          "puzzles/medium/*",
@@ -19,7 +21,7 @@ else:
     data_files = []
 
 setup(name="sudoku-tk",
-      version="1.2.1",
+      version=VERSION,
       description="Sudoku games and puzzle solver",
       author="Juliette Monsel",
       author_email="j_4321@protonmail.com",
