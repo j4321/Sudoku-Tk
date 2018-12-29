@@ -107,22 +107,6 @@ ICONE_48 = os.path.join(IMAGES_LOCATION, "icone_48.png")
 
 PUZZLES_LOCATION = os.path.join(PATH, 'puzzles')
 # emplacement du fichier log (pour pouvoir annuler)
-nb = 0
-if PL == "w":
-    LOG = os.path.join(os.path.expanduser("~"), "AppData", "Local", "Temp", "sudoku-tk%i.log")
-else:
-    LOG = "/tmp/sudoku-tk%i.log"
-while os.path.exists(LOG % nb):
-    nb += 1
-LOG = LOG % nb
-# le fichier log est structuré comme suis :
-# i\tj;val_prec\tpos_prec;modifs;val\tpos
-# où (i,j) = coordonnées de la case modifiée,
-# val_prec, pos_prec : contenu de la case avant modif
-# val, pos : contenu de la case après modif
-# modifs : sous la forme i0,j0\ti1,j1 ..., liste des cases qui ont été modifiées
-# lors de l'ajout de la valeur val dans la case (i,j)
-# (à cause de la fonction update_grille)
 
 
 if PL == "w":

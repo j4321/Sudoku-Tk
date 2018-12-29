@@ -23,8 +23,7 @@ Class for the virtual keyboard to enter numbers in the grid
 
 from tkinter import Toplevel
 from tkinter.ttk import Style, Button
-from sudokutk.constantes import LOG
-from numpy import array
+
 
 class Clavier(Toplevel):
     """ Pavé numérique pour choisir un chiffre """
@@ -32,7 +31,7 @@ class Clavier(Toplevel):
         """ créer le Toplevel 'À propos de Bracelet Generator' """
         Toplevel.__init__(self, parent, **options)
         self.withdraw()
-        self.type = val_ou_pos # clavier pour rentrer une valeur ou une possibilité
+        self.type = val_ou_pos  # clavier pour rentrer une valeur ou une possibilité
         self.overrideredirect(True)
         self.case = case
         self.transient(self.master)
@@ -52,7 +51,7 @@ class Clavier(Toplevel):
                 self.boutons[i][j].grid(row=i, column=j)
         self.protocol("WM_DELETE_WINDOW", self.quitter)
         self.resizable(0, 0)
-        self.attributes("-topmost",0)
+        self.attributes("-topmost", 0)
 
     def focus_out(self, event):
         """ quitte si la fenêtre n'est plus au premier plan """
@@ -69,10 +68,8 @@ class Clavier(Toplevel):
 
         # données pour le log
         val_prec = self.case.get_val()
-        pos_prec = array(self.case.get_possibilites(), dtype=str)
-        coords = "%i\t%i;" % (i, j)
-        undo_ch = "%i\t%s;" % (val_prec,"".join(pos_prec))
-        modifs = ";"
+        pos_prec = self.case.get_possibilites().copy()
+        modifs = []
 
         # modification de la case
         if self.type == "val":
@@ -85,14 +82,11 @@ class Clavier(Toplevel):
             self.master.test_possibilite(i, j, val)
 
         # données pour le log
-        pos = array(self.case.get_possibilites(), dtype=str)
-        redo_ch = "%i\t%s\n" % (self.case.get_val(),"".join(pos))
+        pos = self.case.get_possibilites().copy()
+        val = self.case.get_val()
 
-        self.master.log()
-        with open(LOG, "a") as log:
-            log.write(coords + undo_ch + modifs + redo_ch)
+        self.master.stacks_modif((i, j, val_prec, pos_prec, modifs, val, pos))
         self.master.test_remplie()
-
 
     def quitter(self):
         """ ferme la fenêtre """
