@@ -22,7 +22,7 @@ Class for the GUI
 """
 #TODO: fix english strings (grid _> puzzle ...)
 #TODO: translate code comments / names into English
-
+#TODO: fix undo/redo to include check
 
 import sudokutk.constantes as cst
 from sudokutk.constantes import open_image, CONFIG, askopenfilename, asksaveasfilename
