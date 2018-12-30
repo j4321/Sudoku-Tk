@@ -22,6 +22,8 @@ python libraries Pillow and Numpy.
 Windows
 ~~~~~~~
 
+A portable version of the software is available, which does not require to have Python installed: Download `sudoku-tk-x.y.z-windows.zip <https://github.com/j4321/Sudoku-Tk/releases>`_, extract the .zip and launch ``sudoku-tk.exe``.
+
 Install:
 
 - Python 3: https://www.python.org/downloads/windows/
@@ -67,7 +69,7 @@ Unpack the archive.
 You can directly launch sudoku-tk
 
 In Windows, you might need to select 'open with pythonw.exe' (which is in
-the file C:\Python3x).
+the file ``C:\Python3x``).
 
 In Linux, you can make sudoku-tk.py executable or launch it with
 
