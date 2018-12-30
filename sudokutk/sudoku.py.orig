@@ -20,12 +20,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Class for the GUI
 """
+<<<<<<< HEAD
 #TODO: fix english strings (grid _> puzzle ...)
+#TODO: use list instead of file for log
 #TODO: translate code comments / names into English
 
 
 import sudokutk.constantes as cst
+from sudokutk.constantes import open_image, CONFIG, LOG, askopenfilename, asksaveasfilename
+=======
+#TODO: set numbers back to black when conflicted number is erased
+
+import sudokutk.constantes as cst
 from sudokutk.constantes import open_image, CONFIG, askopenfilename, asksaveasfilename
+>>>>>>> d2a4670
 from sudokutk.clavier import Clavier
 from sudokutk.about import About
 from sudokutk.aide import Aide
@@ -116,18 +124,29 @@ class Sudoku(Tk):
         self.im_question = open_image(cst.QUESTION, master=self)
 
         # --- timer
+<<<<<<< HEAD
         frame_btns = Frame(self)
         frame_btns.columnconfigure(3, weight=1)
         self.chrono = [0, 0]
         self.tps = Label(frame_btns, text="%02i:%02i" % tuple(self.chrono),
+=======
+        self.chrono = [0, 0]
+        self.tps = Label(self, text=" %02i:%02i" % tuple(self.chrono),
+>>>>>>> d2a4670
                          font="Arial 16")
         self.debut = False  # la partie a-t-elle commencée ?
         self.chrono_on = False  # le chrono est-il en marche ?
 
         # --- buttons
+<<<<<<< HEAD
         self.b_pause = Button(frame_btns, state="disabled", image=self.im_pause,
                               command=self.play_pause)
         self.b_restart = Button(frame_btns, image=self.im_restart,
+=======
+        self.b_pause = Button(self, state="disabled", image=self.im_pause,
+                              command=self.play_pause)
+        self.b_restart = Button(self, state="disabled", image=self.im_restart,
+>>>>>>> d2a4670
                                 command=self.recommence)
         self.b_check = Button(frame_btns, image=self.im_check,
                               command=self.check)
@@ -343,7 +362,7 @@ class Sudoku(Tk):
                 tps = int(tps)
                 m = tps // 60
                 s = tps % 60
-                Label(top, text="%i min %i s" % (m, s),
+                Label(top, text=" %i min %i s" % (m, s),
                       font="Sans 10").grid(row=i + 1, column=1,
                                            sticky="w", pady=4,
                                            padx=(4, 20))
@@ -471,11 +490,20 @@ class Sudoku(Tk):
         self.chrono = [m, s]
         self.chrono_on = False
         self.debut = False
+<<<<<<< HEAD
         self.tps.configure(text="%02i:%02i" % tuple(self.chrono))
         self.b_undo.configure(state="disabled")
         self.b_pause.configure(state="disabled", image=self.im_pause)
         self.b_redo.configure(state="disabled")
+        self.log_reinit()
+=======
+        self.tps.configure(text=" %02i:%02i" % tuple(self.chrono))
+        self.b_undo.configure(state="disabled")
+        self.b_pause.configure(state="disabled", image=self.im_pause)
+        self.b_redo.configure(state="disabled")
+        self.b_restart.configure(state="disabled")
         self.stacks_reinit()
+>>>>>>> d2a4670
         self.frame_pause.place_forget()
 
     def play_pause(self):
@@ -507,7 +535,11 @@ class Sudoku(Tk):
             if self.chrono[1] == 60:
                 self.chrono[0] += 1
                 self.chrono[1] = 0
+<<<<<<< HEAD
             self.tps.configure(text="%02i:%02i" % tuple(self.chrono))
+=======
+            self.tps.configure(text=" %02i:%02i" % tuple(self.chrono))
+>>>>>>> d2a4670
             self.tps.after(1000, self.affiche_chrono)
 
     def modifie_nb_cases_remplies(self, nb):
@@ -836,9 +868,14 @@ class Sudoku(Tk):
                 for j in range(9):
                     val = self.blocs[i, j].get_val()
                     if not val:
+<<<<<<< HEAD
                         if show_solution:
                             self.blocs[i, j].edit_chiffre(sol[i, j])
                             self.blocs[i, j].affiche_solution()
+=======
+                        self.blocs[i, j].edit_chiffre(sol[i, j])
+                        self.blocs[i, j].affiche_solution()
+>>>>>>> d2a4670
                     elif self.blocs[i, j].is_modifiable():
                         if val != sol[i, j]:
                             self.blocs[i, j].edit_chiffre(sol[i, j])
@@ -982,7 +1019,11 @@ class Sudoku(Tk):
                     if grille[i, j]:
                         draw.text((26 + j * 82 + 2 * (j // 3),
                                    10 + i * 82 + 2 * (i // 3)),
+<<<<<<< HEAD
                                   "%i" % grille[i, j], fill="black", font=font)
+=======
+                                  " %i" % grille[i, j], fill="black", font=font)
+>>>>>>> d2a4670
 
             del draw
             im.save(fichier)

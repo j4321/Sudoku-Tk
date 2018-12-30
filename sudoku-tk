@@ -21,15 +21,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 Main
 """
 
-from sudokutk .sudoku import Sudoku
-from sudokutk .constantes import LOG, CONFIG, PATH_CONFIG
-from os import remove
+from sudokutk.sudoku import Sudoku
+from sudokutk.constantes import CONFIG, PATH_CONFIG
 import sys
+
 
 try:
     game = Sudoku(*sys.argv[1:])
     game.mainloop()
 finally:
-    remove(LOG)
     with open(PATH_CONFIG, 'w') as fichier:
         CONFIG.write(fichier)
