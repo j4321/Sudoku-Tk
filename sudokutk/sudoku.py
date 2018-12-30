@@ -91,6 +91,7 @@ class Sudoku(Tk):
         self.option_add('*Toplevel.background', bg)
         self.option_add('*Menu.background', bg)
         self.option_add('*Menu.activeBackground', activebg)
+        self.option_add('*Menu.activeForeground', "black")
         self.configure(bg=bg)
 
         style.configure("bg.TFrame", background="grey")
